@@ -74,12 +74,33 @@ In particular, the improved model should be able to:
 # Dataset
 We will generate a synthetic dataset with non-standard object attributes (e.g., colored blackboards) and use LoRA fine-tuning to improve attribute control in a pre-trained text-to-image model.
 
-> - Which dataset(s) the project intends to use, justifying the choice(s).
-> - Which generative modeling approaches the group already sees as interesting to be studied.
-> - Reference articles already identified and that will be studied or used as part of the project planning.
-> - Tools to be used (based on the group’s current vision of the project).
-> - Expected results.
-> - Proposal for evaluating the synthesis results.
+## Which dataset(s) the project intends to use, justifying the choice(s).
+
+## Which generative modeling approaches the group already sees as interesting to be studied.
+The following methods are considered within the scope of this project:
+- Diffusion-based models, particularly Latent Diffusion Models used in Stable Diffusion, which serve as the primary architecture for image generation.
+- LoRA (Low-Rank Adaptation), which will be used as an efficient approach for fine-tuning the pre-trained model with controlled data.
+
+**If the fine-tuned dataset does not yield satisfactory results and sufficient time is available, VAE-based models may be explored, with a focus on analyzing attribute disentanglement. However, this step is considered optional and may be addressed as future work, depending on time constraints and overall project scope.**
+
+## Reference articles already identified and that will be studied or used as part of the project planning. 
+https://arxiv.org/pdf/2112.10752 - Treinamento do difusion 
+https://arxiv.org/pdf/2006.11239 - Denoising Diffusion Probabilistic Models
+https://arxiv.org/pdf/2112.10741 - GLIDE: Towards Photorealistic Image Generation and Editing with Text-Guided Diffusion Models
+
+## Tools to be used (based on the group’s current vision of the project).
+- Python
+- PyTorch
+- Hugging Face Diffusers
+- Stable Diffusion
+- LoRA (Low-Rank Adaptation)
+- CLIP (for evaluation)
+- Google Colab (for training and experiments)
+
+## Expected results.
+
+## Proposal for evaluating the synthesis results.
+CLIP Score: measuring the semantic alignment between generated images and input prompts
 
 ## Schedule
 
