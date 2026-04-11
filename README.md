@@ -28,7 +28,9 @@ The project is motivated by the observation that these models frequently fail to
 - “pink classroom blackboard”
 - “purple polar bear”
 
-Often result in images where the model ignores the requested attribute and instead generates outputs aligned with common real-world representations (e.g., orange carrots, green/black boards, white polar bears).
+Often result in images where the model ignores the requested attribute and instead generates outputs aligned with common real-world representations (e.g., orange carrots, green/black boards, white polar bears). As the examples below:
+
+![Resultado do experimento](imagens/Pink_board_2.jpg)
 
 This behavior suggests that the model prioritizes learned statistical correlations over explicit user instructions, revealing a limitation in its ability to disentangle attributes (e.g., color) from object identity.
 
