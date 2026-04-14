@@ -1,8 +1,6 @@
-# `Geração de Imagens com IA: Desafios no Controle de Atributos sob Viés de Dados`
-(Sugestão: Geração de Imagens com IA: Diversidade, Imparcialidade e Confiabilidade dos Modelos Generativos)
+# `Geração de Imagens com IA: Diversidade, Imparcialidade e Confiabilidade dos Modelos Generativos`
 
-# `AI Image Generation: Challenges in Attribute Control under Data Bias`
-(Sugestão: AI Image Generation: Diversity, Fairness, and Reliability of Generative Models)
+# `AI Image Generation: Diversity, Fairness, and Reliability of Generative Models`
 
 ## Presentation
 
@@ -18,10 +16,7 @@ Link to the presentation slides: https://canva.link/a1xy936n5saa099
 
 ## Project Summary Description
 
-### Description of the project theme, including generating context and motivation.
-
-This project aims to evaluate the behavior of text-to-image generative AI models, focusing on their ability to correctly interpret simple textual descriptions. The rapid advancement of generative models has enabled high-quality image synthesis from text; however, these models often exhibit limitations related to reliability, bias, and control over specific attributes.
-(This project aims to evaluate the behavior of text-to-image generative AI models, focusing on their ability to correctly interpret simple textual descriptions. The rapid advancement of generative models has enabled high-quality image synthesis from text; however, these models often exhibit limitations related to diversity, fairness, and reliability.)
+This project aims to evaluate the behavior of text-to-image generative AI models, focusing on their ability to correctly interpret simple textual descriptions. The rapid advancement of generative models has enabled high-quality image synthesis from text; however, these models often exhibit limitations related to diversity, fairness, and reliability.
 
 The main goal of this project is to investigate how pre-trained open-source models, such as Stable Diffusion, available through platforms like Hugging Face, handle prompts where there is a potential 'limitation' between the user’s input and the statistical patterns learned during training.The project is motivated by the observation that these models frequently fail to correctly apply specific attributes—such as color—to objects. For example, prompts such as:
 - “white carrot”,
@@ -38,20 +33,16 @@ This behavior suggests that the model prioritizes learned statistical correlatio
 
 The central research question of this project is:
 
-> #### *Is this limitation primarily caused by biases in the training data distribution, or by constraints in the model architecture itself?*
-(Is this limitation primarily caused by the training data or by constraints in the model's architecture itself?)
-
+> #### *Is this limitation primarily caused by the training data or by constraints in the model's architecture itself?*
 
 ## Main Goal
 
 The main objective of this project is to evaluate whether the application of fine-tuning techniques to pre-trained open-source text-to-image generation models — Stable Diffusion — improves the fidelity in representing specific visual attributes, such as color, with respect to the instructions provided in the prompt.
 
-Specifically, the study aims to investigate whether, after fine-tuning with datasets that present greater diversity of these attributes, e.g. different colors applied to the same object, the model is able to correctly apply the requested color to specific regions of the image (such as a classroom blackboard), or whether it still exhibits limitations in attribute localization and control, resulting in the incorrect application of color to other regions of the scene (such as walls or adjacent objects), especially in elements that exhibit strong bias in the training data, such as classroom blackboards, which are traditionally associated with green or black colors.
-(Specifically, the study aims to investigate whether, after fine-tuning with datasets that present greater diversity of these attributes, e.g. different colors applied to the same object, the model is able to correctly apply the requested command in the prompt or whether it still exhibits limitations, resulting in an incorrect response to the user's request in the prompt.)
+Specifically, the study aims to investigate whether, after fine-tuning with datasets that present greater diversity of these attributes, e.g. different colors applied to the same object, the model is able to correctly apply the requested command in the prompt or whether it still exhibits limitations, resulting in an incorrect response to the user's request in the prompt.
 
 # Main Hypothesis
-The main hypothesis of this project is that the inability of text-to-image models to correctly apply specific attributes is primarily influenced by biases in the training data distribution, which leads the model to favor statistically dominant representations over explicit user instructions.
-(The main hypothesis of this project is that the inability of text-to-image models to correctly apply specific attributes is primarily influenced by the statistical prioritization of patterns, which leads the model to favor dominant representations over explicit user instructions, such as a classroom blackboard traditionally associated with green or black colors.)
+The main hypothesis of this project is that the inability of text-to-image models to correctly apply specific attributes is primarily influenced by the statistical prioritization of patterns, which leads the model to favor dominant representations over explicit user instructions, such as a classroom blackboard traditionally associated with green or black colors.
 
 # Secondary Questions 
 - 1 To support the main hypothesis, the project investigates the following secondary questions:
@@ -66,8 +57,7 @@ The output of the generative model in this project will consist of images genera
 
 In the initial state (pre-trained model), the system is expected to generate images influenced by learned statistical patterns, often failing to correctly apply uncommon attributes specified in the prompt.
 
-After applying fine-tuning with a synthetic dataset composed of objects with non-standard attribute combinations (e.g., unusual colors), the expected state-of-the-art outcome is that the model becomes capable of correctly modifying object attributes according to the prompt specification.
-(After applying fine-tuning to a synthetic dataset, including combinations of non-standard attributes, such as unusual colors, the expected outcome is that the model be able of correctly modifying object attributes according to the prompt's requests.)
+After applying fine-tuning to a synthetic dataset, including combinations of non-standard attributes, such as unusual colors, the expected outcome is that the model be able of correctly modifying object attributes according to the prompt's requests.
 
 In particular, the improved model should be able to:
 
@@ -78,9 +68,6 @@ In particular, the improved model should be able to:
 ## Proposed Methodology
 
 # Dataset
-Generate a synthetic dataset with non-standardized object attributes, e.g., colored blackboards, and use LoRA fine-tuning to improve attribute control in a pre-trained text-to-image model.
-
-## Which dataset(s) the project intends to use, justifying the choice(s).
 A synthetic dataset synthesized by the group containing non-standardized object attributes, e.g., colored blackboards. Our choice for this type of data was due to the context of the problem, in which is very specific for some type of attributes, which makes it difficult for us to encounter existent datasets containing exactly the type of attribute we need.
 
 ## Which generative modeling approaches the group already sees as interesting to be studied.
