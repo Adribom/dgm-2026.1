@@ -111,6 +111,12 @@ with Text-Guided Diffusion Models”. Em: CoRR abs/2112.10741. url: https://arxi
 - Google Colab (for training and experiments)
 
 ## Expected results.
+We expect to verify that the fine-tuning techniques were indeed helpful into adjusting the addressed problem, and that will be verified using the proposed evaluation metrics:
+- CLIP - measurement of similarity (prompt, image)
+- Attribute Binding Evaluation
+- VQA-based evaluation - usage of vision language model to answer questions and compare with expected results
+- Human evaluation - realism and subtle failures
+- Compositional benchmarks - success rate of correct binding
 
 ## Proposal for evaluating the synthesis results.
 CLIP Score: measuring the semantic alignment between generated images and input prompts
