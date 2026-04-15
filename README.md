@@ -76,6 +76,7 @@ HIGO, Kazuki, et al. TerraFusion: Joint Generation of Terrain Geometry and Textu
 WANG, Zhengren. 3d representation methods: A survey. arXiv preprint arXiv:2410.06475, 2024. Available at: https://arxiv.org/abs/2410.06475
 
 TANG, Xiang; LI, Ruotong; FAN, Xiaopeng. Recent Advances in 3D Object and Scene Generation: A Survey. arXiv preprint arXiv:2504.11734, 2025. Available at: https://arxiv.org/abs/2504.11734
+
 R. Fan, X. Ai, N. Dahnoun, and D. Worrall, “Rethinking Road Surface 3D Reconstruction and Pothole Detection,” arXiv:2012.10802, 2020.
 
 X. Huang et al., “SPAR3D: Stable Point-Aware Reconstruction of 3D Objects from Single Images,” Proc. IEEE/CVF CVPR, 2025.
