@@ -13,7 +13,7 @@ offered in the first semester of 2026, at Unicamp, under the supervision of Prof
 > |--|--|--|
 > | Adriel Bombonato | 291654 | Electrical Engineering|
 > | Hasnat Hameed | 270284 | Electrical Engineering|
-> | Name3 | 123456 | XXX|
+> | Iniobong Nicholas Udeme | 298961 | Applied Physics|
 
 ## Project Summary Description
 
