@@ -5,18 +5,18 @@
 ## Presentation
 
 This project originated in the context of the graduate course _IA376N_,
-offered in the second semester of 2025, at Unicamp, under the supervision of Prof. Dr. Paula Dornhofer Paro Costa, from the Department of Computer and Automation Engineering (DCA) of the School of Electrical and Computer Engineering (FEEC).
+offered in the **first semester of 2026 (2026.1)**, at Unicamp, under the supervision of Prof. Dr. Paula Dornhofer Paro Costa, from the Department of Computer and Automation Engineering (DCA) of the School of Electrical and Computer Engineering (FEEC).
 
 Include name, RA, and specialization focus of each group member.  
-|Name | RA | Specialization|
+| Name | RA | Specialization |
 |--|--|--|
-| Name1 | 123456 | Computer Engineering|
-| Name2 | 123456 | Electrical Engineering|
-| Name3 | 123456 | XXX|
+| Name1 | 123456 | Computer Engineering |
+| Name2 | 123456 | Electrical Engineering |
+| Name3 | 123456 | XXX |
 
 ## Abstract
 
-> Summary of the objective, methodology **and results** obtained (in submission E2 it is possible to report partial results). Suggested maximum of 100 words.
+> Summary of the objective, methodology **and results** obtained. In submission **D2**, it is acceptable to report partial results. Suggested maximum of 100 words.
 
 ## Problem Description / Motivation
 
@@ -60,10 +60,10 @@ Include name, RA, and specialization focus of each group member.
 
 ## Experiments, Results, and Discussion of Results
 
-> In the partial project submission (E2), this section may contain partial results, explorations of implemented solutions, and  
+> In the intermediate project submission (**D2**), this section may contain partial results, explorations of implemented solutions, and  
 > discussions about such experiments, including decisions to change the project trajectory or the description of new experiments as a result of these explorations.
 
-> In the final project submission (E3), this section should list the **main** results obtained (not necessarily all), which best represent the fulfillment of the project objectives.
+> In the final project submission (**D3**), this section should list the **main** results obtained (not necessarily all), which best represent the fulfillment of the project objectives.
 
 > The discussion of results may be carried out in a separate section or integrated into the results section. This is a matter of style.  
 > It is considered fundamental that the presentation of results should not serve as a treatise whose only purpose is to show that "a lot of work was done."  
@@ -72,8 +72,8 @@ Include name, RA, and specialization focus of each group member.
 ## Conclusion
 
 > The Conclusion section should recover the main information already presented in the report and point to future work.  
-> In the partial project submission (E2), it may contain information about which steps or how the project will be conducted until its completion.  
-> In the final project submission (E3), the conclusion is expected to outline, among other aspects, possibilities for the project’s continuation.
+> In the intermediate project submission (**D2**), it may contain information about which steps or how the project will be conducted until its completion.  
+> In the final project submission (**D3**), the conclusion is expected to outline, among other aspects, possibilities for the project’s continuation.
 
 ## Bibliographic References
 

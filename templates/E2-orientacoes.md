@@ -1,4 +1,4 @@
-# 2026.1 IA376N - Project - Second Delivery - Checkpoint (E2)
+# 2026.1 IA376N - Project - Second Delivery - Checkpoint (D2)
 
 ## General Instructions
 
@@ -6,7 +6,7 @@ The overall objective of the final project for this course is to provide the opp
 
 In the second project delivery, your group must:
 
-- Create a tag release `2026.1_IA376_E2`;
+- Create a tag release `2026.1_IA376_D2`;
 - Update the repository’s `README.md` file according to the guidelines provided below;
 - Submit a new pull request;
 - Prepare for a presentation of no more than 10 minutes about the current status of the project.
@@ -16,7 +16,7 @@ As a result of this exploration, it is possible that your group has decided to c
 
 ## Guidelines for editing the project’s README.md file
 
-For delivery E2, the repository’s `README.md` must be formatted in anticipation of the project’s final delivery format, according to the model provided in the course repository template for [at this link](https://github.com/teaching-FEEC/dgm-2026.1/blob/main/templates/E2-E3_template.md)..
+For delivery D2, the repository’s `README.md` must be formatted in anticipation of the project’s final delivery format, according to the model provided in the course repository template [at this link](https://github.com/teaching-FEEC/dgm-2026.1/blob/main/templates/E2-E3_template.md).
 
 ## Repository Structure
 

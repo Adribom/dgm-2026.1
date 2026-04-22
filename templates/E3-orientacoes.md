@@ -6,14 +6,14 @@ The overall objective of the final project for this course is to provide the opp
 
 In the final submission of your project, your group must:
 
-- Create a tag release `2026.1_IA376N_E3`;
+- Create a tag release `2026.1_IA376N_D3`;
 - Update the repository’s `README.md` file according to the guidelines provided below;
 - Submit a new pull request;
 - Prepare for the final 15-minute presentation about the project.
 
 ## Guidelines for editing the project’s README.md file
 
-For submission E3, the repository’s `README.md` must contain the sections outlined in the final project delivery model [available at this link](https://github.com/teaching-FEEC/dgm-2026.1/blob/main/templates/E2-E3_template.md).
+For submission D3, the repository’s `README.md` must contain the sections outlined in the final project delivery model [available at this link](https://github.com/teaching-FEEC/dgm-2026.1/blob/main/templates/E2-E3_template.md).
 
 ## Repository Structure
 
