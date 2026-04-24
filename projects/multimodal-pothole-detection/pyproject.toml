@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "multimodal-pothole-detection"
+version = "0.1.0"
+description = "Deep learning project for pothole 2D-to-3D reconstruction and notebook exploration."
+authors = ["Adriel, Hasnat, Nicholas"]
+readme = "README.md"
+package-mode = false
+
+[tool.poetry.dependencies]
+python = ">=3.10,<3.14"
+numpy = "^2.0.0"
+pandas = "^2.2.0"
+matplotlib = "^3.9.0"
+pillow = "^10.4.0"
+scipy = "^1.14.0"
+jupyterlab = "^4.2.0"
+ipykernel = "^6.29.0"
+
+[build-system]
+requires = ["poetry-core>=1.9.0"]
+build-backend = "poetry.core.masonry.api"
