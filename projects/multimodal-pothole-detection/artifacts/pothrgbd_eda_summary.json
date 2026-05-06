@@ -1,0 +1,11 @@
+{
+  "samples_computed": 992,
+  "samples_failed": 4,
+  "volume_cm3_median": 4464.163149798909,
+  "volume_cm3_p95": 93570.96575251235,
+  "max_depth_mm_median": 72.0,
+  "max_depth_mm_p95": 522.0499999999994,
+  "mask_fraction_median": 0.20881998697916665,
+  "mask_fraction_p95": 0.50137939453125,
+  "missing_depth_fraction_mean": 0.01666466344235791
+}

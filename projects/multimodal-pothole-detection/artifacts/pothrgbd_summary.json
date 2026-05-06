@@ -1,0 +1,25 @@
+{
+  "dataset": "PothRGDB",
+  "root": "/Users/aguidini/Documents/1.Projects/IA376/IA376-Deep_Generative_Modeling/project/code/datasets/PothRGDB/PUBLIC POTHOLE DATASET",
+  "file_counts": {
+    ".jpg": 1000,
+    ".npy": 1000,
+    ".txt": 1000
+  },
+  "sample_count": 998,
+  "samples_with_issues": 2,
+  "duplicate_samples": [
+    {
+      "sample_id": "20250305_060305",
+      "image_count": 2,
+      "depth_count": 2,
+      "label_count": 2
+    },
+    {
+      "sample_id": "20250305_124716",
+      "image_count": 2,
+      "depth_count": 2,
+      "label_count": 2
+    }
+  ]
+}
