@@ -1,7 +1,7 @@
 # FakeImageDetection Classifier for FakeClue Dataset
 
 Classifies FakeClue dataset images as fake or real using pre-trained models
-from [Li et al., "Frequency Masking for Universal DeepFake Detection"
+from [Doloriel & Cheung, "Frequency Masking for Universal DeepFake Detection"
 (ICASSP 2024)](https://arxiv.org/abs/2401.06506).
 
 ## Requirements
