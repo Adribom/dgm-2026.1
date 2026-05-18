@@ -9,7 +9,8 @@ build/
 *.pyc
 .DS_Store
 Thumbs.db
-datasets/
-artifacts/**/*.csv
+/data/
+/notebooks/from_kaggle_poth/
+/artifacts/**/*.csv
 artifacts/**/*.png
 docs/

@@ -174,11 +174,11 @@ def build_parser() -> argparse.ArgumentParser:
 def main() -> int:
     args = build_parser().parse_args()
     code_root = args.code_root.resolve()
-    output_dir = (args.output_dir or (code_root / "artifacts")).resolve()
+    output_dir = (args.output_dir or (code_root / "data" / "interim")).resolve()
     output_dir.mkdir(parents=True, exist_ok=True)
 
-    pothrgbd_root = code_root / "datasets" / "PothRGDB" / "PUBLIC POTHOLE DATASET"
-    rui_fan_root = code_root / "datasets" / "rui_fan_dataset"
+    pothrgbd_root = code_root / "data" / "raw" / "PothRGDB" / "PUBLIC POTHOLE DATASET"
+    rui_fan_root = code_root / "data" / "raw" / "rui_fan_dataset"
 
     if not pothrgbd_root.exists():
         raise FileNotFoundError(f"Missing PothRGDB dataset root: {pothrgbd_root}")

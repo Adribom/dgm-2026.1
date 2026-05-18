@@ -69,8 +69,8 @@ def main() -> int:
     args = build_parser().parse_args()
     code_root = args.code_root.resolve()
 
-    manifest_path = code_root / "artifacts" / "pothrgbd_manifest.csv"
-    dataset_root = code_root / "datasets" / "PothRGDB" / "PUBLIC POTHOLE DATASET"
+    manifest_path = code_root / "data" / "interim" / "pothrgbd_manifest.csv"
+    dataset_root = code_root / "data" / "raw" / "PothRGDB" / "PUBLIC POTHOLE DATASET"
     if not manifest_path.exists():
         raise FileNotFoundError(f"Manifest not found: {manifest_path}")
 
