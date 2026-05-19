@@ -32,16 +32,25 @@ Presentation Link [here](https://docs.google.com/presentation/d/1CM4DDgOnC9EBGzu
 
 > ### 1. Hypothesis 
 > Our central hypothesis is that a generative 3D model (Point-E) can successfully reconstruct the topology of a pothole from a single monocular RGB image, enabling practical severity assessment (depth/volume) without requiring perfect metrological-grade stereo setups during inference. Operationally, we test the following:
-- **Latent Space Scaling:** Feeding carefully padded square crops to a Generative Point Cloud diffusion model allows the extraction of 3D geometry whilst maintaining physical proportions intact.
-- **Robustness via RANSAC:** Applying geometric leveling over training data guarantees that the generative model learns pure depth (the crater) without being biased by camera pitch or road inclination.
+> - **Latent Space Scaling:** Feeding carefully padded square crops to a Generative Point Cloud diffusion model allows the extraction of 3D geometry whilst maintaining physical proportions intact.
+> - **Robustness via RANSAC:** Applying geometric leveling over training data guarantees that the generative model learns pure depth (the crater) without being biased by camera pitch or road inclination.
 ***Scope note:***
-- The project prioritizes practical utility, relative severity ranking, and successful architectural pipeline adaptation, rather than sub-millimeter full mesh reconstruction.
+> - The project prioritizes practical utility, relative severity ranking, and successful architectural pipeline adaptation, rather than sub-millimeter full mesh reconstruction.
 
-### 2. Geometric Core and Data Standardization Geometric Leveling (RANSAC)
+### 2. Geometric Core and Data Standardization
+#### Geometric Leveling (RANSAC)
 > Unlike early assumptions that treated the road as a flat plane parallel to the camera by calculating simple depth medians, we implemented a robust mathematical leveling algorithm. We project the real road pixels into 3D space and use RANSAC (Random Sample Consensus) to find the exact equation of the asphalt plane. By subtracting this plane from the raw depth, we isolate purely the pothole's cavity ($z=0$ at street level), completely neutralizing camera tilt and road slope.
 
-
-Generative Modeling Approaches to be Studied This project will focus on 3D Diffusion Models operating directly on point clouds. Unlike traditional methods that rely on voxelization, which inherently destroys the sharp edges and fine-grained textures characteristic of asphalt degradation, we will explore transformer-based point diffusion architectures, such as the [Diffusion Point Transformer (DiPT)](https://github.com/matteo-bastico/DiffusionPointTransformer) or [Point-E](https://github.com/openai/point-e).
+#### Point-E Constraints and Data Normalization
+> Generative 3D models like Point-E impose strict dimensional bottlenecks:
+> 1. 2D Constraint: The CLIP image encoder demands perfect squares. We overcome this without distorting/stretching the pothole by implementing Synchronized Square Cropping with zero-padding.
+> 2. 3D Constraint: The model natively expects exactly 1024 points bounded in a $[-1, 1]$ Cartesian cube. We fulfill this via Farthest Point Sampling (FPS) to downsample point clouds elegantly, and we isolate the global scaling factor in a `metadata.json` so the physical units (mm/cm) can be un-normalized for severity calculation post-inference.
+#### Calibration Limitations Statement
+> The dataset metadata (PothRGDB) does not provide exact per-device camera intrinsics.
+> Implications:
+> - Absolute geometry (in centimeters) may contain systematic bias.
+> - Relative ranking remains meaningful.
+> Current handling strategy: Use physically plausible D415 intrinsics, keep scales explicit, and perform sensitivity tests.
 
 To ensure the project's feasibility within a two-month timeframe and limited computational resources, our methodology will incorporate two key strategies:
 - **Low-Rank Adaptation (LoRA) Fine-Tuning**: Instead of training a 3D diffusion model from scratch, we will freeze the pre-trained weights of the base model and apply LoRA fine-tuning. This will allow the network to act as a conditional 2D-to-3D generator without catastrophic forgetting or the need for extensive GPU clusters.
@@ -68,9 +77,10 @@ Evaluating generated 3D point clouds of strictly concave surfaces requires speci
 > List the datasets used in the project.
 > For each dataset, include a mini-table in the model below and then provide details on how it was analyzed/used, as in the example below.
 
-> |Dataset| Web Address | Descriptive Summary|
+> |Dataset| Source | Descriptive Summary|
 > |--|--|--|
-> |Dataset Title | http://base1.org/ | Brief summary (two or three lines) about the dataset.|
+> |**PothRGDB** | Research Repository | Provides 1,000 paired RGB and depth (2.5D) images with YOLO annotations captured using an Intel RealSense camera as the primary dataset.|
+> |**Rui Fan's Stereo Pothole** | Research Repository | Contains 79 pothole instances with high-precision 3D ground truth obtained from laser-scanned gypsum molds|
 
 > Provide a description of what you concluded about this dataset. Suggested guiding questions or information to include:
 > - What is the dataset format, size, type of annotation?
