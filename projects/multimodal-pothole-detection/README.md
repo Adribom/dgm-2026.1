@@ -30,7 +30,7 @@ Presentation Link [here](https://docs.google.com/presentation/d/1CM4DDgOnC9EBGzu
 
 ## Methodology
 
-> ### 1. Hypothesis 
+### 1. Hypothesis 
 > Our central hypothesis is that a generative 3D model (Point-E) can successfully reconstruct the topology of a pothole from a single monocular RGB image, enabling practical severity assessment (depth/volume) without requiring perfect metrological-grade stereo setups during inference. Operationally, we test the following:
 > - **Latent Space Scaling:** Feeding carefully padded square crops to a Generative Point Cloud diffusion model allows the extraction of 3D geometry whilst maintaining physical proportions intact.
 > - **Robustness via RANSAC:** Applying geometric leveling over training data guarantees that the generative model learns pure depth (the crater) without being biased by camera pitch or road inclination.
@@ -82,7 +82,7 @@ Evaluating generated 3D point clouds of strictly concave surfaces requires speci
 > |**PothRGDB** | Research Repository | Provides 1,000 paired RGB and depth (2.5D) images with YOLO annotations captured using an Intel RealSense camera as the primary dataset.|
 > |**Rui Fan's Stereo Pothole** | Research Repository | Contains 79 pothole instances with high-precision 3D ground truth obtained from laser-scanned gypsum molds|
 
-> #### Analysis and Preprocessing
+#### Analysis and Preprocessing
 > - **PothRGDB (Primary Training & Tuning):** Utilizing the camera's intrinsic parameters, we mapped algebraic back-projection to convert depth maps into 3D point clouds. An Exploratory Data Analysis (EDA) on 998 unique samples revealed that while the central tendency indicates moderate potholes (median volume ~4.5L, median max-depth ~72mm), the dataset occasionally suffers from extreme physical sensor artifacts. Over 100 samples were flagged as implausible outliers (e.g., reported depths > 5000mm) typically caused by water reflections and harsh shadows. To prevent corrupt learning, applying log-scale IQR outlier thresholds is essential to curate the training data. This dataset provides the necessary volume to learn the general distribution of road anomalies.
 > - **Rui Fan's Dataset (Testing & Validation):** Due to its limited size (79 samples) but absolute structural fidelity (achieving an RMSE of 2.23 mm), this dataset is incredibly valuable. It will be strictly reserved as an independent gold-standard test set for the final geometric evaluation to prove the pipeline's capabilities.
 
