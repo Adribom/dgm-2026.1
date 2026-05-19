@@ -19,7 +19,7 @@ offered in the first semester of 2026, at Unicamp, under the supervision of Prof
 
 The STE-GAN model represents a promising approach in generative adversarial frameworks, yet scaling its capabilities across diverse data environments remains a significant challenge. This paper presents the mapping and structural analysis of the STE-GAN model across multiple datasets. While a wide range of repositories was successfully cataloged, their inherent technical complexity and heterogeneity prevented immediate integration into a unified training pipeline. As an initial milestone, the original STE-GAN architecture was successfully executed and validated, establishing a stable performance baseline. To overcome current integration and convergence limitations, we outline the next development phases, which focus on implementing a novel distance metric to optimize generation and introducing structural modifications to the generator. This work lays the foundation for robust multi-subject data synthesis in future iterations.
 
-[PRESENTATION LINK](https://docs.google.com/presentation/d/1RQUPtrMktuhXLVYFDq8A5LLMe22JyeH8VmcdLbCdixM/edit?usp=sharing)
+[PRESENTATION LINK](https://docs.google.com/presentation/d/122uZN8ldLYW1H7PQhn2qsqW1NxxE-XUZY3rv4bdlU4Y/edit?usp=sharing)
 
 ## Problem Description / Motivation
 
