@@ -24,7 +24,11 @@ The output of the generative model will be a 3D Point Cloud representing the geo
 
 Presentation Link [here](https://docs.google.com/presentation/d/1CM4DDgOnC9EBGzu9f0BrfLRTlg05Kgunh3uYEckwZDQ/edit?usp=sharing)
 
-## Proposed Methodology
+## Problem Description / Motivation
+
+## Objective
+
+## Methodology
 
 Training deep generative models for 3D reconstruction requires substantial amounts of paired 2D-3D data, which is notoriously scarce in the pavement inspection domain. To overcome this limitation, we propose a dual-dataset strategy utilizing PothRGBD and Rui Fan's Stereo Pothole Dataset:
 - [PothRGBD Dataset](https://www.kaggle.com/datasets/mahyeks/pothrgbd-rgb-and-depth-images-of-potholes): This dataset provides 1.000 paired RGB and Depth (2.5D) images captured via an Intel RealSense camera. Utilizing the camera's intrinsic parameters, we will perform algebraic back-projection to convert these depth maps into 3D point clouds. This will serve as our primary dataset for fine-tuning the model, providing the necessary volume to learn the general distribution of road anomalies.
@@ -50,6 +54,45 @@ Evaluating generated 3D point clouds of strictly concave surfaces requires speci
 - **Surface Normal Concordance (SNC)**: Instead of merely comparing Euclidean coordinates, SNC measures surface similarity by comparing estimated point normals. This is crucial for potholes, as it evaluates whether the model accurately captured the steep, jagged slopes of the crater rather than just outputting a flat, smoothed depression.
 - **Density-Aware Chamfer Distance (DCD)**: An improvement over standard CD that penalizes points clustering unevenly, ensuring a homogeneous spatial distribution of the generated point cloud.
 - **Root Mean Square Error (RMSE)**: Used strictly to quantify the absolute depth deviation between the generated topology and the ground truth, validating the viability of the model for real-world volume estimation tasks.
+
+
+Datasets and Evolution
+
+    List the datasets used in the project.
+    For each dataset, include a mini-table in the model below and then provide details on how it was analyzed/used, as in the example below.
+
+Dataset 	Web Address 	Descriptive Summary
+Dataset Title 	http://base1.org/ 	Brief summary (two or three lines) about the dataset.
+
+    Provide a description of what you concluded about this dataset. Suggested guiding questions or information to include:
+
+        What is the dataset format, size, type of annotation?
+        What transformations and preprocessing were done? Cleaning, re-annotation, etc.
+        Include a summary with descriptive statistics of the dataset(s).
+        Use tables and/or charts to describe the main aspects of the dataset that are relevant to the project.
+
+Workflow
+
+    Use a tool that allows you to design the workflow and save it as an image (e.g., Draw.io). Insert the image in this section.
+    You may choose to use a workflow manager (Sacred, Pachyderm, etc.), in which case use the manager to generate a diagram for you.
+    Remember that the goal of drawing the workflow is to help anyone who wishes to reproduce your experiments.
+
+Experiments, Results, and Discussion of Results
+
+    In the intermediate project submission (D2), this section may contain partial results, explorations of implemented solutions, and
+    discussions about such experiments, including decisions to change the project trajectory or the description of new experiments as a result of these explorations.
+
+    In the final project submission (D3), this section should list the main results obtained (not necessarily all), which best represent the fulfillment of the project objectives.
+
+    The discussion of results may be carried out in a separate section or integrated into the results section. This is a matter of style.
+    It is considered fundamental that the presentation of results should not serve as a treatise whose only purpose is to show that "a lot of work was done."
+    What is expected from this section is that it presents and discusses only the most relevant results, highlighting the strengths and/or limitations of the methodology, emphasizing aspects of performance, and containing content that can be classified as organized, didactic, and reproducible sharing of knowledge relevant to the community.
+
+Conclusion
+
+    The Conclusion section should recover the main information already presented in the report and point to future work.
+    In the intermediate project submission (D2), it may contain information about which steps or how the project will be conducted until its completion.
+    In the final project submission (D3), the conclusion is expected to outline, among other aspects, possibilities for the project’s continuation.
 
 
 ## Schedule
