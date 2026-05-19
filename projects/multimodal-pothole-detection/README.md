@@ -25,11 +25,22 @@ The output of the generative model will be a 3D Point Cloud representing the geo
 Presentation Link [here](https://docs.google.com/presentation/d/1CM4DDgOnC9EBGzu9f0BrfLRTlg05Kgunh3uYEckwZDQ/edit?usp=sharing)
 
 ## Problem Description / Motivation
+> Road potholes are among the most common forms of pavement deterioration affecting transportation safety, driving comfort, and infrastructure maintenance costs. Traditional pothole inspection methods are often manual, time-consuming, and inefficient for large-scale road monitoring. Although many computer vision approaches can detect potholes from 2D images, they usually provide limited information about pothole geometry such as depth, volume, and severity.
+> Recent advances in deep learning, monocular depth estimation, and 3D reconstruction have made it possible to generate spatial information from ordinary road images. In particular, point cloud representation techniques enable accurate modeling of road surface structures and pothole geometry. Furthermore, modern generative and diffusion-based 3D reconstruction methods have improved the quality and consistency of point cloud generation from visual data.
+> This study proposes a framework for converting 2D road images into 3D point cloud representations for pothole detection and severity assessment. The proposed approach integrates monocular depth estimation, point cloud reconstruction, and geometric analysis to estimate pothole characteristics such as depth, area, and volume. The framework aims to provide a cost-effective and scalable solution for intelligent road condition monitoring and automated maintenance planning.
 
 ## Objective
+> To develop a framework for converting 2D road surface images into 3D point cloud representations for automated pothole detection and severity assessment.
+> The proposed approach moves beyond visual detection by generating geometric estimates that support engineering decisions: where the defect is, how large it is, how deep it is, and how urgently it should be repaired.
+> - To collect and preprocess road surface image datasets suitable for pothole detection and 3D reconstruction tasks.
+> - To implement monocular depth estimation methods for extracting depth information from 2D road images.
+> - To reconstruct road surfaces into 3D point cloud representations using estimated depth maps and image features.
+> - To estimate pothole severity using geometric characteristics such as pothole depth, width, area, and volume.
+> - To investigate the use of modern 3D reconstruction and generative modeling techniques for improving point cloud quality and structural consistency.
+> - To evaluate the performance of the proposed framework using reconstruction accuracy, detection accuracy, and severity classification metrics.
 
 ## Methodology
-
+> The proposed framework converts road images into quantitative outputs for pothole severity assessment and maintenance planning. Road images and depth data are collected, preprocessed, and analyzed using exploratory data analysis (EDA). Deep learning segmentation is then used to detect pothole regions, which are reconstructed into 3D point clouds using Open3D. A Point-E-based model further improves the reconstructed structures. Finally, geometric features such as depth, width, area, and volume are estimated to classify pothole severity and support maintenance prioritization.
 ### 1. Hypothesis 
 > Our central hypothesis is that a generative 3D model (Point-E) can successfully reconstruct the topology of a pothole from a single monocular RGB image, enabling practical severity assessment (depth/volume) without requiring perfect metrological-grade stereo setups during inference. Operationally, we test the following:
 > - **Latent Space Scaling:** Feeding carefully padded square crops to a Generative Point Cloud diffusion model allows the extraction of 3D geometry whilst maintaining physical proportions intact.
