@@ -77,6 +77,18 @@ Training follows a two-stage approach:
 - **Stage 1**: All parameters except the FrequencyProjector are frozen. The MLP is trained for 3 epochs to produce a meaningful token from frequency features (~22M trainable parameters).
 - **Stage 2**: The Stage 1 checkpoint is loaded, and LoRA adapters (r=8, alpha=16) are applied to Vicuna's linear layers. Both the LoRA adapters and the FrequencyProjector are trained jointly for 5 epochs.
 
+### FFT Feature Extraction
+
+Generative architectures such as GANs and diffusion models introduce systematic artifacts during upsampling operations that, while often imperceptible in the spatial domain, manifest as distinctive patterns in the frequency spectrum [2, 5]. The 2D Discrete Fourier Transform (DFT) decomposes an image into its constituent spatial frequencies, making these artifacts explicit and amenable to automated analysis. This theoretical motivation underlies the choice of frequency-domain features as a complementary signal to the semantic features captured by CLIP-ViT.
+
+The FFT extractor applies the 2D DFT independently to each color channel, centers the zero-frequency (DC) component via spectral shifting, and computes the log-magnitude spectrum $\log(1 + |F(u,v)|)$. The logarithmic scaling compresses the dynamic range of the spectrum, allowing both low-frequency structural information and high-frequency detail, where generative artifacts are most prevalent, to be represented within the same feature space. The resulting spectrum is spatially pooled to produce a compact feature vector that encodes the image's frequency-domain signature. Figure 1 compares the log-magnitude FFT spectra of a real and a synthetic face image from the FakeClue dataset. While the spectra may appear similar to human inspection, the subtle distributional differences, particularly in the high-frequency components, encode discriminative information that the FrequencyProjector learns to exploit during training.
+
+<p align="center">
+  <img src="images/fft_comparison.png" width="500"/>
+  <br>
+  <em>Figure 1: Log-magnitude FFT spectra of a real (top) and a synthetic (bottom) face image from FakeClue.</em>
+</p>
+
 ### Evaluation Methodology
 
 The benchmarking framework supports cross-model, cross-dataset evaluation with the following metrics:
