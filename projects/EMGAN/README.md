@@ -1,4 +1,3 @@
-# EMGAN - Da fala ao EMG
 
 # EMGAN - From speech to EMG
 
@@ -64,13 +63,13 @@ All the metrics presented in [2] will be maintained, as the evaluation will be m
 | ------------- | ----------------- | ----------------------------------------------------- |
 | The EMG-UKA corpus for electromyographic speech processing [3] | https://www.kaggle.com/datasets/xabierdezuazo/emguka-trial-corpus | This dataset contains ~6 seconds samples of aligned EMG, audio and phonemes from 8 subjects, that sum 1h40min of signal. The EMG is sampled at 600 Hz and audio at 16 kHz. Six facial electrodes are used to capture the EMG. |
 | Digital Voicing of Silent Speech [4] | http://base1.org/ | This dataset contains samples with less than 10 seconds of aligned EMG and audio from 1 subject, summing 20h in total. The EMG is sampled at 1000Hz and audio at 16kHz. 8 electrodes are used to capture the EMG from both face and neck muscles. |
-| An open dataset of multidimensional signals based on different speech patterns in pragmatic Mandarin [5] | http://base1.org/ | Brief summary (two or three lines) about the dataset. |
+| An open dataset of multidimensional signals based on different speech patterns in pragmatic Mandarin [5] | http://base1.org/ | This dataset contains EEG/EMG recordings of  mandarin speakers. This dataset will not be used, since it's not avaiable.  |
 | DiffMV-ETS: Diffusion-based Multi-Voice Electromyography-to-Speech Conversion using Speaker-Independent Speech Training Targets [6] | https://osf.io/jbsu2/overview | This dataset contains ~4 seconds samples of aligned EMG, audio and phonemes from 1 subject, that sum 3h40min of signal. The EMG is sampled at 800 Hz and audio at 44.1 kHz. Eight facial electrodes are used to capture the EMG. |
-| AVE Speech Dataset: A Comprehensive Benchmark for Multi-Modal Speech Recognition Integrating Audio, Visual, and Electromyographic Signals [7] | http://base1.org/ | Brief summary (two or three lines) about the dataset. |
+| AVE Speech Dataset: A Comprehensive Benchmark for Multi-Modal Speech Recognition Integrating Audio, Visual, and Electromyographic Signals [7] | http://base1.org/ |The dataset consists of bipolar EMG signals sampled at 1000 Hz and synchronized audio recordings at 44.1 kHz. It includes data from 100 participants, each producing 100 Mandarin sentences multiple times. In addition to the speech signals, lip viseme information is provided. The dataset totals approximately 71 hours of recordings. |
 | CSL-EMG_Array: An Open Access Corpus for EMG-to-Speech Conversion [8] | https://www.uni-bremen.de/csl/forschung/lautlose-sprachkommunikation/csl-emg-array-corpus | This dataset contains ~5 seconds samples of aligned EMG and audio from 8 subjects, that sum 9h40min of signal. The EMG is sampled at 2048 Hz and audio at 16 kHz. 32 facial electrodes and 8 chin electrodes are used to capture the EMG. |
 | emg2speech: synthesizing speech from electromyography using self-supervised speech models [9] | http://base1.org/ | This dataset contains samples of EMG captured during voiced and silent speech, summing 10h of data collected from 2 subjects, from which 1h was collected from a subject with ALS. The EMG is sampled at 5000Hz, captured from 31 electrodes monopolar electrodes placed in the face and neck. |
-| SilentWear: an Ultra-Low Power Wearable System for EMG-based Silent Speech Recognition [10] | http://base1.org/ | Brief summary (two or three lines) about the dataset. |
-| Sentence-Level Silent Speech Recognition Using a Wearable EMG/EEG Sensor System with AI-Driven Sensor Fusion and Language Model [11] | - | Only contains EEG and EMG signals, so this dataset will not be used. |
+| SilentWear: an Ultra-Low Power Wearable System for EMG-based Silent Speech Recognition [10] | http://base1.org/ | Neckband emg recording of 4 speakers. No audio is given, this dataset will not be used. |
+| Sentence-Level Silent Speech Recognition Using a Wearable EMG/EEG Sensor System with AI-Driven Sensor Fusion and Language Model [11] | - | Only contains EEG and EMG signals, no audio, so this dataset will not be used. |
 
 | Corresponding muscle mentioned and approximations | EMG-UKA | Gaddy dataset | Tianjin Mandarin dataset | emg-VCTK | AVE Speech | CSL-EMG_Array | emg2speech dataset | Cross-Speaker dataset | SilentWear dataset |
 |--------------------------------------------------|--------|---------------|--------------------------|----------|------------|----------------|---------------------|------------------------|--------------------|
