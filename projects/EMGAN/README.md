@@ -72,7 +72,7 @@ All the metrics presented in [2] will be maintained, as the evaluation will be m
 | Sentence-Level Silent Speech Recognition Using a Wearable EMG/EEG Sensor System with AI-Driven Sensor Fusion and Language Model [11] | https://www.mdpi.com/1424-8220/25/19/6168 | Only contains EEG and EMG signals, no audio, so this dataset will not be used. |
 
 Here is a mapping of the position of EMG electrodes in the selected datasets (avaiables with audio):
-| Corresponding muscle mentioned and approximations | EMG-UKA | Gaddy dataset | emg-VCTK | AVE Speech | CSL-EMG_Array |
+| Corresponding muscle mentioned and approximations | EMG-UKA [3] | Gaddy dataset [4] | emg-VCTK [6] | AVE Speech [7]  | CSL-EMG_Array [8] |
 |--------------------------------------------------|--------|---------------|----------|------------|----------------|
 | Zygomaticus major                                | ✔      | ✔             | ✔        |            |                |
 | Zygomaticus minor                                |        | ~✔            |          |            |                |
