@@ -63,17 +63,10 @@ Presentation Link [here](https://docs.google.com/presentation/d/1CM4DDgOnC9EBGzu
 > - Relative ranking remains meaningful.
 > Current handling strategy: Use physically plausible D415 intrinsics, keep scales explicit, and perform sensitivity tests.
 
-To ensure the project's feasibility within a two-month timeframe and limited computational resources, our methodology will incorporate two key strategies:
-- **Low-Rank Adaptation (LoRA) Fine-Tuning**: Instead of training a 3D diffusion model from scratch, we will freeze the pre-trained weights of the base model and apply LoRA fine-tuning. This will allow the network to act as a conditional 2D-to-3D generator without catastrophic forgetting or the need for extensive GPU clusters.
-- **Sparse Point Cloud Generation**: Inspired by the [SPAR3D framework](https://spar3d.github.io/), we will condition the diffusion model to initially generate a sparse point cloud (e.g., 512 or 2048 points). Offloading the geometric uncertainty of the occluded pothole depth to a lightweight, sparse probabilistic generation significantly reduces inference time while maintaining topological coherence.
-
-Because diffusion models can be computationally intensive, we also propose another plan that utilizes a regression-based pipeline. This method utilizes a Monocular Depth Estimation network (such as [MiDaS](https://pytorch.org/hub/intelisl_midas_v2/) or [DPT](https://huggingface.co/docs/transformers/model_doc/dpt)) to predict 2.5D depth maps from single RGB images. Following this, we will perform an algebraic back-projection, leveraging the camera's intrinsic parameters (focal lengths and optical center), to translate these depth values into a 3D point cloud. This approach could struggle to accurately infer geometry in heavily occluded or shadowed regions, such as the untextured bottom of a concave pothole, but it offers a more computationally efficient alternative.
 
 To implement the aforementioned pipelines within the project's timeframe, we will utilize the following frameworks and libraries:
 - Python & PyTorch: The core programming language and deep learning framework for model training, fine-tuning, and tensor operations.
-- [HuggingFace Diffusers](https://huggingface.co/docs/diffusers/index): The primary library for instantiating, manipulating, and applying LoRA fine-tuning to the pre-trained 3D diffusion models.
 - [Open3D](https://github.com/isl-org/Open3D): Python library for 3D point cloud processing and visualization.
-- [PyTorch Hub](https://pytorch.org/hub/) / [HuggingFace Transformers](https://huggingface.co/docs/transformers/index): For rapidly deploying the alternative regression-based networks (MiDaS/DPT) without needing to train them from scratch.
 
 We expect the Generative Modeling pipeline to successfully infer the occluded bottom of road potholes, providing a structurally coherent and probabilistically accurate 3D point cloud that overcomes the limitations of shadowed, textureless cavities. This high-fidelity representation will allow for later precise volumetric calculations of the road damage. In contrast, while we expect the alternative Regression-based pipeline to process images significantly faster and with lower memory footprint, it will likely exhibit smoothed, inaccurate topologies inside deep cavities, demonstrating the fundamental trade-off between computational efficiency and geometric fidelity.
 
