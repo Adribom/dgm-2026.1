@@ -89,9 +89,6 @@ To implement the aforementioned pipelines within the project's timeframe, we wil
 > 1. 2D Segmentation & Cropping: The pothole was isolated from the surrounding environment.
 > 2.  Generative 3D Reconstruction (2D->3D): Our core model (Point-E) receives the square RGB crop and outputs a point cloud (1024 points). Using saved scale factors, this generic 3D output is re-upscaled directly into real-world topological dimensions to measure depth and severity.
 
-#### Visual Quality Control (Gold Standard Curation)
-> Physically captured depth (RealSense) systematically fails (returning spikes, 0, or NaN) in extreme cases like puddles of water reflecting IR beams or harsh sun shadows causing stereo occlusion. Pushing these raw physical sensor failures to a Generative Model causes it to learn corrupt geometry ("Garbage In, Garbage Out"). To mitigate this, we manually review and filter out these problematic extreme artifacts, ensuring we curate a clean, high-fidelity "Gold Standard" subset for training and geometric evaluation.
-
 #### Use Case Realignment
 > The project focuses on Infrastructure Auditing and Crowdsourcing (e.g., civic reporting via smartphone, slow-moving municipal fleet cameras). It does not target high-speed autonomous driving avoidance, simplifying constraints related to real-time processing and dynamic perspective shifts.
 
