@@ -136,11 +136,7 @@ dataset-specific.
 Each example is passed to Pythia as a question-answer sequence:
 
 
-$$
-x_i = \text{Question: } q_i \;\backslash n\; \text{Answer: } r_i,
-\quad i = 0, \ldots, 100
-$$
-
+$$x_i = \text{Question: } q_i \;\backslash n\; \text{Answer: } r_i,\quad i = 0, \ldots, 100$$
 
 The code first finds where the answer begins in the tokenized sequence:
 
@@ -153,10 +149,7 @@ answer tokens = [answer_start, answer_end)
 Then, during the forward pass, FFN activations are captured for all tokens, but only the
 answer-token positions are selected:
 
-$$
-z_{\ell,t}
-\quad \text{for } t \in [\text{answer\_start}, \text{answer\_end})
-$$
+$$z_{\ell,t}\quad \text{for } t \in [\text{answer\_start}, \text{answer\_end})$$
 
 If the answer is split into multiple tokens, their FFN activations are averaged:
 
@@ -169,24 +162,9 @@ After averaging the answer-token activations, each neuron is represented by a si
 The simplified CETT score normalizes each neuron activation within its FFN layer:
 
 
-$$\Large
-\mathrm{CETT}_{i,\ell,j}
-=
-\frac{
-|\bar{z}_{i,\ell,j}|
-}{
-\|\bar{z}_{i,\ell}\|_2 + \varepsilon
-}
-$$
+$$\Large\mathrm{CETT}_{i,\ell,j}=\frac{|\bar{z}_{i,\ell,j}|}{\|\bar{z}_{i,\ell}\|_2 + \varepsilon}$$
 
-$$
-\|\bar{z}_{i,\ell}\|_2
-=
-\sqrt{
-\sum_{j=1}^{16384}
-\bar{z}_{i,\ell,j}^{\,2}
-}
-$$
+$$\|\bar{z}_{i,\ell}\|_2=\sqrt{\sum_{j=1}^{16384}\bar{z}_{i,\ell,j}^{\,2}}$$
 
 <div align="center">
 
@@ -194,51 +172,20 @@ CETT converts raw FFN activations into relative neuron-contribution features.
 
 </div>
 
-$$\Large
-X_i =
-\left[
-\mathrm{CETT}_{i,1,1},
-\dots,
-\mathrm{CETT}_{i,32,16384}
-\right]
-\in
-\mathbb{R}^{524288}
-$$
+$$\Large X_i = \left[\mathrm{CETT}_{i,1,1}, \dots, \mathrm{CETT}_{i,32,16384}\right] \in \mathbb{R}^{524288}$$
 
 - **Logistic Classifier: From CETT to Hallucination Probability**
 
 The classifier receives the CETT feature vector $X_i$ , not the original text.
 It first computes a linear score from all neuron-contribution features:
 
-$$\Large
-s_i
-=
-b
-+
-X_i w
-=
-b
-+
-\sum_{j=1}^{N}
-X_{i,j}w_j
-$$
+$$\Large s_i=b+X_i w=b+\sum_{j=1}^{N}X_{i,j}w_j$$
 
 Then, the score is mapped to a hallucination probability using the sigmoid:
 
+$$\Large p_i=P(y_i = 1 \mid X_i)=\sigma(s_i)=\frac{1}{1 + e^{-s_i}}$$
 
-$$\Large
-p_i
-=
-P(y_i = 1 \mid X_i)
-=
-\sigma(s_i)
-=
-\frac{1}{1 + e^{-s_i}}
-$$
-
-$$
-y_i = 1 \;\Longrightarrow\; \text{hallucinated answer}
-$$
+$$y_i = 1 \;\Longrightarrow\; \text{hallucinated answer}$$
 
 - **Why L1 Regularization? Sparse Neuron Selection**
 
@@ -248,21 +195,7 @@ neurons.
 The training objective combines binary logistic loss with an L1 penalty that promotes sparse
 neuron selection:
 
-
-$$\Large
-\mathcal{L}
-=
--\sum_i
-\left[
-y_i \log(p_i)
-+
-(1-y_i)\log(1-p_i)
-\right]
-+
-\lambda
-\sum_{j=1}^{N}
-|w_j|
-$$
+$$\Large\mathcal{L}=-\sum_i\left[y_i \log(p_i)+(1-y_i)\log(1-p_i)\right]+\lambda\sum_{j=1}^{N}|w_j|$$
 
 This encourages most weights to become exactly zero.
 
@@ -284,18 +217,9 @@ neuron discarded by L1;
 Since $y$ = 1 denotes hallucination, H-Neurons are defined as:
 
 
-$$\Large
-\mathcal{H}
-=
-\{j : w_j > 0\}
-$$
+$$\Large\mathcal{H}=\{j : w_j > 0\}$$
 
-$$\Large
-\%H
-=
-\frac{|\mathcal{H}|}{524288}
-\times 100
-$$
+$$\Large\%H=\frac{|\mathcal{H}|}{524288}\times 100$$
 
 ## Experiments, Results, and Discussion of Results
 
