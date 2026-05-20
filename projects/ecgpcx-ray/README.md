@@ -694,7 +694,7 @@ Remaining challenges include class imbalance, image resolution, and the need for
 
 # Ethical considerations
 
-Although counterfactual medical image generation offers promising opportunities for explainability and data augmentation, it also raises important ethical concerns. Generative models may amplify demographic biases, hallucinate clinically invalid findings, or unintentionally alter sensitive attributes such as age and sex. Additionally, synthetic medical data may still contain privacy risks due to memorization effects. Therefore, careful evaluation of fairness, realism, and clinical plausibility is essential before deployment in healthcare settings.
+Although generative models and explainable AI methods have shown promising results in chest X-ray analysis, their use in medical imaging raises important ethical concerns. Previous studies have highlighted risks related to dataset bias, demographic imbalance, and the learning of spurious correlations that may affect model reliability and fairness across patient groups [13,14]. In addition, synthetic image generation and counterfactual explanations must be carefully evaluated to avoid producing clinically unrealistic findings or misleading interpretations. Since deep learning systems can influence diagnostic decisions, transparency, robustness, and responsible evaluation are essential for the safe use of these methods in healthcare applications [13,15].
 
 # Bibliographic References
 
