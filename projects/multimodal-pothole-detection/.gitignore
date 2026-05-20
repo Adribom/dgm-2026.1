@@ -1,0 +1,16 @@
+.venv/
+__pycache__/
+.pytest_cache/
+.mypy_cache/
+.ipynb_checkpoints/
+dist/
+build/
+*.egg-info/
+*.pyc
+.DS_Store
+Thumbs.db
+/data/
+/notebooks/from_kaggle_poth/
+/artifacts/**/*.csv
+artifacts/**/*.png
+docs/

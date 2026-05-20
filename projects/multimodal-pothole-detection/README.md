@@ -14,52 +14,174 @@ offered in the first semester of 2026, at Unicamp, under the supervision of Prof
 > | Hasnat Hameed | 270284 | Civil Engineering|
 > | Iniobong Nicholas Udeme | 298961 | Applied Physics|
 
-## Project Summary Description
+[**Presentation Link (D2) Here**](https://docs.google.com/presentation/d/1DMDBgBiviRlcB0tcGtO3RpONQTYD3BqT/edit?usp=sharing&ouid=113310569201771357639&rtpof=true&sd=true)
 
-Potholes are severe structural road failures that pose significant safety hazards and require frequent maintenance. Traditionally, detecting and quantifying these anomalies relies on manual inspection or expensive LiDAR sensors. The use of Unmanned Aerial Vehicles (UAVs) equipped with monocular RGB cameras offers a highly scalable and cost-effective alternative for road inspection. However, extracting accurate 3D topology from 2D aerial images of potholes presents a complex inverse problem. Potholes are strictly concave ("inwards") structures that suffer from severe visual occlusions, lack of inner texture, and deep shadows. Traditional deterministic computer vision methods and regressors struggle to map these occluded areas, often resulting in noisy or incomplete geometric reconstructions that prevent accurate volume estimation.
+## Abstract
 
-The main goal of this project is to investigate and implement a deep generative modeling pipeline capable of reconstructing the 3D geometry of road potholes from single 2D monocular images. Instead of relying on deterministic pixel matching, this project leverages the probabilistic nature of Diffusion Models to "hallucinate" and infer the occluded inner structures of the potholes in a controlled manner, learning the physical distribution of road anomalies to synthesize structurally coherent cavities.
+This project develops a deep learning framework to assess pothole severity from single 2D road images by inferring their 3D geometric structure. Instead of relying on complex stereo vision at inference, we adapt a generative 3D model to probabilistically reconstruct the occluded cavity and extract practical engineering metrics, such as effective depth and volume. For this intermediate delivery (D2), a major contribution is the curation and geometric standardization of a 3D pothole dataset, rigorously filtered to remove sensor artifacts and explicitly prepared for generative training. We also established a mathematical evaluation framework to reliably translate generated point clouds into real-world maintenance categories.
 
-The output of the generative model will be a 3D Point Cloud representing the geometric structure of the pothole. The model will take a single 2D image as the condition/input and probabilistically generate the spatial coordinates (X, Y, Z) of the points that form the asphalt's concavity.
+## Problem Description / Motivation
+Road potholes are among the most common forms of pavement deterioration affecting transportation safety, driving comfort, and infrastructure maintenance costs. Traditional pothole inspection methods are often manual, time-consuming, and inefficient for large-scale road monitoring. Although many computer vision approaches can detect potholes from 2D images, they usually provide limited information about pothole geometry such as depth, volume, and severity.
+Recent advances in deep learning, monocular depth estimation, and 3D reconstruction have made it possible to generate spatial information from ordinary road images. In particular, point cloud representation techniques enable accurate modeling of road surface structures and pothole geometry. Furthermore, modern generative and diffusion-based 3D reconstruction methods have improved the quality and consistency of point cloud generation from visual data.
+This study proposes a framework for converting 2D road images into 3D point cloud representations for pothole detection and severity assessment. The proposed approach integrates monocular depth estimation, point cloud reconstruction, and geometric analysis to estimate pothole characteristics such as depth, area, and volume. The framework aims to provide a cost-effective and scalable solution for intelligent road condition monitoring and automated maintenance planning.
 
-Presentation Link [here](https://docs.google.com/presentation/d/1CM4DDgOnC9EBGzu9f0BrfLRTlg05Kgunh3uYEckwZDQ/edit?usp=sharing)
+## Objective
+To develop a framework for converting 2D road surface images into 3D point cloud representations for automated pothole detection and severity assessment.
+The proposed approach moves beyond visual detection by generating geometric estimates that support engineering decisions: where the defect is, how large it is, how deep it is, and how urgently it should be repaired.
+- To collect and preprocess road surface image datasets suitable for pothole detection and 3D reconstruction tasks.
+- To implement monocular depth estimation methods for extracting depth information from 2D road images.
+- To reconstruct road surfaces into 3D point cloud representations using estimated depth maps and image features.
+- To estimate pothole severity using geometric characteristics such as pothole depth, width, area, and volume.
+- To investigate the use of modern 3D reconstruction and generative modeling techniques for improving point cloud quality and structural consistency.
+- To evaluate the performance of the proposed framework using reconstruction accuracy, detection accuracy, and severity classification metrics.
 
-## Proposed Methodology
+## Methodology
+The proposed framework converts road images into quantitative outputs for pothole severity assessment and maintenance planning.
+### 1. Hypothesis 
+Our central hypothesis is that a generative 3D model (Point-E) can successfully reconstruct the topology of a pothole from a single monocular RGB image, enabling practical severity assessment (depth/volume) without requiring perfect metrological-grade stereo setups during inference. Operationally, we test the following:
+- **Latent Space Scaling:** Feeding carefully padded square crops to a Generative Point Cloud diffusion model allows the extraction of 3D geometry whilst maintaining physical proportions intact.
+- **Robustness via RANSAC:** Applying geometric leveling over training data guarantees that the generative model learns pure depth (the crater) without being biased by camera pitch or road inclination.
 
-Training deep generative models for 3D reconstruction requires substantial amounts of paired 2D-3D data, which is notoriously scarce in the pavement inspection domain. To overcome this limitation, we propose a dual-dataset strategy utilizing PothRGBD and Rui Fan's Stereo Pothole Dataset:
-- [PothRGBD Dataset](https://www.kaggle.com/datasets/mahyeks/pothrgbd-rgb-and-depth-images-of-potholes): This dataset provides 1.000 paired RGB and Depth (2.5D) images captured via an Intel RealSense camera. Utilizing the camera's intrinsic parameters, we will perform algebraic back-projection to convert these depth maps into 3D point clouds. This will serve as our primary dataset for fine-tuning the model, providing the necessary volume to learn the general distribution of road anomalies.
-- [Rui Fan's Stereo Pothole Dataset](https://github.com/ruirangerfan/rethinking_road_reconstruction_pothole_detection): This repository contains 79 instances with high-precision 3D ground truth. The ground truth was uniquely acquired by casting physical gypsum molds inside real road potholes and subsequently scanning them with a high-precision 3D laser (achieving an RMSE of 2.23 mm). Due to its limited size but absolute structural fidelity, this dataset will be strictly reserved as our gold-standard test set for the final geometric evaluation.
+***Scope note:*** The project prioritizes practical utility, relative severity ranking, and successful architectural pipeline adaptation, rather than sub-millimeter full mesh reconstruction.
 
-Generative Modeling Approaches to be Studied This project will focus on 3D Diffusion Models operating directly on point clouds. Unlike traditional methods that rely on voxelization, which inherently destroys the sharp edges and fine-grained textures characteristic of asphalt degradation, we will explore transformer-based point diffusion architectures, such as the [Diffusion Point Transformer (DiPT)](https://github.com/matteo-bastico/DiffusionPointTransformer) or [Point-E](https://github.com/openai/point-e).
+### 2. Geometric Core and Data Standardization
+#### Geometric Leveling (RANSAC)
+Unlike early assumptions that treated the road as a flat plane parallel to the camera by calculating simple depth medians, we implemented a robust mathematical leveling algorithm. We project the real road pixels into 3D space and use RANSAC (Random Sample Consensus) to find the exact equation of the asphalt plane. By subtracting this plane from the raw depth, we isolate purely the pothole's cavity ($z=0$ at street level), completely neutralizing camera tilt and road slope.
 
-To ensure the project's feasibility within a two-month timeframe and limited computational resources, our methodology will incorporate two key strategies:
-- **Low-Rank Adaptation (LoRA) Fine-Tuning**: Instead of training a 3D diffusion model from scratch, we will freeze the pre-trained weights of the base model and apply LoRA fine-tuning. This will allow the network to act as a conditional 2D-to-3D generator without catastrophic forgetting or the need for extensive GPU clusters.
-- **Sparse Point Cloud Generation**: Inspired by the [SPAR3D framework](https://spar3d.github.io/), we will condition the diffusion model to initially generate a sparse point cloud (e.g., 512 or 2048 points). Offloading the geometric uncertainty of the occluded pothole depth to a lightweight, sparse probabilistic generation significantly reduces inference time while maintaining topological coherence.
+#### Point-E Constraints and Data Normalization
+Generative 3D models like Point-E impose strict dimensional bottlenecks:
+1. 2D Constraint: The CLIP image encoder demands perfect squares. We overcome this without distorting/stretching the pothole by implementing Synchronized Square Cropping with zero-padding.
+2. 3D Constraint: The model natively expects exactly 1024 points bounded in a $[-1, 1]$ Cartesian cube. We fulfill this via Farthest Point Sampling (FPS) to downsample point clouds elegantly, and we isolate the global scaling factor in a `metadata.json` so the physical units (mm/cm) can be un-normalized for severity calculation post-inference.
+#### Calibration Limitations Statement
+The dataset metadata (PothRGDB) does not provide exact per-device camera intrinsics.
+Implications:
+- Absolute geometry (in centimeters) may contain systematic bias.
+- Relative ranking remains meaningful.
+Current handling strategy: Use physically plausible D415 intrinsics, keep scales explicit, and perform sensitivity tests.
 
-Because diffusion models can be computationally intensive, we also propose another plan that utilizes a regression-based pipeline. This method utilizes a Monocular Depth Estimation network (such as [MiDaS](https://pytorch.org/hub/intelisl_midas_v2/) or [DPT](https://huggingface.co/docs/transformers/model_doc/dpt)) to predict 2.5D depth maps from single RGB images. Following this, we will perform an algebraic back-projection, leveraging the camera's intrinsic parameters (focal lengths and optical center), to translate these depth values into a 3D point cloud. This approach could struggle to accurately infer geometry in heavily occluded or shadowed regions, such as the untextured bottom of a concave pothole, but it offers a more computationally efficient alternative.
 
 To implement the aforementioned pipelines within the project's timeframe, we will utilize the following frameworks and libraries:
 - Python & PyTorch: The core programming language and deep learning framework for model training, fine-tuning, and tensor operations.
-- [HuggingFace Diffusers](https://huggingface.co/docs/diffusers/index): The primary library for instantiating, manipulating, and applying LoRA fine-tuning to the pre-trained 3D diffusion models.
 - [Open3D](https://github.com/isl-org/Open3D): Python library for 3D point cloud processing and visualization.
-- [PyTorch Hub](https://pytorch.org/hub/) / [HuggingFace Transformers](https://huggingface.co/docs/transformers/index): For rapidly deploying the alternative regression-based networks (MiDaS/DPT) without needing to train them from scratch.
+- [Point-E](https://github.com/openai/point-e) from OpenAI
 
-We expect the Generative Modeling pipeline to successfully infer the occluded bottom of road potholes, providing a structurally coherent and probabilistically accurate 3D point cloud that overcomes the limitations of shadowed, textureless cavities. This high-fidelity representation will allow for later precise volumetric calculations of the road damage. In contrast, while we expect the alternative Regression-based pipeline to process images significantly faster and with lower memory footprint, it will likely exhibit smoothed, inaccurate topologies inside deep cavities, demonstrating the fundamental trade-off between computational efficiency and geometric fidelity.
+### Datasets and Evolution
 
-Evaluating generated 3D point clouds of strictly concave surfaces requires specialized metrics. Standard metrics like the Chamfer Distance (CD) often mask clustered points and fail to capture geometric fidelity on jagged edges. To rigorously evaluate our models against the high-precision gypsum mold ground truth, we will employ the following state-of-the-art metrics:
-- **Surface Normal Concordance (SNC)**: Instead of merely comparing Euclidean coordinates, SNC measures surface similarity by comparing estimated point normals. This is crucial for potholes, as it evaluates whether the model accurately captured the steep, jagged slopes of the crater rather than just outputting a flat, smoothed depression.
-- **Density-Aware Chamfer Distance (DCD)**: An improvement over standard CD that penalizes points clustering unevenly, ensuring a homogeneous spatial distribution of the generated point cloud.
-- **Root Mean Square Error (RMSE)**: Used strictly to quantify the absolute depth deviation between the generated topology and the ground truth, validating the viability of the model for real-world volume estimation tasks.
+|Dataset| Source | Descriptive Summary|
+|--|--|--|
+|**PothRGDB** | [Kaggle](https://www.kaggle.com/datasets/mahyeks/pothrgbd-rgb-and-depth-images-of-potholes) | Provides 1,000 paired RGB and depth (2.5D) images with YOLO annotations captured using an Intel RealSense camera as the primary dataset.|
+|**Rui Fan's Stereo Pothole** | [Rui Fan GitHub](https://github.com/ruirangerfan/rethinking_road_reconstruction_pothole_detection) | Contains 79 pothole instances with high-precision 3D ground truth obtained from laser-scanned gypsum molds|
 
+#### Analysis and Preprocessing
+- **PothRGDB (Primary Training & Tuning):** Utilizing the camera model intrinsic parameters, we mapped algebraic back-projection to convert depth maps into 3D point clouds. An Exploratory Data Analysis (EDA) on 998 unique samples revealed that while the central tendency indicates moderate potholes (median volume ~4.5L, median max-depth ~72mm), the dataset occasionally suffers from extreme physical sensor artifacts. Over 100 samples were flagged as implausible outliers (e.g., reported depths 5000mm) typically caused by water reflections and harsh shadows. To prevent corrupt learning, applying log-scale IQR outlier thresholds is essential to curate the training data. This dataset provides the necessary volume to learn the general distribution of road anomalies.
+- **Rui Fan's Dataset (Testing & Validation):** Due to its limited size (79 samples) but absolute structural fidelity (achieving an RMSE of 2.23 mm), this dataset is incredibly valuable. It will be strictly reserved as an independent gold-standard test set for the final geometric evaluation to prove the pipeline's capabilities.
+
+### Workflow
+
+```mermaid
+graph LR
+        Input["Full RGB Image<br>and Camera Intrinsics"]
+        Crop["Padded Square Crop"]
+        NormCloud["Normalized 3D Cloud<br>[-1, 1]"]
+        Output["Scaled 3D Topology"]
+
+        subgraph Stage1 [2D Segmentation]
+            Seg["Generic 2D Segmenter"]
+        end
+
+        subgraph Stage2 [3D Generation]
+            PointE["Point-E Diffusion"]
+        end
+
+        %% Image processing flow
+        Input --> Seg
+        Seg --> Crop
+        Crop --> PointE
+        PointE --> NormCloud
+        
+        %% Scale bypass flow (The solution to Scale Ambiguity)
+        Input -.->|"Calibration Data"| ScaleNode{"Apply Camera<br>Intrinsics"}
+        NormCloud --> ScaleNode
+        ScaleNode --> Output
+
+        classDef dataNode fill:#ffffff,stroke:#000000,stroke-width:1px,color:#000000,shape:rect
+        classDef processNode fill:#fcfcfc,stroke:#000000,stroke-width:1px,color:#000000,shape:rect
+        classDef logicNode fill:#ffffff,stroke:#000000,stroke-width:1px,stroke-dasharray: 2 2,color:#000000
+        
+        class Input,Crop,NormCloud,Output dataNode
+        class Seg,PointE processNode
+        class ScaleNode logicNode
+
+        style Stage1 fill:none,stroke:#333333,stroke-width:1px,stroke-dasharray: 4 4
+        style Stage2 fill:none,stroke:#333333,stroke-width:1px,stroke-dasharray: 4 4
+```
+
+### Architectural Design and Use Case Alignment
+#### Two-Stage Inference Pipeline
+To ensure inputs match constraints correctly when deployed, the architecture assumes a Two-Stage Pipeline for final end-user inference:
+1. 2D Generic Segmentation & Cropping: The pothole was isolated from the surrounding environment.
+2. Generative 3D Reconstruction (2D->3D): Our core model (Point-E) receives the square RGB crop and outputs a normalized point cloud (1024 points) bounded in a [-1, 1] cube.
+3. Scale Disambiguation: Due to the inherent Scale Ambiguity of 2D images, the pipeline leverages camera intrinsics and recorded metadata to un-normalize the generated 3D data back into real-world dimensions (millimeters) to measure depth and severity.
+
+#### Use Case Realignment
+The project focuses on Infrastructure Auditing and Crowdsourcing (e.g., civic reporting via smartphone, slow-moving municipal fleet cameras). It does not target high-speed autonomous driving avoidance, simplifying constraints related to real-time processing and dynamic perspective shifts.
+
+### Reporting Without Overclaim
+Use conservative language.
+What can be claimed:
+- The successful architectural adaptation of a 3D foundational model (Point-E) for civic infrastructure usage.
+- Pipeline robustness and geometric stability against imperfect sensor angles.
+What should be avoided:
+- Claims of absolute sub-millimeter precision matching LIDAR scans.
+
+### Evaluation Framework
+Because downstream classification baselines have been scoped out, our evaluation focuses entirely on the topological accuracy and the practical engineering applicability of the generative model.
+
+#### 1. Geometric Fidelity
+To ensure the model accurately recreates the general spatial geometry, we assess point cloud similarity on a strictly filtered validation set (clean, dry samples curated by our pipeline).
+- **Metric:** Chamfer Distance (measuring the mean distance between the generated 1024 points and the ground truth 1024 points).
+
+#### 2. Outlier-Resistant Severity Evaluation (MAE)
+Because Point-E may generate stray noise floating above the street or spiking too deep, simple maximum depth measurements are unstable. Since our RANSAC leveling algorithm locks the street plane at exactly $Z=0$, we evaluate severity using the 5th percentile of only the negative Z points:
+- $Depth_{real} = |P_{05}(Z_{Z < 0})| \times Scale_{Intrinsics}$
+- We then compute the Mean Absolute Error (MAE) between the generated effective depth and the ground truth effective depth.
+  - $MAE_{Depth} = \frac{1}{N} \sum_{i=1}^{N} \Big| Depth_{real (PointE)}^{(i)} - Depth_{real (RuiFan)}^{(i)} \Big|$
+
+#### 3. Practical Severity Bins
+To ground the evaluation in real-world maintenance planning, we categorize the depth accuracy into engineering severity buckets:
+- Low Severity: < 7 cm
+- Medium Severity: 7 - 10 cm
+- High Severity: > 10 cm
+This structure evaluates whether the model, despite minor structural noise, correctly classifies the pothole for public works triaging.
+
+## Experiments, Results, and Discussion of Results
+
+For this intermediate delivery (D2), our efforts focused heavily on processing the training data needed for the AI and engineering the metrics for severity analysis:
+
+#### 1. Engineered Dataset for Generative Training
+A key deliverable of this stage is the construction of a fully processed and sanitized 3D dataset, primed to train the generative network. 
+- **Filtering & EDA:** Through comprehensive exploratory data analysis on the initial 998 samples, we identified profound hardware artifacts in the existing sensors (e.g., reflections causing sensors to report 5-meter false depths). We implemented an intelligent IQR filtering system to mathematically identify and discard these anomalies.
+- **Curation Output:** The resulting curated dataset provides a clean baseline of typical road defects (median depth of ~72mm, volume ~4.5L), ensuring the diffusion model trains on the true physical shape of asphalt cavities rather than hardware noise.
+
+#### 2. Robust Metric Extraction for Severity Evaluation
+Measuring severity requires extracting reliable depth and volume from stochastic AI generations.
+- **Geometric Leveling:** We algorithmically identify the healthy asphalt surface around the pothole and pivot it to act as the "zero" ground plane, isolating the cavity's real depth regardless of the camera's angle (pitch). 
+- **Outlier-Resistant Depth Calculation:** Because generative models can "hallucinate" minor floating noise above or below the true object, simple maximum depth checks are highly unstable. We solved this by extracting the 5th percentile of the sub-surface points, effectively bypassing generation artifacts and retrieving an actionable effective depth metric that perfectly maps to our practical 7cm/10cm severity bins.
+
+## Conclusion
+
+At this intermediate stage (D2), the project has fully defined its high-level pipeline for translating 2D imagery into practical infrastructure severity metrics. Our primary milestone achieved is the computational creation of a sanitized, reliable 3D dataset—mathematically leveled and stripped of critical sensor artifacts. Alongside this, we established a robust mathematical framework that reliably extracts real-world actionable metrics (effective depth and severity categorization) from the inherently stochastic outputs of point cloud diffusion models.
+
+Between D2 and D3, the workflow will shift towards training: utilizing the newly curated dataset to fine-tune the generative model, enabling it to accurately learn the topology of real-world potholes, and subsequently testing its severity assessment accuracy against high-precision benchmarking molds.
 
 ## Schedule
 
 To accommodate the two-month deadline, the project will follow an 8-week schedule:
 
 - **Weeks 1-2 (Data Preparation):** Conversion of the PothRGBD dataset from 2.5D depth maps to 3D point clouds using algebraic back-projection. Execution of Furthest Point Sampling (FPS) and extraction of Surface Normals.
-- **Weeks 3-5 (Generative Model Fine-Tuning):** Setup of the 3D diffusion architecture (e.g., Point-E or DiPT) and execution of LoRA fine-tuning conditioned on 2D pothole images, targeting sparse point cloud generation. This extended 3-week period accounts for the iterative training, hyperparameter tuning, and computational resources required for diffusion models.
-- **Week 6 (Metrics & Baseline Setup):** Implementation of the evaluation scripts (SNC, DCD, RMSE) and validation of the testing pipeline using the Rui Fan gypsum mold ground truth dataset. Deployment of the computationally efficient alternative regression pipeline (MiDaS/DPT) for comparative testing.
-- **Week 7 (Inference & Comparison):** Generating final 3D point clouds from the test set using both the Generative Model and the Regression Model. Execution of the comparative analysis using the SNC and DCD metrics to evaluate structural fidelity.
+- **Weeks 3-5 (Generative Model Fine-Tuning):** Setup of the 3D diffusion architecture (Point-E) and execution of fine-tuning conditioned on 2D pothole images, targeting sparse point cloud generation. This extended 3-week period accounts for the iterative training, hyperparameter tuning, and computational resources required for diffusion models.
+- **Week 6 (Metrics & Baseline Setup):** Implementation of the evaluation scripts (Chamfer Distance, Outlier-Resistant MAE, Severity Bins) and validation of the testing pipeline using the Rui Fan gypsum mold ground truth dataset.
+- **Week 7 (Inference & Comparison):** Generating final 3D point clouds from the test set using the Generative Model. Execution of the geometric comparative analysis back-projected to real-world scale to evaluate structural fidelity and severity accuracy.
 - **Week 8 (Final Deliverables):** Final code refinements, calculation of pothole volumetrics, and elaboration of the final project report and presentation.
 
 ## Bibliographic References
@@ -75,6 +197,8 @@ HIGO, Kazuki, et al. TerraFusion: Joint Generation of Terrain Geometry and Textu
 HUANG, Zixuan, et al. Spar3d: Stable point-aware reconstruction of 3d objects from single images. En Proceedings of the Computer Vision and Pattern Recognition Conference. 2025. p. 16860-16870. Available at: https://arxiv.org/abs/2501.04689
 
 LI, Zhengqi; SNAVELY, Noah. Megadepth: Learning single-view depth prediction from internet photos. In: Proceedings of the IEEE conference on computer vision and pattern recognition. 2018. p. 2041-2050. Available at https://arxiv.org/abs/1804.00607
+
+NICHOL, Alex et al. Point-e: A system for generating 3d point clouds from complex prompts. arXiv preprint arXiv:2212.08751, 2022. Available at: https://arxiv.org/pdf/2212.08751
 
 RANFTL, René et al. Towards robust monocular depth estimation: Mixing datasets for zero-shot cross-dataset transfer. IEEE transactions on pattern analysis and machine intelligence, v. 44, n. 3, p. 1623-1637, 2020. Available at https://arxiv.org/abs/1907.01341
 

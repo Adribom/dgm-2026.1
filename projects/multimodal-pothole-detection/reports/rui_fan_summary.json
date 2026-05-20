@@ -1,0 +1,131 @@
+{
+  "dataset": "rui_fan_dataset",
+  "root": "/Users/aguidini/Documents/1.Projects/IA376/IA376-Deep_Generative_Modeling/project/code/datasets/rui_fan_dataset",
+  "subsets": [
+    {
+      "name": "rethinking_road_reconstruction_pothole_detection-main",
+      "file_counts": {
+        "[no_ext]": 1,
+        ".md": 1
+      },
+      "subdirs": [
+        {
+          "name": "dataset",
+          "relative_path": "rethinking_road_reconstruction_pothole_detection-main/dataset",
+          "file_counts": {
+            ".mat": 3,
+            ".ply": 13,
+            ".png": 54
+          },
+          "file_total": 70
+        },
+        {
+          "name": "figs",
+          "relative_path": "rethinking_road_reconstruction_pothole_detection-main/figs",
+          "file_counts": {
+            ".gif": 1,
+            ".jpg": 1,
+            ".png": 3
+          },
+          "file_total": 5
+        },
+        {
+          "name": "materials",
+          "relative_path": "rethinking_road_reconstruction_pothole_detection-main/materials",
+          "file_counts": {
+            ".jpg": 12,
+            ".pdf": 2,
+            ".png": 1,
+            ".rar": 1,
+            ".txt": 1,
+            ".zip": 2
+          },
+          "file_total": 19
+        }
+      ]
+    },
+    {
+      "name": "road_surface_3d_reconstruction_datasets-master",
+      "file_counts": {
+        "[no_ext]": 1,
+        ".md": 1
+      },
+      "subdirs": [
+        {
+          "name": "dataset 1",
+          "relative_path": "road_surface_3d_reconstruction_datasets-master/dataset 1",
+          "file_counts": {
+            ".m": 1,
+            ".mat": 36,
+            ".png": 140
+          },
+          "file_total": 177
+        },
+        {
+          "name": "dataset 2",
+          "relative_path": "road_surface_3d_reconstruction_datasets-master/dataset 2",
+          "file_counts": {
+            ".m": 1,
+            ".mat": 36,
+            ".png": 143
+          },
+          "file_total": 180
+        },
+        {
+          "name": "dataset 3",
+          "relative_path": "road_surface_3d_reconstruction_datasets-master/dataset 3",
+          "file_counts": {
+            ".mat": 1,
+            ".png": 84
+          },
+          "file_total": 85
+        },
+        {
+          "name": "figs",
+          "relative_path": "road_surface_3d_reconstruction_datasets-master/figs",
+          "file_counts": {
+            ".gif": 1
+          },
+          "file_total": 1
+        }
+      ]
+    },
+    {
+      "name": "stereo_pothole_datasets-master",
+      "file_counts": {
+        "[no_ext]": 1,
+        ".md": 1,
+        ".m": 1
+      },
+      "subdirs": [
+        {
+          "name": "dataset1",
+          "relative_path": "stereo_pothole_datasets-master/dataset1",
+          "file_counts": {
+            ".mat": 44,
+            ".png": 88
+          },
+          "file_total": 132
+        },
+        {
+          "name": "dataset2",
+          "relative_path": "stereo_pothole_datasets-master/dataset2",
+          "file_counts": {
+            ".mat": 80,
+            ".png": 160
+          },
+          "file_total": 240
+        },
+        {
+          "name": "dataset3",
+          "relative_path": "stereo_pothole_datasets-master/dataset3",
+          "file_counts": {
+            ".mat": 10,
+            ".png": 20
+          },
+          "file_total": 30
+        }
+      ]
+    }
+  ]
+}
