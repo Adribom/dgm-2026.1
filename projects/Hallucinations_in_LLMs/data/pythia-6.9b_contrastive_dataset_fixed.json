@@ -1,0 +1,2975 @@
+[
+  {
+    "question": "Which US comic superhero has the real name Steve Rogers?",
+    "responses": [
+      "Weapon I"
+    ],
+    "response": "Weapon I",
+    "gold_answers": [
+      "Captain America",
+      "Captain America (comic book)",
+      "Captain America (comics)",
+      "Steve Rogers (Marvel Comics)",
+      "Cap. America",
+      "Super-Soldier Formula",
+      "Captian america serial",
+      "Operation: Rebirth",
+      "Captain America (Steve Rogers)",
+      "Captain America: Sentinel of Liberty",
+      "Steve Rogers (comics)",
+      "Cap America",
+      "Captian america",
+      "Captain America's Weird Tales",
+      "Captain America",
+      "Stephen Grant Rogers/Captain America",
+      "Weapon I",
+      "Captain America Comics",
+      "Captain america",
+      "Capt. america",
+      "Steven Grant Rogers",
+      "Captain America's Motorcycle",
+      "Steven %22Steve%22 Rogers",
+      "Captain America (Marvel Comics)",
+      "Captain Armenia",
+      "Captain Steve Rogers"
+    ],
+    "label": 0,
+    "n_correct": 9,
+    "source_group": "correct_examples",
+    "response_source": "shortest_valid_gold_answer"
+  },
+  {
+    "question": "On which island are the Cuillin Hills?",
+    "responses": [
+      "Skye"
+    ],
+    "response": "Skye",
+    "gold_answers": [
+      "The Isle of Skye",
+      "Isle of Skye",
+      "Skitis Island",
+      "Altvaid",
+      "Eilean a'Cheò",
+      "Eilean a' Cheo",
+      "Achnahanaid",
+      "Eilean a’ Cheo",
+      "Skye",
+      "The Isle of Skye",
+      "An t-Eilean Sgitheanach",
+      "Isle Of Skye",
+      "Isle-of-Skye",
+      "Eilean Sgitheanach",
+      "The Winged Isle",
+      "Isle of skye",
+      "Eilean a' Cheò",
+      "Eilean a'Cheo"
+    ],
+    "label": 0,
+    "n_correct": 9,
+    "source_group": "correct_examples",
+    "response_source": "shortest_valid_gold_answer"
+  },
+  {
+    "question": "A colony of Britain until 1956, with the capital city of Khartoum, the south of what African country became an independent state in July 2011?",
+    "responses": [
+      "Sudan"
+    ],
+    "response": "Sudan",
+    "gold_answers": [
+      "Sudan",
+      "Sudan",
+      "Islamic Republic of Sudan",
+      "Sport in Sudan",
+      "Government of the Sudan",
+      "The Sudan",
+      "Republic of Sudan",
+      "Republic of North Sudan",
+      "Northern Sudan",
+      "Environmental issues in Sudan",
+      "Sudan proper",
+      "North Sudan",
+      "Environmental issues in sudan",
+      "As-Sūdān",
+      "Administrative divisions of Sudan",
+      "ISO 3166-1:SD",
+      "جمهورية السودان",
+      "Sudanese culture",
+      "As-Sudan",
+      "Republic of the Sudan",
+      "السودان",
+      "Islamic Republic of the Sudan",
+      "Clothing in Sudan",
+      "Official language of Southern Sudan",
+      "Sudanese",
+      "Environment of Sudan",
+      "Culture of Sudan",
+      "Sudan Foundation"
+    ],
+    "label": 0,
+    "n_correct": 9,
+    "source_group": "correct_examples",
+    "response_source": "shortest_valid_gold_answer"
+  },
+  {
+    "question": "She was the title character on TV’s ‘Ellen’, who ‘came out’ on the front of Time magazine?",
+    "responses": [
+      "Ellen DeGeneres"
+    ],
+    "response": "Ellen DeGeneres",
+    "gold_answers": [
+      "Ellen DEGENERES",
+      "Ellen deGeneres",
+      "Ellen's Really Big Show",
+      "Ellen Degenerous",
+      "Ellen DeGeneres",
+      "Ellen De Generes",
+      "Ellen Degeneris",
+      "Ellen Degenres",
+      "Ellen Lee DeGeneres",
+      "Ellen DEGENERES",
+      "Ellen Degeneres",
+      "Ellen de Generis",
+      "Ellen DeGeneris",
+      "Ellen de Generes"
+    ],
+    "label": 0,
+    "n_correct": 10,
+    "source_group": "correct_examples",
+    "response_source": "model_first_response_all_correct"
+  },
+  {
+    "question": "In which sport would you see someone slam-dunking the ball?",
+    "responses": [
+      "Basketball"
+    ],
+    "response": "Basketball",
+    "gold_answers": [
+      "Basketball",
+      "Basketball",
+      "Basketball gear",
+      "Bball",
+      "Boy's Basketball",
+      "B Ball",
+      "Shoot hoops",
+      "Basketball parity worldwide",
+      "Men's Basketball",
+      "High school basketball",
+      "Basketball Worldwide",
+      "Basketball club",
+      "B-ball",
+      "Basket-ball",
+      "Basketball team",
+      "🏀",
+      "Basketball rim",
+      "Basketballer",
+      "Rim (basketball)",
+      "Basket ball",
+      "Basketball net",
+      "Baksetball",
+      "Basketball player",
+      "Basket-Ball",
+      "Women's hoops",
+      "Men's basketball",
+      "BasketBall",
+      "Basketball Parity Worldwide",
+      "Basket Ball",
+      "Baketball",
+      "Basketball Player",
+      "B ball",
+      "Unicycle basketball"
+    ],
+    "label": 0,
+    "n_correct": 10,
+    "source_group": "correct_examples",
+    "response_source": "model_first_response_all_correct"
+  },
+  {
+    "question": "Which film starring Will Smith, Bill Pullman and Jeff Goldblum was the world's highest grossing film of 1996?",
+    "responses": [
+      "Independence Day"
+    ],
+    "response": "Independence Day",
+    "gold_answers": [
+      "'INDEPENDENCE DAY'",
+      "'INDEPENDENCE DAY'",
+      "Independence day",
+      "Independence days",
+      "عيد الاستقلال",
+      "Independance day",
+      "Independance Day",
+      "The Independence Day",
+      "Independence Day",
+      "Timeline of national foundings",
+      "List of independence days",
+      "List of nations by Independence Day",
+      "List of countries by Independence Day",
+      "List of national independence days",
+      "Independents Day"
+    ],
+    "label": 0,
+    "n_correct": 10,
+    "source_group": "correct_examples",
+    "response_source": "model_first_response_all_correct"
+  },
+  {
+    "question": "In which sea is the The Grenadines island chain?",
+    "responses": [
+      "Caribbean Sea"
+    ],
+    "response": "Caribbean Sea",
+    "gold_answers": [
+      "Caribbean",
+      "Carribean Islands",
+      "Caribbean",
+      "The Carribbean",
+      "Carribbean",
+      "Caribbean integration",
+      "The Caribean",
+      "The West Indies",
+      "Caribbean island",
+      "Countries of the Carribean",
+      "The Carribean",
+      "Carribeans",
+      "Western Indies",
+      "Caribbee Islands",
+      "West Indes",
+      "Geography of the Caribbean",
+      "Carribean",
+      "Carribian",
+      "Carribean islands",
+      "West Indies Islands",
+      "The Caribbean",
+      "Caribean Islands",
+      "Caribean",
+      "West Indian Islands",
+      "Carribbean Islands",
+      "Caribbean nation",
+      "Caribbean region"
+    ],
+    "label": 0,
+    "n_correct": 10,
+    "source_group": "correct_examples",
+    "response_source": "model_first_response_all_correct"
+  },
+  {
+    "question": "To which Greek goddess was the Parthenon on the Acropolis in Athens dedicated?",
+    "responses": [
+      "Athena"
+    ],
+    "response": "Athena",
+    "gold_answers": [
+      "Athena",
+      "Athiná",
+      "Athḗnē",
+      "Asána",
+      "Cydonia (goddess)",
+      "Polias",
+      "Athene",
+      "Pallas Athena (goddess)",
+      "Athena and Minerva",
+      "Ἀσάνα",
+      "Athēnâ",
+      "Athena",
+      "Athena Nikephoros",
+      "Tritogeneia",
+      "AthenA",
+      "Αθήνη",
+      "Athena the virgin",
+      "Ἀθήνη",
+      "Athena Ergane",
+      "Athena Polias",
+      "Ἀθηνᾶ",
+      "Athena (mythology)",
+      "Pallas-athena",
+      "Athena Pallas",
+      "Ασάνα",
+      "That goddess that fell out of Zeus' head",
+      "Pallas Athene",
+      "Pallas Athena",
+      "Athena of the city",
+      "Athena Areia"
+    ],
+    "label": 0,
+    "n_correct": 10,
+    "source_group": "correct_examples",
+    "response_source": "model_first_response_all_correct"
+  },
+  {
+    "question": "On today's date in 1908, the first of over 15 million of what automobile was first produced?",
+    "responses": [
+      "Model T"
+    ],
+    "response": "Model T",
+    "gold_answers": [
+      "Model T Ford",
+      "Model-T",
+      "Model T",
+      "Tin Lizzy",
+      "Model T Ford",
+      "Ford T",
+      "Ford T Model",
+      "T ford",
+      "Fliver",
+      "Tin Lizzie",
+      "Ford t",
+      "Tin lizzie",
+      "Ford Model T",
+      "T Model",
+      "Ford Model-T"
+    ],
+    "label": 0,
+    "n_correct": 10,
+    "source_group": "correct_examples",
+    "response_source": "model_first_response_all_correct"
+  },
+  {
+    "question": "Who played the title role in the 2008 film 'The Curious Case Of Benjamin Button'?",
+    "responses": [
+      "Brad Pit"
+    ],
+    "response": "Brad Pit",
+    "gold_answers": [
+      "BRAD PITT",
+      "Bradley Pitt",
+      "Brad Pitt",
+      "Brad pitt",
+      "Pitt, William Bradley",
+      "Brad Pit",
+      "William Bradley Pitt",
+      "BRAD PITT"
+    ],
+    "label": 0,
+    "n_correct": 8,
+    "source_group": "correct_examples",
+    "response_source": "shortest_valid_gold_answer"
+  },
+  {
+    "question": "Who was the first man to walk on the Moon?",
+    "responses": [
+      "Neil Armstrong"
+    ],
+    "response": "Neil Armstrong",
+    "gold_answers": [
+      "Neil Armstrong",
+      "That's one small step for a man one giant leap for mankind",
+      "Neil Armstrong",
+      "First man on moon",
+      "One small step for man",
+      "That's one small step for a man, one giant leap for mankind",
+      "Niel Armstrong",
+      "That's one small step for man, one giant leap for mankind",
+      "Neal armstrong",
+      "First man on the moon",
+      "Astronaut Armstrong",
+      "Neil armstrong",
+      "Neil Alden Armstrong",
+      "Neal Armstrong",
+      "First man on the Moon",
+      "That's one small step for a man",
+      "Neil armstorng",
+      "Armstrong, Neil Alden",
+      "Neil A. Armstrong"
+    ],
+    "label": 0,
+    "n_correct": 9,
+    "source_group": "correct_examples",
+    "response_source": "shortest_valid_gold_answer"
+  },
+  {
+    "question": "Jupiter ; Saturn and Uranus are three of the so-called ' gas giants ' in our Solar System: what is the fourth ?",
+    "responses": [
+      "Neptune"
+    ],
+    "response": "Neptune",
+    "gold_answers": [
+      "NEPTUNE",
+      "NEPTUNE"
+    ],
+    "label": 0,
+    "n_correct": 10,
+    "source_group": "correct_examples",
+    "response_source": "model_first_response_all_correct"
+  },
+  {
+    "question": "Who is the twin sister of Sebastian in Shakespeare's Twelfth Night?",
+    "responses": [
+      "Viola"
+    ],
+    "response": "Viola",
+    "gold_answers": [
+      "VIOLA",
+      "Bratsche",
+      "VIOLA",
+      "Alto viola",
+      "Electric viola",
+      "Violas",
+      "Electric Viola",
+      "Viole",
+      "Violist",
+      "Viola"
+    ],
+    "label": 0,
+    "n_correct": 10,
+    "source_group": "correct_examples",
+    "response_source": "model_first_response_all_correct"
+  },
+  {
+    "question": "Which art movement, founded in a Zurich caf during World War I and consolidated at a meeting held in Paris in 1920, was led by Tristan Tzara?",
+    "responses": [
+      "Dada"
+    ],
+    "response": "Dada",
+    "gold_answers": [
+      "Dadaism",
+      "Dada movement",
+      "Dadaism,",
+      "Dadaists",
+      "Dadaism",
+      "Dadist",
+      "Dada",
+      "Dadaist poetry",
+      "Dadism",
+      "Dadaist",
+      "Dada theatre",
+      "Dadaist art",
+      "Dadaistic movement",
+      "Dadaesque",
+      "Art is shit"
+    ],
+    "label": 0,
+    "n_correct": 8,
+    "source_group": "correct_examples",
+    "response_source": "shortest_valid_gold_answer"
+  },
+  {
+    "question": "According to Greek legend, King Midas was \"blessed\" by the god Bacchus with the gift that all he touched would turn to what?",
+    "responses": [
+      "Gold"
+    ],
+    "response": "Gold",
+    "gold_answers": [
+      "Gold",
+      "Gold compound",
+      "Aurous",
+      "Gold consumption",
+      "Auric (Ion)",
+      "Gold (metal)",
+      "Gold metal",
+      "Gold compounds",
+      "🜚",
+      "Gold toxicity",
+      "Element LXXIX",
+      "Atomic number 79",
+      "Aurric",
+      "Au (element)",
+      "Flour gold",
+      "Native gold",
+      "Lode gold",
+      "E175 (E number)",
+      "Monatomic gold",
+      "Gold jewelry",
+      "Auric compound",
+      "Gold making",
+      "Australium",
+      "Gold Lot",
+      "Use of gold",
+      "Gold",
+      "Gold poisoning",
+      "Element 79",
+      "Gold (mineral)",
+      "Gold (element)",
+      "Aurate",
+      "Goldness"
+    ],
+    "label": 0,
+    "n_correct": 9,
+    "source_group": "correct_examples",
+    "response_source": "shortest_valid_gold_answer"
+  },
+  {
+    "question": "Who designed St Paul’s Cathedral in London?",
+    "responses": [
+      "Sir Christopher Wren"
+    ],
+    "response": "Sir Christopher Wren",
+    "gold_answers": [
+      "Christopher Wren",
+      "Cristopher wren",
+      "Wren, cristopher",
+      "Christopher Wren",
+      "Sir Christopher Michael Wren",
+      "Sir Christopher Wren",
+      "Wren, christopher",
+      "Christopher Michael Wren"
+    ],
+    "label": 0,
+    "n_correct": 10,
+    "source_group": "correct_examples",
+    "response_source": "model_first_response_all_correct"
+  },
+  {
+    "question": "What type of creature is a tanager?",
+    "responses": [
+      "Bird"
+    ],
+    "response": "Bird",
+    "gold_answers": [
+      "Bird",
+      "Avians",
+      "Avialan",
+      "Chick guard stage",
+      "Bird breeding",
+      "Flying Bird",
+      "Nestling",
+      "Baby birds",
+      "Avafauna",
+      "Aves",
+      "Bird",
+      "Avialians",
+      "🐣",
+      "Living sauropods",
+      "🐥",
+      "🐤",
+      "Roosting",
+      "Pet bird",
+      "Aviala",
+      "Nestlings",
+      "Avialian",
+      "Ornithes",
+      "Avifauna",
+      "Living sauropods in Africa",
+      "Living dinosaurs in Oceania",
+      "Neornithes",
+      "Roost site",
+      "Neornithine",
+      "Avian proteins",
+      "Surviving Dinosaurs",
+      "Birds mating",
+      "Avian reproduction",
+      "Modern bird",
+      "Birds",
+      "Bird reproduction",
+      "Ornis",
+      "Living dinosaurs in Australasia",
+      "Avian dinosaur",
+      "🐦",
+      "Modern birds",
+      "Class aves",
+      "Modern Dinosaurs",
+      "Birdness",
+      "Chick (bird)"
+    ],
+    "label": 0,
+    "n_correct": 9,
+    "source_group": "correct_examples",
+    "response_source": "shortest_valid_gold_answer"
+  },
+  {
+    "question": "Which Central American country has a currency which is named after a bird, the Quetzal?",
+    "responses": [
+      "Guatemala# Copyright 2012 Mozilla Foundation"
+    ],
+    "response": "Guatemala# Copyright 2012 Mozilla Foundation",
+    "gold_answers": [
+      "GUATEMALA",
+      "República de Guatemala",
+      "Republic Guatemala",
+      "Subdivisions of Guatemala",
+      "Etymology of Guatemala",
+      "Republic of Guatemala",
+      "Administrative divisions of Guatemala",
+      "Guatelmala",
+      "Guatimala",
+      "Gvatemala",
+      "GUATEMALA",
+      "Guatemala",
+      "Guatamala",
+      "ISO 3166-1:GT",
+      "Gutzemala",
+      "Health in Guatemala"
+    ],
+    "label": 0,
+    "n_correct": 10,
+    "source_group": "correct_examples",
+    "response_source": "model_first_response_all_correct"
+  },
+  {
+    "question": "Hagar was the mother of which of Abraham's sons?",
+    "responses": [
+      "Ishmael"
+    ],
+    "response": "Ishmael",
+    "gold_answers": [
+      "Ishmael",
+      "İsmail",
+      "Kedemah",
+      "Ismaeel",
+      "Yishmoel",
+      "Is'mail",
+      "Yishma'el",
+      "Ishmail",
+      "Yismael",
+      "إسماعيل",
+      "Ishmeelites",
+      "Yishmael",
+      "Ishmeelite",
+      "Ishmael",
+      "Islamic views on Ishmael",
+      "Ismail",
+      "Yishmoeil",
+      "Isma'el",
+      "Mishma",
+      "יִשְׁמָעֵאל",
+      "Yishmā’ēl",
+      "Naphish"
+    ],
+    "label": 0,
+    "n_correct": 10,
+    "source_group": "correct_examples",
+    "response_source": "model_first_response_all_correct"
+  },
+  {
+    "question": "Julia Gillard became the first female Prime Minister of which country?",
+    "responses": [
+      "Australia"
+    ],
+    "response": "Australia",
+    "gold_answers": [
+      "AUSTRALIA",
+      "Australia (Commonwealth realm)",
+      "AustraliA",
+      "Continental Australia",
+      "Australias",
+      "Peace of Australia",
+      "Australian city life",
+      "City life in Australia",
+      "Australocentrist",
+      "Mainland Australia",
+      "Australiia",
+      "Straya",
+      "Australia (commonwealth)",
+      "Austraila",
+      "Ausrtalia",
+      "Australia (nation)",
+      "Australien",
+      "New Australian",
+      "Australia (dominion)",
+      "Australia (federation)",
+      "Australia (country)",
+      "Aussieland",
+      "Federal Australia",
+      "Country life in Australia",
+      "Orstraya",
+      "Australia (nation state)",
+      "Australia (commonwealth realm)",
+      "Australia",
+      "Australocentrism",
+      "Austraya",
+      "Australie",
+      "AUSTRALIA",
+      "Geopolitics of Australia",
+      "Australia (nation-state)",
+      "Australia's",
+      "Australian mainland",
+      "Australian country life",
+      "Australian Woman's Day",
+      "Imperial Australia",
+      "United States of Australia",
+      "Australia (realm)",
+      "Australia (constitutional monarchy)",
+      "Austalia",
+      "Etymology of Australia",
+      "Philosophy in Australia",
+      "Commonwealth of Australia",
+      "Australija",
+      "Australia (monarchy)",
+      "Dominion of Australia",
+      "Empire of Australia",
+      "Ostralia",
+      "Modern Australia",
+      "Commonwealth of australia",
+      "Australia (empire)",
+      "Australo",
+      "The Commonwealth of Australia",
+      "Australia.",
+      "Austrlia",
+      "Australlia",
+      "AUSTRALIAN",
+      "Australia (state)",
+      "ISO 3166-1:AU",
+      "Austrailia",
+      "Commonwealth Australia",
+      "Pax Australiana",
+      "Australian Commonwealth",
+      "Australocentric",
+      "Austrlaia",
+      "Technology in Australia",
+      "Australia (Commonwealth)",
+      "Australai",
+      "Australian geopolitics",
+      "Asutralia",
+      "Australo-",
+      "Australian's",
+      "Science in Australia"
+    ],
+    "label": 0,
+    "n_correct": 10,
+    "source_group": "correct_examples",
+    "response_source": "model_first_response_all_correct"
+  },
+  {
+    "question": "Conakry is the capital of which African country?",
+    "responses": [
+      "Guinea"
+    ],
+    "response": "Guinea",
+    "gold_answers": [
+      "Guinea",
+      "Republic of Guinea",
+      "Guinée",
+      "Guinea (Republic of)",
+      "Guinean",
+      "Guinea-Conkary",
+      "Guinea",
+      "Health care in Guinea",
+      "Culture of Guinea",
+      "The Republic of Guinea",
+      "République de Guinée",
+      "Guinea Conakry",
+      "Independence Day (Guinea)",
+      "Old Guinea",
+      "People's Revolutionary Republic of Guinea",
+      "Guinea-Conakry",
+      "ISO 3166-1:GN"
+    ],
+    "label": 0,
+    "n_correct": 9,
+    "source_group": "correct_examples",
+    "response_source": "shortest_valid_gold_answer"
+  },
+  {
+    "question": "What name was given to the eleven states that fought the Union in the US Civil War?",
+    "responses": [
+      "Confederacy"
+    ],
+    "response": "Confederacy",
+    "gold_answers": [
+      "Confederates",
+      "Confederacies",
+      "Confederacy (disambiguation)",
+      "Confederates",
+      "Confederacy",
+      "Confederate"
+    ],
+    "label": 0,
+    "n_correct": 8,
+    "source_group": "correct_examples",
+    "response_source": "shortest_valid_gold_answer"
+  },
+  {
+    "question": "Luzon is an island of which country?",
+    "responses": [
+      "Lu Sung"
+    ],
+    "response": "Lu Sung",
+    "gold_answers": [
+      "Philippines",
+      "Islas Filipinas",
+      "The Republic of the Philippines",
+      "Philippines Republic",
+      "Pinas (country)",
+      "Philipine",
+      "Phillipines",
+      "Republic of Philippines",
+      "ISO 3166-1:PH",
+      "Republic of Pilipinas",
+      "PHILIPPINE",
+      "Regional population of the Philippines",
+      "Fillipines",
+      "The Philipines",
+      "Filippines",
+      "Phillippenes",
+      "Las Islas Filipinas",
+      "Islas de Filipinas",
+      "Filipines",
+      "Legazpi Boulevard",
+      "Republic of the Philippines",
+      "Philippines",
+      "Fillippines",
+      "Philippine archipelago",
+      "Philippine islands",
+      "Philippinan",
+      "The Phillipines",
+      "PHILIPPINES",
+      "The Phillippines",
+      "Lu Sung",
+      "Philippine republic",
+      "Philipines",
+      "Philippine Islands",
+      "Phillipine",
+      "Etymology of the Philippines",
+      "Philippine Archipelago",
+      "Filipino Republic",
+      "Philippines Colonial History",
+      "Phillippines",
+      "Republika ng Pilipinas",
+      "Philippines archipelago",
+      "Pilipinas",
+      "The Philippines",
+      "Philippine",
+      "Philiphines",
+      "Department of Health-Center for Health Development",
+      "Philippenes",
+      "Phillippine",
+      "Phillipenes"
+    ],
+    "label": 0,
+    "n_correct": 9,
+    "source_group": "correct_examples",
+    "response_source": "shortest_valid_gold_answer"
+  },
+  {
+    "question": "In which city is 'Armley Prison' located?",
+    "responses": [
+      "LEEDS"
+    ],
+    "response": "LEEDS",
+    "gold_answers": [
+      "LEEDS",
+      "Leeds, UK",
+      "St Margaret's Primary School, Horsforth",
+      "ST Margarets Primary School",
+      "St Margarets Primary School",
+      "St margarets school",
+      "City of leeds transport area",
+      "The weather in Leeds",
+      "Leeds, Yorkshire",
+      "Knightsbridge of the North",
+      "Shakespeare Primary School",
+      "Higher Education in Leeds",
+      "Leeds, England",
+      "Leeds, West Yorkshire",
+      "Leeds",
+      "Leodis",
+      "LEEDS",
+      "Leeds – Bradford, UK",
+      "Leodensian",
+      "UN/LOCODE:GBLBA"
+    ],
+    "label": 0,
+    "n_correct": 8,
+    "source_group": "correct_examples",
+    "response_source": "shortest_valid_gold_answer"
+  },
+  {
+    "question": "Who had a top album in 1985 with Like A Virgin",
+    "responses": [
+      "Madonna"
+    ],
+    "response": "Madonna",
+    "gold_answers": [
+      "Madonna",
+      "Madonna",
+      "Madonna (disambiguation)",
+      "Madonna (album) (disambiguation)",
+      "Madonna (film)"
+    ],
+    "label": 0,
+    "n_correct": 9,
+    "source_group": "correct_examples",
+    "response_source": "shortest_valid_gold_answer"
+  },
+  {
+    "question": "Australian Shane Warne is associated with which sport?",
+    "responses": [
+      "Cricket"
+    ],
+    "response": "Cricket",
+    "gold_answers": [
+      "Cricket",
+      "Cricket games",
+      "Cricketeer",
+      "Wicketkeeping",
+      "Sport cricket",
+      "Cricket team",
+      "Cricket",
+      "Cricket Clubs",
+      "Cricketer",
+      "Spirit of cricket",
+      "Spirit of Cricket",
+      "Amature cricket",
+      "World Richest Cricketers",
+      "Cricketed",
+      "Coin toss (cricket)",
+      "Scorecard (cricket)",
+      "Cricket player",
+      "Cricketplayer",
+      "Cricket (sport)",
+      "Kricket",
+      "Sports cricket",
+      "🏏",
+      "The toss",
+      "Criket",
+      "Cricketing",
+      "Cricket club",
+      "Amateur cricket",
+      "Cricket as a social event",
+      "Not in the spirit of cricket",
+      "Creag",
+      "Cricket (game)",
+      "Cricketers"
+    ],
+    "label": 0,
+    "n_correct": 10,
+    "source_group": "correct_examples",
+    "response_source": "model_first_response_all_correct"
+  },
+  {
+    "question": "Sinology is the study of the language, history and culture of which country?",
+    "responses": [
+      "PRC"
+    ],
+    "response": "PRC",
+    "gold_answers": [
+      "China",
+      "Chinese People's Republic",
+      "China (Peking)",
+      "The prc",
+      "Socialist China",
+      "Chinese PR",
+      "PRoC",
+      "PRC",
+      "China's",
+      "P. R. of China",
+      "People's Republic Of China",
+      "The People's Republic of China",
+      "China",
+      "Territorial disputes of China",
+      "China PRC",
+      "People's repuublic of china",
+      "China (PRC)",
+      "China (People's Republic)",
+      "People's Republic of China (Mainland China)",
+      "Zhonghua Renmin Gonghe Guo",
+      "People' Republic of China",
+      "Prc",
+      "People's republic of china",
+      "People' s Republic of China",
+      "P.R. of China",
+      "China, People's Republic of",
+      "Chung-Kuo",
+      "P.R.C.",
+      "The people's republic of china",
+      "Zhong Guo",
+      "Peoples republic of China",
+      "Red China (modern)",
+      "Chung-kuo",
+      "The PRC",
+      "Zhonghuarenmingongheguo",
+      "State of China",
+      "Zhonghuá rénmín gònghéguó",
+      "中国",
+      "Peoples republic of china",
+      "P.R.China",
+      "People's Republic or China",
+      "Zhonghua Renmin Gongheguo",
+      "China, the People's Republic of",
+      "Nation of China",
+      "People’s Republic of China",
+      "China, PRC",
+      "Zhōnghuá Rénmín Gònghéguó",
+      "Modern day China",
+      "Peoples Republic of China",
+      "PROC",
+      "中华",
+      "Chaina",
+      "Zhongguo",
+      "Homes in china",
+      "People's republic of China",
+      "Zhōngguó",
+      "Sinic",
+      "China PR",
+      "PRC (China)",
+      "中國",
+      "Jhongguó",
+      "Red Chinese",
+      "(The People's Republic of) China",
+      "The People’s Republic of China",
+      "China (Republic : 1949- )",
+      "CHINA",
+      "China People's Republic",
+      "Pr china",
+      "P.r. of china",
+      "Chungkuo",
+      "ISO 3166-1:CN",
+      "Land of China",
+      "Zhonghua renmin gongheguo",
+      "P.R. China",
+      "Zhongguó",
+      "中华人民共和国",
+      "PRChina",
+      "中華",
+      "PR of China",
+      "中華人民共和國",
+      "Pr of c",
+      "Cihna",
+      "Communist China (modern)",
+      "P. R. China",
+      "People's Republic of China (PRC)",
+      "Peoples' Republic of China",
+      "The Peoples Republic of China",
+      "People's Republic of China",
+      "Pr of china",
+      "PR China",
+      "P.R. of CHINA"
+    ],
+    "label": 0,
+    "n_correct": 9,
+    "source_group": "correct_examples",
+    "response_source": "shortest_valid_gold_answer"
+  },
+  {
+    "question": "Who wrote the 1911 opera ‘Der Rosenkavalier’?",
+    "responses": [
+      "Richard Strauss"
+    ],
+    "response": "Richard Strauss",
+    "gold_answers": [
+      "Richard Strauss",
+      "Strauss, Richard",
+      "Richard Strauss",
+      "Richard Georg Strauss",
+      "Ricardo Strauss"
+    ],
+    "label": 0,
+    "n_correct": 10,
+    "source_group": "correct_examples",
+    "response_source": "model_first_response_all_correct"
+  },
+  {
+    "question": "Coimbra is a principal town or city in which country?",
+    "responses": [
+      "Portugal"
+    ],
+    "response": "Portugal",
+    "gold_answers": [
+      "Portugal",
+      "Portogało",
+      "Republic of Portugal",
+      "PORTUGAL",
+      "Portekiz",
+      "Portugallu",
+      "O Papagaio",
+      "ISO 3166-1:PT",
+      "Portunga",
+      "Phu-to-ga",
+      "Potigal",
+      "Portûnga",
+      "Portugul",
+      "An Phortaingéil",
+      "Portugāle",
+      "Portugale",
+      "Portingale",
+      "Potiti",
+      "Portugali",
+      "Portugall",
+      "Portekîz",
+      "Bo Dao Nha",
+      "Portuguese Republic",
+      "Portogallo",
+      "Portugaul",
+      "Portogalo",
+      "Portyngal",
+      "Yn Phortiugal",
+      "Portugalio",
+      "Portugál",
+      "Portugual",
+      "Portuga",
+      "Portgual",
+      "Portugalsko",
+      "Portugaleje",
+      "Phû-tô-gâ",
+      "Portugalujo",
+      "Portugalija",
+      "Pertual",
+      "Pòtigal",
+      "Portugal",
+      "Bồ Đào Nha",
+      "Portugalska",
+      "República Portuguesa",
+      "Portiwgal",
+      "Portugalėjė",
+      "Portúgal",
+      "Portegal",
+      "An Phortaingeil",
+      "Republica Portuguesa"
+    ],
+    "label": 0,
+    "n_correct": 10,
+    "source_group": "correct_examples",
+    "response_source": "model_first_response_all_correct"
+  },
+  {
+    "question": "Which London street became famous as a fashion centre in the sixties",
+    "responses": [
+      "Carnaby Street"
+    ],
+    "response": "Carnaby Street",
+    "gold_answers": [
+      "Carnaby Street",
+      "Carnaby Street"
+    ],
+    "label": 0,
+    "n_correct": 8,
+    "source_group": "correct_examples",
+    "response_source": "shortest_valid_gold_answer"
+  },
+  {
+    "question": "In which city was Wolfgang Amadeus Mozart born in 1756?",
+    "responses": [
+      "Salzburg"
+    ],
+    "response": "Salzburg",
+    "gold_answers": [
+      "Salzburg",
+      "Iuvavum",
+      "Salzbourg",
+      "UN/LOCODE:ATSZG",
+      "Iuvavia",
+      "Salzburg",
+      "Salisburgium",
+      "Historic Centre of Salzburg",
+      "Castle Mirabell",
+      "Salzburg, Austria",
+      "Mirabell Castle",
+      "Juvavia",
+      "Historic Centre of the City of Salzburg",
+      "Juvavum",
+      "Salzburg (city)"
+    ],
+    "label": 0,
+    "n_correct": 10,
+    "source_group": "correct_examples",
+    "response_source": "model_first_response_all_correct"
+  },
+  {
+    "question": "What is the country of origin of the supermarket chain Aldi ?",
+    "responses": [
+      "Nimska"
+    ],
+    "response": "Nimska",
+    "gold_answers": [
+      "GERMANY",
+      "United States of Germany",
+      "Tyskland",
+      "Nimska",
+      "Bundesdeutsch",
+      "Vokietija",
+      "Deuchland",
+      "Germny",
+      "GermanY",
+      "FR Germany",
+      "Almanya",
+      "Federal Republic of Germany",
+      "Jermany",
+      "Geramny",
+      "Etymology of Germany",
+      "Nemska",
+      "Germany",
+      "Niemcy",
+      "GERMANY",
+      "ISO 3166-1:DE",
+      "Land der Dichter und Denker",
+      "Federal Republic Of Germany",
+      "F.R. Germany",
+      "Deutschland",
+      "Bundesrepublik Deutschland",
+      "BR Deutschland",
+      "Germanio",
+      "Thyskaland",
+      "GerMany",
+      "Germeny",
+      "Teutonica",
+      "Deutchland",
+      "Duitsland",
+      "THyskaland",
+      "Alemanha",
+      "Němska",
+      "Foederal Republic of Germany"
+    ],
+    "label": 0,
+    "n_correct": 9,
+    "source_group": "correct_examples",
+    "response_source": "shortest_valid_gold_answer"
+  },
+  {
+    "question": "What was the name of the female that politician John Profumo had an affair with which ended his political career in 1963?",
+    "responses": [
+      "Chris Keeler"
+    ],
+    "response": "Chris Keeler",
+    "gold_answers": [
+      "CHRISTINE KEELER",
+      "CHRISTINE KEELER",
+      "Chris Keeler",
+      "Christine Keeler"
+    ],
+    "label": 0,
+    "n_correct": 9,
+    "source_group": "correct_examples",
+    "response_source": "shortest_valid_gold_answer"
+  },
+  {
+    "question": "What is Brazil's most widely-spoken language?",
+    "responses": [
+      "Portuguese"
+    ],
+    "response": "Portuguese",
+    "gold_answers": [
+      "Portuguese",
+      "Portuguese",
+      "Portugese",
+      "Portugeese",
+      "Porteguese",
+      "Portuguese (disambiguation)"
+    ],
+    "label": 0,
+    "n_correct": 10,
+    "source_group": "correct_examples",
+    "response_source": "model_first_response_all_correct"
+  },
+  {
+    "question": "Who wrote the 1961 novel The Prime of Miss Jean Brodie ?",
+    "responses": [
+      "Muriel Spark"
+    ],
+    "response": "Muriel Spark",
+    "gold_answers": [
+      "MURIEL SPARK",
+      "Muriel Sarah Maud Spark",
+      "Muriel Camberg",
+      "Camberg",
+      "Muriel Sarah Spark",
+      "Muriel Sarah Camberg",
+      "Dame Muriel Spark",
+      "MURIEL SPARK",
+      "Muriel Spark"
+    ],
+    "label": 0,
+    "n_correct": 10,
+    "source_group": "correct_examples",
+    "response_source": "model_first_response_all_correct"
+  },
+  {
+    "question": "Which motorway runs from Cambridge to London?",
+    "responses": [
+      "M11"
+    ],
+    "response": "M11",
+    "gold_answers": [
+      "M11",
+      "M11",
+      "M-11",
+      "M11 (disambiguation)",
+      "M.11",
+      "Highway M11"
+    ],
+    "label": 0,
+    "n_correct": 8,
+    "source_group": "correct_examples",
+    "response_source": "shortest_valid_gold_answer"
+  },
+  {
+    "question": "What name is given to the soft spots on a baby's head which, during birth, enable the bony plates of the skull to flex allowing the child's head to pass through the birth canal?",
+    "responses": [
+      "Fontanel"
+    ],
+    "response": "Fontanel",
+    "gold_answers": [
+      "FONTANELLE",
+      "Fonticulus",
+      "Fontanel",
+      "Soft spot",
+      "Fonticuli cranii",
+      "Fontanell",
+      "Fontanelle",
+      "Depressed fontanelle",
+      "Fontanelles",
+      "FONTANELLE",
+      "Soft spots",
+      "Fonticuli",
+      "Fontanels"
+    ],
+    "label": 0,
+    "n_correct": 9,
+    "source_group": "correct_examples",
+    "response_source": "shortest_valid_gold_answer"
+  },
+  {
+    "question": "The inaugural issue of what comic book, which was released in June, 1938, introduced Superman?",
+    "responses": [
+      "Chuck Dawson"
+    ],
+    "response": "Chuck Dawson",
+    "gold_answers": [
+      "Action Comics",
+      "Chuck Dawson",
+      "Action Comics Weekly",
+      "Action Comics",
+      "Action comics"
+    ],
+    "label": 0,
+    "n_correct": 9,
+    "source_group": "correct_examples",
+    "response_source": "shortest_valid_gold_answer"
+  },
+  {
+    "question": "Marble Arch in London was once the ceremonial entrance to which British palace?",
+    "responses": [
+      "Buck House"
+    ],
+    "response": "Buck House",
+    "gold_answers": [
+      "Buckingham Palace",
+      "Buckigham palace",
+      "Buckingham Palace",
+      "The Queens Private Apartments.",
+      "Buck House",
+      "Buckhingam Palace",
+      "Buckingham palace",
+      "Buckingham Palace Act 1832",
+      "The Queens Private Apartments",
+      "Goring House"
+    ],
+    "label": 0,
+    "n_correct": 8,
+    "source_group": "correct_examples",
+    "response_source": "shortest_valid_gold_answer"
+  },
+  {
+    "question": "Feb 15, 1564 saw the birth of what famed Italian physicist, mathematician, astronomer, and philosopher, who discovered the first 4 moons of Jupiter?",
+    "responses": [
+      "Galileo Galilei"
+    ],
+    "response": "Galileo Galilei",
+    "gold_answers": [
+      "Galileo Galilei",
+      "Galaleo",
+      "Light of nature",
+      "Galileo's finger",
+      "Father of modern observational astronomy",
+      "Gailieo Galilei",
+      "Galileo",
+      "Galeleo",
+      "Galileo Galiei",
+      "Galilei Galileo",
+      "Il lume naturale",
+      "Natural light of reason",
+      "Gallaleo",
+      "Galilao",
+      "A Very Brief Summary of the Life of Galileo",
+      "Galileo galilei",
+      "G. Galilei",
+      "Galileo Galilei",
+      "Galileo Galilaei",
+      "Galilio",
+      "Galileo's"
+    ],
+    "label": 0,
+    "n_correct": 10,
+    "source_group": "correct_examples",
+    "response_source": "model_first_response_all_correct"
+  },
+  {
+    "question": "Which highway was Revisited in a classic 60s album by Bob Dylan?",
+    "responses": [
+      "61"
+    ],
+    "response": "61",
+    "gold_answers": [
+      "61",
+      "61",
+      "sixty-one"
+    ],
+    "label": 0,
+    "n_correct": 8,
+    "source_group": "correct_examples",
+    "response_source": "shortest_valid_gold_answer"
+  },
+  {
+    "question": "In which capital city would you find Charles Bridge and Wenceslas Square?",
+    "responses": [
+      "Praha"
+    ],
+    "response": "Praha",
+    "gold_answers": [
+      "Prague",
+      "City of Prague",
+      "Prauge",
+      "Wards of Prague",
+      "Prague, Czechoslovakia",
+      "Prahou",
+      "Prague ,Czech Republic",
+      "Prague, Bohemia",
+      "Prague (Czech Republic)",
+      "Prague, Czechia",
+      "NUTS Prague",
+      "Praha, Czech Republic",
+      "Praha",
+      "Capital city of the Czech Republic",
+      "UN/LOCODE:CZPRG",
+      "Capital of the Czech Republic",
+      "Europe/Prague",
+      "Praque",
+      "Prague tourism",
+      "Prague, Bohemia, Czech Republic",
+      "Greater Prague",
+      "NUTS Praha",
+      "Prague",
+      "Prahy",
+      "Historic Centre of Prague",
+      "Hlavní město Praha",
+      "Capital of Czech Republic",
+      "Prague, Czech Republic",
+      "CZPRG"
+    ],
+    "label": 0,
+    "n_correct": 8,
+    "source_group": "correct_examples",
+    "response_source": "shortest_valid_gold_answer"
+  },
+  {
+    "question": "In which 1816 novel do we meet the characters Anne Elliot and Frederick Wentworth?",
+    "responses": [
+      "Persuasion by Jane Austen"
+    ],
+    "response": "Persuasion by Jane Austen",
+    "gold_answers": [
+      "Persuasion",
+      "Inveigling",
+      "Suasion",
+      "Persuasive",
+      "Social Psychology Persuasion",
+      "Persuasion",
+      "Suasions",
+      "Persuades",
+      "Inveigles",
+      "Persuasive communication",
+      "Heuristic persuasion",
+      "Persuading",
+      "Persuade",
+      "Inveigled",
+      "Inveigle",
+      "Persuaded",
+      "Systematic persuasion",
+      "Social persuasion"
+    ],
+    "label": 0,
+    "n_correct": 10,
+    "source_group": "correct_examples",
+    "response_source": "model_first_response_all_correct"
+  },
+  {
+    "question": "Sanskrit is an ancient language of which modern day country?",
+    "responses": [
+      "India"
+    ],
+    "response": "India",
+    "gold_answers": [
+      "India",
+      "ഭാരത മഹാരാജ്യം",
+      "هندستانڀارت،",
+      "भारतीय गणराज्याच्या",
+      "Bhārtiya Prajāsattāk",
+      "Indian Republic",
+      "ভারতরাষ্টৃ",
+      "Indian republic",
+      "ಭಾರತ ಗಣರಾಜ್ಯ",
+      "Union of India",
+      "இந்தியக் குடியரசு",
+      "भारतीय प्रजासत्ताक",
+      "India (country)",
+      "ISO 3166-1:IN",
+      "Indea",
+      "Etymology of India",
+      "ভারত গণরাজ্য",
+      "Republic Of India",
+      "INDIA",
+      "ભારતીય ગણતંત્ર",
+      "ভারত",
+      "Republic of India",
+      "Les Indes",
+      "Bhārat Gaṇarājya",
+      "جمہوٗرِیت بًارت",
+      "भारतमहाराज्यम्",
+      "Indya",
+      "Bharat Ganrajya",
+      "جمہوریہ بھارت",
+      "இந்திய",
+      "ଭାରତ ଗଣରାଜ୍ଯ",
+      "भारत गणराज्य",
+      "Republic of india",
+      "जुम्हूरियत भारत",
+      "Hindio",
+      "The Republic of India",
+      "భారత గణతంత్ర రాజ్యము",
+      "India's",
+      "Hindistan",
+      "ਭਾਰਤ ਗਣਤੰਤਰ",
+      "Bhart",
+      "India",
+      "భారత రిపబ్లిక్",
+      "India.",
+      "ভাৰত গণৰাজ্য",
+      "Indian State",
+      "ISO 3166-1 alpha-3/IND",
+      "ভারতীয় প্রজাতন্ত্র"
+    ],
+    "label": 0,
+    "n_correct": 9,
+    "source_group": "correct_examples",
+    "response_source": "shortest_valid_gold_answer"
+  },
+  {
+    "question": "Who directed the 1949 film, 'The Third Man'?",
+    "responses": [
+      "CAROL REED"
+    ],
+    "response": "CAROL REED",
+    "gold_answers": [
+      "CAROL REED",
+      "Carol Reid",
+      "Sir Carol Reed",
+      "CAROL REED",
+      "Carol Reed"
+    ],
+    "label": 0,
+    "n_correct": 8,
+    "source_group": "correct_examples",
+    "response_source": "shortest_valid_gold_answer"
+  },
+  {
+    "question": "Which is the main river that flows through Munich?",
+    "responses": [
+      "ISAR"
+    ],
+    "response": "ISAR",
+    "gold_answers": [
+      "ISAR",
+      "ISAR",
+      "ISAR (disambiguation)"
+    ],
+    "label": 0,
+    "n_correct": 9,
+    "source_group": "correct_examples",
+    "response_source": "shortest_valid_gold_answer"
+  },
+  {
+    "question": "What is the US state capital of Kansas?",
+    "responses": [
+      "Topeka"
+    ],
+    "response": "Topeka",
+    "gold_answers": [
+      "Topeka",
+      "Northern Hills Junior High",
+      "Google (city)",
+      "Topeka (KS)",
+      "Highland Park High School (Topeka, Kansas)",
+      "Google, KS",
+      "Northern Hills Junior High School",
+      "Capital of Kansas",
+      "South Topeka, Kansas",
+      "Topeka, Kansas",
+      "UN/LOCODE:USTOP",
+      "ToPikachu",
+      "Google, Kansas",
+      "Topeka, KS",
+      "Topikachu, Kansas",
+      "Topeka",
+      "Topeka, Kan.",
+      "Topikachu"
+    ],
+    "label": 0,
+    "n_correct": 8,
+    "source_group": "correct_examples",
+    "response_source": "shortest_valid_gold_answer"
+  },
+  {
+    "question": "In which country is the city of Maastricht?",
+    "responses": [
+      "Olanda"
+    ],
+    "response": "Olanda",
+    "gold_answers": [
+      "The Netherlands",
+      "NETHERLANDS",
+      "The netherland",
+      "Nederlandia",
+      "Climate of the Netherlands",
+      "Administrative divisions of the netherlands",
+      "The Netheralands",
+      "Nyderlandai",
+      "Northern Netherlands",
+      "Holland (country)",
+      "Administrative divisions of the Netherlands",
+      "The Netherlands",
+      "Netherlands",
+      "Pays-Bas",
+      "Netherlands, (Dut/Hol)",
+      "ISO 3166-1:NL",
+      "Olanda",
+      "Netherlands/HistoryTalk",
+      "Capitals of Holland",
+      "Neatherlands",
+      "The netherlands",
+      "Dutch inhabitants",
+      "Netherlands, The",
+      "European Netherlands",
+      "Subdivisions of the Netherlands",
+      "Mainland Netherlands",
+      "Metropolitan Netherlands",
+      "Nehterlands",
+      "Netherlands (European territory)"
+    ],
+    "label": 0,
+    "n_correct": 8,
+    "source_group": "correct_examples",
+    "response_source": "shortest_valid_gold_answer"
+  },
+  {
+    "question": "Which 1977 musical was inspired by a magazine article about Bay Ridge kids of Brooklyn whose working class lives were said to be so empty that they lived just to dance on the weekend?",
+    "responses": [
+      "Saturday Night Fever"
+    ],
+    "response": "Saturday Night Fever",
+    "gold_answers": [
+      "Saturday Night Fever",
+      "Saturday Night Fever"
+    ],
+    "label": 0,
+    "n_correct": 10,
+    "source_group": "correct_examples",
+    "response_source": "model_first_response_all_correct"
+  },
+  {
+    "question": "Which Tsar of Russia ruled from 1682-1725?",
+    "responses": [
+      "Пётр I"
+    ],
+    "response": "Пётр I",
+    "gold_answers": [
+      "Peter the Great",
+      "Pyotr Veliky",
+      "Czar of Russia Peter I",
+      "Petr I",
+      "Grand Duchess Natalia Petrovna (1713-1715)",
+      "Peter The Great",
+      "Petr Velikiy",
+      "Pyotr Velikhiy",
+      "Peter Romanov",
+      "Piotr Velikiy",
+      "Peter Alexeivic Romanov",
+      "Pyotr I Alekse%60yevich",
+      "Grand Duchess Natalia Petrovna of Russia (1713-1715)",
+      "Pyotr Velikiy",
+      "Pyotr Alekseyevich Romanov",
+      "Peter I of Russia",
+      "Пётр I Алексеевич",
+      "Emperor Peter the Great",
+      "Piotr I of Russia",
+      "Pyotr Alexeyevich",
+      "Pyotr Velikii",
+      "Pyotr I",
+      "Peter I the Great",
+      "Pyotr Alexeyevich Romanov",
+      "Pyotr Romanov",
+      "Petr Velikyy",
+      "Peter I the Great of Russia",
+      "Peter the great",
+      "Grand Duchess Natalia Petrovna of Russia (1713–1715)",
+      "Tsar Peter I",
+      "Natalia Petrovna",
+      "Peter the Great reformation - causes and implementation",
+      "Tsar Peter the Great",
+      "Peter I. the Great",
+      "Peter Mikhajlov",
+      "Czar Peter",
+      "Piotr Alekseyevich",
+      "Czar Peter I",
+      "Pyotr I of Russia",
+      "Grand Duchess Natalia Petrovna (1713 - 1715)",
+      "Grand Duke Alexander Petrovich of Russia",
+      "Peter I (Russia)",
+      "პეტრე პირველი",
+      "Peter the Great",
+      "Пётр I",
+      "Peter the Great of Russia",
+      "Alexander Petrovich",
+      "Piotr I Alieksieievich",
+      "Peter the Great reformation – causes and implementation",
+      "Peter I The Great",
+      "Pyotr I Alekseyevich"
+    ],
+    "label": 0,
+    "n_correct": 8,
+    "source_group": "correct_examples",
+    "response_source": "shortest_valid_gold_answer"
+  },
+  {
+    "question": "\"Which film ends with the line 'Kevin, what did you do to my room\"\"?\"",
+    "responses": [
+      "The Breakfast Club"
+    ],
+    "response": "The Breakfast Club",
+    "gold_answers": [
+      "HOME ALONE",
+      "Home Alone House",
+      "HOME ALONE",
+      "Wet Bandits",
+      "Home alone",
+      "Home alone family fun edition",
+      "Kenosha Kickers",
+      "Home Alone 1",
+      "Home Alone (movie)",
+      "Screams with his hands on his face",
+      "Gus Polinski",
+      "Harry and Marv",
+      "Marv and Vera",
+      "Angels with Filthy Souls",
+      "Home Alone (film)",
+      "Home Alone",
+      "Marv Merchants"
+    ],
+    "label": 1,
+    "n_correct": 0,
+    "source_group": "incorrect_examples",
+    "response_source": "model_hallucinated_response"
+  },
+  {
+    "question": "What type of scenes was Dame Laura Knight noted for painting",
+    "responses": [
+      "Roses and Carnations"
+    ],
+    "response": "Roses and Carnations",
+    "gold_answers": [
+      "Circus",
+      "Circus ring",
+      "Circus",
+      "Big top (circus)",
+      "3 ring circus",
+      "Traveling circus",
+      "Circus tent",
+      "Travelling circus",
+      "Circus troupe",
+      "Circus (performing art)",
+      "The Circus",
+      "🎪",
+      "Three ring circus",
+      "Circus performer",
+      "Circus (performing arts)",
+      "Circus elephant",
+      "History of circuses",
+      "Circuses",
+      "History of the circus",
+      "Three-ring circus"
+    ],
+    "label": 1,
+    "n_correct": 0,
+    "source_group": "incorrect_examples",
+    "response_source": "model_hallucinated_response"
+  },
+  {
+    "question": "Which root vegetable pie was named after a Minister of Food during World War II?",
+    "responses": [
+      "Bovril"
+    ],
+    "response": "Bovril",
+    "gold_answers": [
+      "WOOLTON (Pie)",
+      "WOOLTON (Pie)",
+      "Lord Woolton pie",
+      "Woolton pie"
+    ],
+    "label": 1,
+    "n_correct": 0,
+    "source_group": "incorrect_examples",
+    "response_source": "model_hallucinated_response"
+  },
+  {
+    "question": "Who played the part of 'herman' in the 1960's TV series 'The Munsters'?",
+    "responses": [
+      "Patrons"
+    ],
+    "response": "Patrons",
+    "gold_answers": [
+      "FRED GWYNNE",
+      "Fred Gwynne",
+      "FRED GWYNNE",
+      "Frederick Hubbard Gwynne"
+    ],
+    "label": 1,
+    "n_correct": 0,
+    "source_group": "incorrect_examples",
+    "response_source": "model_hallucinated_response"
+  },
+  {
+    "question": "\"In the TV version of \"\"The Odd Couple\"\", the part of Felix Ungar was played by Tony Randall. Which actor played the part in the original 1968 film?\"",
+    "responses": [
+      "Jack Klugman"
+    ],
+    "response": "Jack Klugman",
+    "gold_answers": [
+      "JACK LEMMON",
+      "JACK LEMMON",
+      "Jack Lemmon",
+      "Jack lemmon",
+      "The Jack Lemmon Film Collection",
+      "Jack Lemon",
+      "John Uhler %22Jack%22 Lemmon III",
+      "John Uhler Lemmon III"
+    ],
+    "label": 1,
+    "n_correct": 0,
+    "source_group": "incorrect_examples",
+    "response_source": "model_hallucinated_response"
+  },
+  {
+    "question": "The 1955 comedy movie We're No Angels centred on three escaped convicts. Peter Ustinov and Aldo Ray were two, but who played the third?",
+    "responses": [
+      "Jack Palance"
+    ],
+    "response": "Jack Palance",
+    "gold_answers": [
+      "Humphrey Bogart",
+      "Humphrey boggart",
+      "Stephen Bogart",
+      "Humphrey bogart",
+      "Humphry Bogart",
+      "Humphrey DeForest Bogart",
+      "Tennis anyone",
+      "Bogart",
+      "Humphrey Bogart",
+      "Humprey Bogart"
+    ],
+    "label": 1,
+    "n_correct": 0,
+    "source_group": "incorrect_examples",
+    "response_source": "model_hallucinated_response"
+  },
+  {
+    "question": "Which film features the Dawes Tomes Mousley Grubbs Fidelity Fiduciary Bank?",
+    "responses": [
+      "The Wizard of Oz"
+    ],
+    "response": "The Wizard of Oz",
+    "gold_answers": [
+      "Mary Poppins",
+      "Mrs. George Banks",
+      "Winifred banks",
+      "17 Cherry Tree Lane",
+      "Bert (Mary Poppins)",
+      "Mr. George Banks",
+      "Mr George Banks",
+      "Mary popins",
+      "Mrs George Banks",
+      "Marry Poppins",
+      "Mrs Winifred Banks",
+      "Mary Poppins",
+      "Mrs. Winifred Banks",
+      "Mary poppins",
+      "Winifred Banks"
+    ],
+    "label": 1,
+    "n_correct": 0,
+    "source_group": "incorrect_examples",
+    "response_source": "model_hallucinated_response"
+  },
+  {
+    "question": "In Shakespeare's 'Hamlet', what was the name of 'Hamlet's' mother?",
+    "responses": [
+      "Ophelia"
+    ],
+    "response": "Ophelia",
+    "gold_answers": [
+      "'GERTRUDE'",
+      "Gertrude",
+      "Gertrud",
+      "'GERTRUDE'",
+      "Gertrude (disambiguation)"
+    ],
+    "label": 1,
+    "n_correct": 0,
+    "source_group": "incorrect_examples",
+    "response_source": "model_hallucinated_response"
+  },
+  {
+    "question": "Which cartoon strip character first appeared in The Beano in 1951?",
+    "responses": [
+      "Spike Milligan"
+    ],
+    "response": "Spike Milligan",
+    "gold_answers": [
+      "Dennis the Menace.",
+      "Denis the Menace",
+      "Dennis the Menace.",
+      "Dennis the Menace (disambiguation)",
+      "Denis the Menice",
+      "Dennis the Menace (TV series)",
+      "Dennis the Mennis",
+      "Dennis the Menace (television)",
+      "Dennis The Menace",
+      "Dennis the Menace"
+    ],
+    "label": 1,
+    "n_correct": 0,
+    "source_group": "incorrect_examples",
+    "response_source": "model_hallucinated_response"
+  },
+  {
+    "question": "\"Which \"\"Bond girl\"\" met Ringo Starr when they starred in the 1981 film \"\"Caveman\"\", and later married him?\"",
+    "responses": [
+      "\"Cheryl Ladd\""
+    ],
+    "response": "\"Cheryl Ladd\"",
+    "gold_answers": [
+      "Barbara Bach",
+      "Barbara Bach"
+    ],
+    "label": 1,
+    "n_correct": 0,
+    "source_group": "incorrect_examples",
+    "response_source": "model_hallucinated_response"
+  },
+  {
+    "question": "In which country were the 2015 European Games held?",
+    "responses": [
+      "Switzerland"
+    ],
+    "response": "Switzerland",
+    "gold_answers": [
+      "Azerbaijan",
+      "Azerbaycan",
+      "Azerbajdjan",
+      "Azerbeidjan",
+      "Azerbajani",
+      "Aserbajan",
+      "Azarbeycan",
+      "Azerbaijan(Arran)",
+      "Azarbaycan Respublikasi",
+      "Adhirbayjan",
+      "Azerbaijan",
+      "Azerbaidzhan",
+      "Made in Azerbaijan",
+      "Azərbaycan",
+      "Azerbaïdjan",
+      "Azerbadzjan",
+      "Azerbijani",
+      "Modern Azerbaijan",
+      "Azerbijan",
+      "Azyerbaydzhan",
+      "Azərbaycan Respublikası",
+      "Adharbijan",
+      "Азәрбајҹан",
+      "Azerbajian",
+      "AZƏRBAYCAN",
+      "Azerbaijan Republic",
+      "Az@rbaycan Respublikasi",
+      "Azerbaijani Republic",
+      "Republic of Azerbaijan.",
+      "Azerbaijain",
+      "Republic of Azerbaijan",
+      "Azerbajan",
+      "Azarbaycan",
+      "Azerbayjan",
+      "Etymology of Azerbaijan",
+      "Azerbadjan",
+      "Azerbaydzhan",
+      "Azerbajijan",
+      "Azerbaijin",
+      "Azerbaijani independence",
+      "Azyerbayjan",
+      "Azerbaijan (Country)",
+      "History of the name Azerbaijan",
+      "AZERBAIJAN",
+      "North Azerbaijan",
+      "Azherbaijan",
+      "Ajerbijan",
+      "Aserbaidschan",
+      "Azyerbijan",
+      "Azerbajdzhan",
+      "Azyerbaijan",
+      "Azerbaidjan",
+      "Azerbāïjān",
+      "History of the name azerbaijan",
+      "ISO 3166-1:AZ",
+      "Azerbaijan (country)",
+      "Azerbaijan (Republic)",
+      "Aserbajdsjan",
+      "Azerbijan history",
+      "Name of Azerbaijan",
+      "Azerbaidschan",
+      "Republic of Azerbaidjan",
+      "Azerbaijan (Arran)",
+      "Azərbaycan Cümhuriyyəti",
+      "Azyerbaidzhan",
+      "Azerbajzan",
+      "Azherbeijan"
+    ],
+    "label": 1,
+    "n_correct": 0,
+    "source_group": "incorrect_examples",
+    "response_source": "model_hallucinated_response"
+  },
+  {
+    "question": "Lead poisoning, caused by increased levels of the metal lead in the blood, that may cause irreversible neurological damage, renal disease, and reproductive toxicity, is not also known in medical circles as ?",
+    "responses": [
+      "lead poisoning"
+    ],
+    "response": "lead poisoning",
+    "gold_answers": [
+      "Gunshot wounds",
+      "Bullet injury",
+      "Gunshot wounds",
+      "Bullet wound",
+      "Accidental Gunshot",
+      "Ballistic trauma",
+      "Gunshot Wound",
+      "Bullet found",
+      "Gun wound",
+      "Gunshot injury",
+      "Gun-shot wounds",
+      "Death by gunshot",
+      "Gunshot wound"
+    ],
+    "label": 1,
+    "n_correct": 0,
+    "source_group": "incorrect_examples",
+    "response_source": "model_hallucinated_response"
+  },
+  {
+    "question": "Ray’s Jazz Cafe is situated inside which famous London bookshop?",
+    "responses": [
+      "W.H. Smith"
+    ],
+    "response": "W.H. Smith",
+    "gold_answers": [
+      "Foyles",
+      "Foyles",
+      "Foyle's",
+      "Foyle's Literary Luncheon",
+      "W & G Foyle Ltd."
+    ],
+    "label": 1,
+    "n_correct": 0,
+    "source_group": "incorrect_examples",
+    "response_source": "model_hallucinated_response"
+  },
+  {
+    "question": "Nicknamed “Old Grog”, which 18th century Admiral ordered the watering down of Royal Navy rum rations?",
+    "responses": [
+      "Sir John Jervis"
+    ],
+    "response": "Sir John Jervis",
+    "gold_answers": [
+      "Admiral Vernon",
+      "Admiral Edward Vernon",
+      "Admiral Vernon",
+      "Edward Vernon",
+      "Old Grog",
+      "Vice Admiral Edward Vernon"
+    ],
+    "label": 1,
+    "n_correct": 0,
+    "source_group": "incorrect_examples",
+    "response_source": "model_hallucinated_response"
+  },
+  {
+    "question": "Which handheld electronic toy had to be treated as a pet?",
+    "responses": [
+      "PDA"
+    ],
+    "response": "PDA",
+    "gold_answers": [
+      "TAMAGOTCHI",
+      "Saaiko! Tamagotchi",
+      "TAMAGOTCHI",
+      "Tamaguchi",
+      "Tamogatchi",
+      "Tamagotchi V4",
+      "Tamagotchi version 4",
+      "Tamigotchi",
+      "Tamagutchi",
+      "Tamagotchi",
+      "Tamogotchi",
+      "Aki Maita",
+      "Tamagotti",
+      "Mametchi",
+      "Ichigotchi",
+      "Saaikō! Tamagotchi",
+      "Tomagatchi",
+      "Tamagocchi",
+      "Tamagachi",
+      "Tamagaotchi",
+      "Tamagoshi",
+      "Kuchipatchi",
+      "Tamagotchi Secret Characters",
+      "Tamagotchi help",
+      "Tamagochi",
+      "Anime TV de Hakken! Tamagotchi",
+      "Tamaigotchi",
+      "Hinotamatchi",
+      "Tamagotchi Connection V3",
+      "Tomagotchi",
+      "Tomagutchi",
+      "Memetchi",
+      "Mimitchi",
+      "Otokitchi",
+      "Tagamotchi",
+      "Gotchi King",
+      "Let's Go! Tamagotchi",
+      "Tamagatchi",
+      "Tamagothi",
+      "List of Tamagotchi Chracters",
+      "Tamagotchis"
+    ],
+    "label": 1,
+    "n_correct": 0,
+    "source_group": "incorrect_examples",
+    "response_source": "model_hallucinated_response"
+  },
+  {
+    "question": "The oldest still operating national parliament in Europe governs which country?",
+    "responses": [
+      "Norway"
+    ],
+    "response": "Norway",
+    "gold_answers": [
+      "Iceland",
+      "IJsland",
+      "Icedland",
+      "The land of ice and snow",
+      "Icelandic isles",
+      "Lýðveldið ísland",
+      "Iceland",
+      "ISO 3166-1:IS",
+      "The Republic of Iceland",
+      "Ice-land",
+      "Hyui",
+      "Republic of Iceland",
+      "Ísland",
+      "ICELAND",
+      "Lydveldid island",
+      "Icealnd",
+      "Ice land",
+      "Mainland Iceland",
+      "Island of Iceland"
+    ],
+    "label": 1,
+    "n_correct": 0,
+    "source_group": "incorrect_examples",
+    "response_source": "model_hallucinated_response"
+  },
+  {
+    "question": "Who was the question master in the original series of TV’s Going For Gold?",
+    "responses": [
+      "Bob Barker"
+    ],
+    "response": "Bob Barker",
+    "gold_answers": [
+      "Henry Kelly",
+      "Henry Kelly"
+    ],
+    "label": 1,
+    "n_correct": 0,
+    "source_group": "incorrect_examples",
+    "response_source": "model_hallucinated_response"
+  },
+  {
+    "question": "\"The border crossing known as \"\"Checkpoint Charlie\"\" was between which two places?\"",
+    "responses": [
+      "Berlin and Moscow."
+    ],
+    "response": "Berlin and Moscow.",
+    "gold_answers": [
+      "East and West Berlin",
+      "East and West Berlin"
+    ],
+    "label": 1,
+    "n_correct": 0,
+    "source_group": "incorrect_examples",
+    "response_source": "model_hallucinated_response"
+  },
+  {
+    "question": "Which quadrilateral has one pair of parallel edges of unequal length?",
+    "responses": [
+      "A rhombus"
+    ],
+    "response": "A rhombus",
+    "gold_answers": [
+      "Trapezium",
+      "Trapezium (disambiguation)",
+      "Trapezium"
+    ],
+    "label": 1,
+    "n_correct": 0,
+    "source_group": "incorrect_examples",
+    "response_source": "model_hallucinated_response"
+  },
+  {
+    "question": "Give the title of the first UK No 1 hit single of the group 'Take That'?",
+    "responses": [
+      "The One and Only."
+    ],
+    "response": "The One and Only.",
+    "gold_answers": [
+      "PRAY",
+      "Prayed",
+      "Prayers",
+      "Pray",
+      "Prayer group",
+      "Orison (spirituality)",
+      "Orisons",
+      "🙏",
+      "Prayer",
+      "Namāz",
+      "PRAY",
+      "Daily prayer",
+      "Daily prayers",
+      "Devotional prayer",
+      "Praying",
+      "Prayer in Buddhism"
+    ],
+    "label": 1,
+    "n_correct": 0,
+    "source_group": "incorrect_examples",
+    "response_source": "model_hallucinated_response"
+  },
+  {
+    "question": "The Springfield, Mass YMCA saw the first game of what played on January 20, 1892, when 9 players ended the game with a 1-0 score?",
+    "responses": [
+      "the Boston Athletic Association"
+    ],
+    "response": "the Boston Athletic Association",
+    "gold_answers": [
+      "Basketball",
+      "Basketball",
+      "Basketball gear",
+      "Bball",
+      "Boy's Basketball",
+      "B Ball",
+      "Shoot hoops",
+      "Basketball parity worldwide",
+      "Men's Basketball",
+      "High school basketball",
+      "Basketball Worldwide",
+      "Basketball club",
+      "B-ball",
+      "Basket-ball",
+      "Basketball team",
+      "🏀",
+      "Basketball rim",
+      "Basketballer",
+      "Rim (basketball)",
+      "Basket ball",
+      "Basketball net",
+      "Baksetball",
+      "Basketball player",
+      "Basket-Ball",
+      "Women's hoops",
+      "Men's basketball",
+      "BasketBall",
+      "Basketball Parity Worldwide",
+      "Basket Ball",
+      "Baketball",
+      "Basketball Player",
+      "B ball",
+      "Unicycle basketball"
+    ],
+    "label": 1,
+    "n_correct": 0,
+    "source_group": "incorrect_examples",
+    "response_source": "model_hallucinated_response"
+  },
+  {
+    "question": "What is the name forthe leaf of a fern or palm?",
+    "responses": [
+      "Fernleaf"
+    ],
+    "response": "Fernleaf",
+    "gold_answers": [
+      "FROND",
+      "Frond",
+      "FROND",
+      "Fronds"
+    ],
+    "label": 1,
+    "n_correct": 0,
+    "source_group": "incorrect_examples",
+    "response_source": "model_hallucinated_response"
+  },
+  {
+    "question": "The pasta, farfalle, is named after which creature?",
+    "responses": [
+      "The spider"
+    ],
+    "response": "The spider",
+    "gold_answers": [
+      "THE BUTTERFLY",
+      "ButterFly",
+      "Butterfly (film)",
+      "Butterflies (disambiguation)",
+      "Butterflies (song)",
+      "Butterfly (disambiguation)",
+      "The Butterfly",
+      "Butterflies (film)",
+      "Butterfly (movie)",
+      "Butterfly (album)",
+      "Butterfly (song)",
+      "THE BUTTERFLY"
+    ],
+    "label": 1,
+    "n_correct": 0,
+    "source_group": "incorrect_examples",
+    "response_source": "model_hallucinated_response"
+  },
+  {
+    "question": "What was the surname of the French explorer who discovered the area where Montreal is now situated, on this day in 1953?",
+    "responses": [
+      "Dumont"
+    ],
+    "response": "Dumont",
+    "gold_answers": [
+      "(Jacques) CARTIER",
+      "(Jacques) CARTIER",
+      "Jacques cartier",
+      "Petite Hermine",
+      "Jacques Cartier",
+      "Jaques Cartier"
+    ],
+    "label": 1,
+    "n_correct": 0,
+    "source_group": "incorrect_examples",
+    "response_source": "model_hallucinated_response"
+  },
+  {
+    "question": "What creatures were trained by Croatia's Zagreb university in 2013 to detect landmines?",
+    "responses": [
+      "Drones"
+    ],
+    "response": "Drones",
+    "gold_answers": [
+      "Bees",
+      "Anthophila",
+      "Apiformes",
+      "Ground bee",
+      "Bee flight",
+      "Solitary bees",
+      "Bee",
+      "Bees",
+      "Ground bees",
+      "Apiforme",
+      "Solitary bee"
+    ],
+    "label": 1,
+    "n_correct": 0,
+    "source_group": "incorrect_examples",
+    "response_source": "model_hallucinated_response"
+  },
+  {
+    "question": "What do we call the selfless and virtuous practice of concern for the welfare of others?",
+    "responses": [
+      "Karma"
+    ],
+    "response": "Karma",
+    "gold_answers": [
+      "ALTRUISM",
+      "Altruist",
+      "Otherism",
+      "Altruists",
+      "Alturism",
+      "Selfless action",
+      "Problem of love",
+      "Altruism (philosophy)",
+      "Truist",
+      "Altruistic",
+      "Law of mutual aid",
+      "Selflessly",
+      "Unselfishness",
+      "Altruistic behavior",
+      "Digital altruism",
+      "Altruistically",
+      "The problem of love",
+      "Altruistical",
+      "ALTRUISM",
+      "Altruism",
+      "Altutrists"
+    ],
+    "label": 1,
+    "n_correct": 0,
+    "source_group": "incorrect_examples",
+    "response_source": "model_hallucinated_response"
+  },
+  {
+    "question": "What is a female swan called",
+    "responses": [
+      "A goose. I really don’t know why but that's what I believe."
+    ],
+    "response": "A goose. I really don’t know why but that's what I believe.",
+    "gold_answers": [
+      "Pen",
+      "Erasable Pen",
+      "Pen and ink",
+      "Ink sketch",
+      "Pen-and-ink drawing",
+      "Pen Drawing",
+      "Novelty pen",
+      "Pen",
+      "Pen and Ink",
+      "Clickable pens"
+    ],
+    "label": 1,
+    "n_correct": 0,
+    "source_group": "incorrect_examples",
+    "response_source": "model_hallucinated_response"
+  },
+  {
+    "question": "The 27 episodes of which sitcom featuring Julia Mckenzie, Anton Rodgers and Ballard Berkley were first broadcast in the 1980s?",
+    "responses": [
+      "Frasier"
+    ],
+    "response": "Frasier",
+    "gold_answers": [
+      "Fresh Fields",
+      "Fresh Fields (TV series)",
+      "Fresh Fields"
+    ],
+    "label": 1,
+    "n_correct": 0,
+    "source_group": "incorrect_examples",
+    "response_source": "model_hallucinated_response"
+  },
+  {
+    "question": "Who was the first person to sell one million records?",
+    "responses": [
+      "Elvis Presley"
+    ],
+    "response": "Elvis Presley",
+    "gold_answers": [
+      "Enrico Caruso",
+      "Errico Caruso",
+      "Enrico Caruso",
+      "Enrique Caruso"
+    ],
+    "label": 1,
+    "n_correct": 0,
+    "source_group": "incorrect_examples",
+    "response_source": "model_hallucinated_response"
+  },
+  {
+    "question": "Suger Mice was a 1987 single for which British rock band?",
+    "responses": [
+      "Duran Duran"
+    ],
+    "response": "Duran Duran",
+    "gold_answers": [
+      "Marillion",
+      "In The Last Waking Moments",
+      "Marillon",
+      "Marillion"
+    ],
+    "label": 1,
+    "n_correct": 0,
+    "source_group": "incorrect_examples",
+    "response_source": "model_hallucinated_response"
+  },
+  {
+    "question": "Which female politician and aristocrat said ‘I married beneath me, all women do’?",
+    "responses": [
+      "Adelheid von Schwerin, Queen of Prussia"
+    ],
+    "response": "Adelheid von Schwerin, Queen of Prussia",
+    "gold_answers": [
+      "Nancy Astor",
+      "Nancy astor",
+      "Nancy Astor, Viscountess Astor",
+      "Nancy Witcher Astor, Viscountess Astor, CH",
+      "Nancy W. Astor",
+      "Viscountess Astor",
+      "Lady Astor",
+      "Astor, Nancy Witcher Langhorne, Viscountess Astor",
+      "Nancy Witcher Astor",
+      "Nancy Witcher Langhorne",
+      "Viscountess Astor Astor Nancy Witcher Langhorne",
+      "Nancy Witcher Astor, Viscountess Astor",
+      "Nancy Langhorne",
+      "Nancy Astor (mini-series)",
+      "Lady Nancy Astor",
+      "Nancy Astor",
+      "Nancy Witcher (Langhorne) Astor",
+      "Nancy Witcher Langhorne, Viscountess Astor Astor"
+    ],
+    "label": 1,
+    "n_correct": 0,
+    "source_group": "incorrect_examples",
+    "response_source": "model_hallucinated_response"
+  },
+  {
+    "question": "From which 1976 musical does the song 'Oh What a Circus' come?",
+    "responses": [
+      "Shuffle Along"
+    ],
+    "response": "Shuffle Along",
+    "gold_answers": [
+      "Evita",
+      "Evita",
+      "Evita (movie)",
+      "Evita movie",
+      "Evita (film)",
+      "Evita (disambiguation)"
+    ],
+    "label": 1,
+    "n_correct": 0,
+    "source_group": "incorrect_examples",
+    "response_source": "model_hallucinated_response"
+  },
+  {
+    "question": "Where does the draw for the Euromillions lottery prize usually take place?",
+    "responses": [
+      "The Netherlands"
+    ],
+    "response": "The Netherlands",
+    "gold_answers": [
+      "Paris",
+      "Paříž",
+      "FRPAR",
+      "Paris",
+      "Name of paris and its inhabitants",
+      "Paname",
+      "Paris France",
+      "Ville Lumière",
+      "Leucetia",
+      "Rue de Ménilmontant",
+      "Paris agglomeration",
+      "France Paris",
+      "Sports in Paris",
+      "Departement de Paris",
+      "Paris, Ile-De-France",
+      "Rue de Menilmontant",
+      "UN/LOCODE:FRPAR",
+      "Paříži",
+      "Ville Lumiere",
+      "Paris, France",
+      "Paris, Île-de-France",
+      "Paris, Île-de-France, France",
+      "Parijs",
+      "Parisien",
+      "Cuisine of Paris",
+      "Suburbs of Paris",
+      "Sport in Paris",
+      "The weather in Paris",
+      "Parisian (person)",
+      "Parizi",
+      "París",
+      "Name of Paris and its inhabitants",
+      "Paree",
+      "Paris, Europe",
+      "Paris, Banks of the Seine",
+      "Paris (etymology)",
+      "Paris (France)",
+      "The City of Love (city)",
+      "Département de Paris"
+    ],
+    "label": 1,
+    "n_correct": 0,
+    "source_group": "incorrect_examples",
+    "response_source": "model_hallucinated_response"
+  },
+  {
+    "question": "Born Jose Zapata, but known by his middle names, which Colombian goalkeeper who scored three goals for his country is best remembered for his 'scorpion kick' performed at Wembley in 1995?",
+    "responses": [
+      "Alfredo di Stefano"
+    ],
+    "response": "Alfredo di Stefano",
+    "gold_answers": [
+      "Rene Higuita",
+      "José René Higuita",
+      "Rene Higuita",
+      "René Higuita",
+      "René Higuita Zapata",
+      "Scorpion kick",
+      "Scorpion save"
+    ],
+    "label": 1,
+    "n_correct": 0,
+    "source_group": "incorrect_examples",
+    "response_source": "model_hallucinated_response"
+  },
+  {
+    "question": "Which boxer broke Muhammed Ali's jaw",
+    "responses": [
+      "George Foreman"
+    ],
+    "response": "George Foreman",
+    "gold_answers": [
+      "Ken Norton",
+      "Ken Norton",
+      "Ken Norton, Sr",
+      "Ken Norton, Senior",
+      "Ken Norton, Sr."
+    ],
+    "label": 1,
+    "n_correct": 0,
+    "source_group": "incorrect_examples",
+    "response_source": "model_hallucinated_response"
+  },
+  {
+    "question": "If you order 'Gambas' in a Spanish restaurant what will you get?",
+    "responses": [
+      "Fish, because it rhymes with shrimp."
+    ],
+    "response": "Fish, because it rhymes with shrimp.",
+    "gold_answers": [
+      "PRAWNS",
+      "Prawn versus shrimp",
+      "Prawn",
+      "PRAWNS",
+      "Prawns",
+      "King prawns",
+      "King Prawn"
+    ],
+    "label": 1,
+    "n_correct": 0,
+    "source_group": "incorrect_examples",
+    "response_source": "model_hallucinated_response"
+  },
+  {
+    "question": "How many vertices (ie corners) are there on an octahedron?",
+    "responses": [
+      "8"
+    ],
+    "response": "8",
+    "gold_answers": [
+      "SIX",
+      "SIX",
+      "six",
+      "6"
+    ],
+    "label": 1,
+    "n_correct": 0,
+    "source_group": "incorrect_examples",
+    "response_source": "model_hallucinated_response"
+  },
+  {
+    "question": "Which famous Englishman was born in Lichfield in Staffordshire in 1709?",
+    "responses": [
+      "Abraham Darby"
+    ],
+    "response": "Abraham Darby",
+    "gold_answers": [
+      "DR SAMUEL JOHNSON",
+      "Johnsonism",
+      "The Great Cham Of Literature",
+      "Doctor Johnson",
+      "Probus Brittanicus",
+      "Samuel Johnson",
+      "Dr. Samuel Johnson",
+      "Dr. Johnson",
+      "DR SAMUEL JOHNSON",
+      "Johnsoniana",
+      "Johnsonian",
+      "Dr Samuel Johnson",
+      "Dr Johnson",
+      "Johnson, Samuel"
+    ],
+    "label": 1,
+    "n_correct": 0,
+    "source_group": "incorrect_examples",
+    "response_source": "model_hallucinated_response"
+  },
+  {
+    "question": "Which 2008 Western film starred Ed Harris and Viggo Mortensen as lawmen, Jeremy Irons as a rancher and Renee Zellweger as a piano-playing widow?",
+    "responses": [
+      "Wild Wild West"
+    ],
+    "response": "Wild Wild West",
+    "gold_answers": [
+      "Appaloosa",
+      "Palouse horses",
+      "Appaloosa",
+      "Apaloosa",
+      "Appaloosa horse",
+      "Palouse horse",
+      "Appaloosas"
+    ],
+    "label": 1,
+    "n_correct": 0,
+    "source_group": "incorrect_examples",
+    "response_source": "model_hallucinated_response"
+  },
+  {
+    "question": "In which Yorkshire town is the Harlow Carr RHS Gardens situated?",
+    "responses": [
+      "Keighley"
+    ],
+    "response": "Keighley",
+    "gold_answers": [
+      "HARROGATE",
+      "HARROGATE",
+      "Harrogate, England",
+      "Harrogate, North Yorkshire",
+      "Harrogate",
+      "Rossett Acre",
+      "South stanley harrogate",
+      "Oatlands, North Yorkshire",
+      "Harrowgate Borough Council",
+      "Low Harrogate"
+    ],
+    "label": 1,
+    "n_correct": 0,
+    "source_group": "incorrect_examples",
+    "response_source": "model_hallucinated_response"
+  },
+  {
+    "question": "\"During an infamous court case who said of Lord Astor's denial \"\"Well he would, wouldn't he\"\"?\"",
+    "responses": [
+      "Oscar Wilde"
+    ],
+    "response": "Oscar Wilde",
+    "gold_answers": [
+      "Mandy Rice-Davies",
+      "Mandy-Rice Davies",
+      "Mandy Rice-Davies",
+      "Mandy Rice-Davis",
+      "Mandy Rice Davies"
+    ],
+    "label": 1,
+    "n_correct": 0,
+    "source_group": "incorrect_examples",
+    "response_source": "model_hallucinated_response"
+  },
+  {
+    "question": "Marmalade is which bear's favourite sandwich filling?",
+    "responses": [
+      "peanut butter"
+    ],
+    "response": "peanut butter",
+    "gold_answers": [
+      "Paddington Bear",
+      "Darkest Peru",
+      "32 Windsor Gardens",
+      "Paddington Brown",
+      "A bear called paddington",
+      "Paddington bear",
+      "Paddington Bear"
+    ],
+    "label": 1,
+    "n_correct": 0,
+    "source_group": "incorrect_examples",
+    "response_source": "model_hallucinated_response"
+  },
+  {
+    "question": "What is the longest word can be typed using only the top row of letters on a typewriter?",
+    "responses": [
+      "D.T.G."
+    ],
+    "response": "D.T.G.",
+    "gold_answers": [
+      "Typewriter",
+      "Typewriter ribbons",
+      "Typewriter carriage",
+      "Personal word processor",
+      "Typewrite",
+      "Typewriters",
+      "Type-write",
+      "Type-writerly",
+      "Type machine",
+      "Electric typewriter",
+      "Typewrites",
+      "Typewriter",
+      "Type written",
+      "Electronic word processor",
+      "Typewriting",
+      "Typebasket",
+      "Type writer",
+      "Type writes",
+      "The type writer",
+      "Typewritten",
+      "Typewriterly",
+      "Type-writing",
+      "The first typewriter",
+      "Type-written",
+      "Typebars",
+      "Typewriter keyboard",
+      "Type wrote",
+      "Type-wrote",
+      "Type writers",
+      "Type write",
+      "Typewrote",
+      "Type-writers",
+      "Personal Word Processor",
+      "Electronic typewriter",
+      "Typebar",
+      "Type writing",
+      "Type-writes",
+      "Type-writer",
+      "Electromechanical typewriter",
+      "Manual typewriter",
+      "Type bar",
+      "Typing machine",
+      "Type writerly",
+      "Typewriter eraser"
+    ],
+    "label": 1,
+    "n_correct": 0,
+    "source_group": "incorrect_examples",
+    "response_source": "model_hallucinated_response"
+  },
+  {
+    "question": "Which veteran Hollywood actor played Judge Henry Garth in the TV western series 'The Virginian'?",
+    "responses": [
+      "Robert Preston (1915-2000),"
+    ],
+    "response": "Robert Preston (1915-2000),",
+    "gold_answers": [
+      "LEE J COBB",
+      "Lee Cobb",
+      "Lee J. Cobb",
+      "Lee J Cobb",
+      "LEE J COBB",
+      "Lee Jacob Cobb"
+    ],
+    "label": 1,
+    "n_correct": 0,
+    "source_group": "incorrect_examples",
+    "response_source": "model_hallucinated_response"
+  },
+  {
+    "question": "What would a Scotsman do with a spurtle?",
+    "responses": [
+      "Give it to his wife's lover"
+    ],
+    "response": "Give it to his wife's lover",
+    "gold_answers": [
+      "Eat porridge",
+      "Eat porridge"
+    ],
+    "label": 1,
+    "n_correct": 0,
+    "source_group": "incorrect_examples",
+    "response_source": "model_hallucinated_response"
+  },
+  {
+    "question": "The Greek god of marriage is?",
+    "responses": [
+      "Hera"
+    ],
+    "response": "Hera",
+    "gold_answers": [
+      "Hymen",
+      "Microperforate hymen",
+      "Vaginal corona",
+      "Hymen",
+      "Hymen vaginae",
+      "List of hymen states",
+      "Carunculae myrtiforme",
+      "Maiden heads",
+      "Carunculae myrtiformes",
+      "List of animals with hymens",
+      "Cherry (slang)",
+      "Popped cherry",
+      "Himen",
+      "Hy-men",
+      "Hymens",
+      "Maidenheads"
+    ],
+    "label": 1,
+    "n_correct": 0,
+    "source_group": "incorrect_examples",
+    "response_source": "model_hallucinated_response"
+  },
+  {
+    "question": "What did Manchester United footballer Carlos Tevez put in his mouth in celebrating a goal at Christmas 2007?",
+    "responses": [
+      "A coin"
+    ],
+    "response": "A coin",
+    "gold_answers": [
+      "A baby's dummy",
+      "Adult pacifier",
+      "Pacifiers",
+      "Soother",
+      "Dodie",
+      "Pacifers",
+      "Baby's dummy",
+      "Pacifier clip",
+      "Pacifier",
+      "A baby's dummy",
+      "Comforter (nipple)",
+      "Teething coral"
+    ],
+    "label": 1,
+    "n_correct": 0,
+    "source_group": "incorrect_examples",
+    "response_source": "model_hallucinated_response"
+  },
+  {
+    "question": "Name the private gardens adjoining Windsor Castle which housed the Royal Mausoleum, the burial place of Queen Victoria and Prince Albert?",
+    "responses": [
+      "Kensington Palace, Hampton Court Palace"
+    ],
+    "response": "Kensington Palace, Hampton Court Palace",
+    "gold_answers": [
+      "FROGMORE",
+      "Frogmore",
+      "Victoria and Albert Mausoleum",
+      "Frogmore Royal Mausoleum",
+      "Frogmore Mausoleum",
+      "Frogmore Gardens",
+      "FROGMORE"
+    ],
+    "label": 1,
+    "n_correct": 0,
+    "source_group": "incorrect_examples",
+    "response_source": "model_hallucinated_response"
+  },
+  {
+    "question": "From which film, for which Chaplin film wrote the music, did Petula Clark have a Number One with 'This Is My Song'?",
+    "responses": [
+      "One Day in the Life"
+    ],
+    "response": "One Day in the Life",
+    "gold_answers": [
+      "'COUNTESS FROM HONG KONG'",
+      "A Countess from Hong Kong",
+      "'COUNTESS FROM HONG KONG'",
+      "The Countess from Hong Kong",
+      "Countess from Hong Kong",
+      "A Countess From Hong Kong"
+    ],
+    "label": 1,
+    "n_correct": 0,
+    "source_group": "incorrect_examples",
+    "response_source": "model_hallucinated_response"
+  },
+  {
+    "question": "Which is the first of the four stations on a standard Monopoly Board after passing Go?",
+    "responses": [
+      "Start (Auckland)"
+    ],
+    "response": "Start (Auckland)",
+    "gold_answers": [
+      "KING'S CROSS",
+      "Kings Cross",
+      "King's Cross (disambiguation)",
+      "King's Cross",
+      "Kings Cross (disambiguation)",
+      "KING'S CROSS",
+      "King’s Cross"
+    ],
+    "label": 1,
+    "n_correct": 0,
+    "source_group": "incorrect_examples",
+    "response_source": "model_hallucinated_response"
+  }
+]
