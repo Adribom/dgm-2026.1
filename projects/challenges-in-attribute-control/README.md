@@ -41,10 +41,6 @@ Some examples of the resulting images are shown in figures 1e 2. These images su
 | ![Generated image and metadata for the blue banana prompt](imagens/Pink_board_2.jpg) | ![Generated image and metadata for the blue banana prompt](imagens/orange_purple.jpeg) |
 
 
-![Generated image and metadata for the blue banana prompt](imagens/Pink_board_2.jpg)
-
-![Generated image and metadata for the blue banana prompt](imagens/orange_purple.jpeg) 
-
 ## Output of the generative model
 
 The generative model will produce images from textual prompts containing controlled combinations of objects and attributes, such as "blue banana" or "pink blackboard," generated from synthetic datasets. In some cases, the model is expected to not correctly apply the requested attribute, generating images that reflect more common patterns rather than the one requested in the prompt.
@@ -249,11 +245,6 @@ The first problem, shown in Figure 1, demonstrates that the model failed to corr
 | ------------- | ----------------- |
 | ![Generated image and metadata for the blue banana prompt](imagens/Imagem_CachorroVerde.png) | ![Generated image and metadata for the blue banana prompt](imagens/Imagem_SapodentroCarro.png) |
 
-![Generated image and metadata for the blue banana prompt](imagens/Imagem_CachorroVerde.png)
-
-![Generated image and metadata for the blue banana prompt](imagens/Imagem_SapodentroCarro.png)
-
-
 
 The idea was to study the functioning of the Stable Diffusion model in the first problem, figure 1, which is to correctly use the color attribute in the object according to the prompt instructions, which is "pink classroom chalkboard". Based on the paper by Rombach et al., 2021, it was possible to identify the diagram in Figure 6 and based on the results of experiments 1 to 4, it was possible to identify the possibility of solving the problem presented in Figure 1 using the CVAE and CNN-CVAE model.
 
@@ -264,11 +255,6 @@ In experiment 1 - Dataset Analysis, the Conceptual Captions database was analyze
 | Heat map of the pattern    | PPMI heat map    |
 | ------------- | ----------------- |
 | ![Generated image and metadata for the blue banana prompt](imagens/Imagem_MapaCalor.png) | ![Generated image and metadata for the blue banana prompt](imagens/Imagem_MapaCalorSemantica.png) |
-
-![Generated image and metadata for the blue banana prompt](imagens/Imagem_MapaCalor.png) 
-
-![Generated image and metadata for the blue banana prompt](imagens/Imagem_MapaCalorSemantica.png)
-
 
 In experiment 2 - Embeddings CLIP, it can be noted that the green chalkboard pattern, figure 8, which is not the prompt request, is the beginning of the model's denoising procedure. Figure 9 shows that the green frog pattern, which is the prompt request, is the beginning of the model's denoising procedure.
 
@@ -286,7 +272,6 @@ In experiment 3 - Cross Attention, it can be noted that when the model starts th
 ![Generated image and metadata for the blue banana prompt](imagens/Imagem_CrossAttentionBanana.png)
 
 ![Generated image and metadata for the blue banana prompt](imagens/Imagem_CrossAttentionUrso.png)
-Figura 11
 
 Therefore, noting that the training data, experiment 1 - Dataset Analysis, does not present the necessary data to satisfy the request of the prompt, and that in the observed steps of experiment 2 - Generation Behavior, and in experiment 3 - Cross attention, the current Stable Diffusion model presented at https://yeri.ai/pt/app/image-generator is unable to meet the request made in the prompt.
 
