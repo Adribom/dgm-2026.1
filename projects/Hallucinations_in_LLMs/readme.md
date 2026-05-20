@@ -216,7 +216,7 @@ neuron discarded by L1;
 
 Since $y$ = 1 denotes hallucination, H-Neurons are defined as:
 
-$$\mathcal{H} = \left\{ j : w_j > 0 \right\}$$
+$$\mathcal{H} = \{ j : w_j > 0 \}$$
 
 $$H_{\%} =\frac{\left\|\mathcal{H}\right\|}{524288}\times 100$$
 
