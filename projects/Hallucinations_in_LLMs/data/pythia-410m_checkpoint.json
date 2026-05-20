@@ -1,0 +1,1493 @@
+{
+  "correct_examples": [],
+  "incorrect_examples": [
+    {
+      "question": "Rapidly boiling a liquid to make it thicker and more concentrated is called what?",
+      "gold_answers": [
+        "Reducing",
+        "Reductively",
+        "Reductions (disambiguation)",
+        "Reduces",
+        "Reductiveness",
+        "Reduce",
+        "Reduction (disambiguation)",
+        "Reduction (linguistics)",
+        "Reduction",
+        "Reductivities",
+        "Reducibility",
+        "Reductive",
+        "Reductional",
+        "Reducible",
+        "Reductivenesses",
+        "Reducing",
+        "Reductionally",
+        "Reduced",
+        "Reductionality",
+        "Reductivity"
+      ],
+      "responses": [
+        "Solvent",
+        "Water",
+        "Liquid hydrodynamics",
+        "Flame",
+        "Steam",
+        "Potassium bicarbonate",
+        "Liquors",
+        "High temperature.",
+        "Superficial boiling",
+        "Hydroic"
+      ],
+      "label": 1,
+      "n_correct": 0
+    },
+    {
+      "question": "\"What year did Jean-Francois Champollion publish the first correct translation of Egyptian hieroglyphs from the Rosetta Stone, the Roman Catholic Church take Galileo Galilei's \"\"Dialogue\"\" off their list of banned books, and Britain repeal the death penalty for over 100 crimes?\"",
+      "gold_answers": [
+        "1822",
+        "one thousand, eight hundred and twenty-two",
+        "1822"
+      ],
+      "responses": [
+        "1540",
+        "1814.",
+        "In the year 2000",
+        "1958",
+        "1798",
+        "In the 12th century, King Louis VIII of France issued an edict to all Muslims in France that if one knew the letter 'j', the word '",
+        "2006",
+        "1696-1715",
+        "1470",
+        "1757"
+      ],
+      "label": 1,
+      "n_correct": 0
+    },
+    {
+      "question": "What is Marge Simpson's maiden name ?",
+      "gold_answers": [
+        "BOUVIER",
+        "Augustus Jules Bouvier",
+        "AUGUSTUS JULES BOUVIER (1837-81)",
+        "A. Bouvier",
+        "BOUVIER"
+      ],
+      "responses": [
+        "Marge Simpson",
+        "Mary Simpson",
+        "Homer Simpson",
+        "Simpson",
+        "Simpson",
+        "Marge McDonnell",
+        "Marie Roux",
+        "Miller",
+        "Lisa Simpson",
+        "Smith"
+      ],
+      "label": 1,
+      "n_correct": 0
+    },
+    {
+      "question": "What percentage of the earth's surface is covered by Europe?",
+      "gold_answers": [
+        "8%",
+        "eight  %",
+        "8 %",
+        "8%"
+      ],
+      "responses": [
+        "95.99 per cent",
+        "2%",
+        "The whole part of the earth including Europe's eastern border",
+        "90%",
+        "Europe",
+        "60% or less",
+        "The percentage",
+        "90",
+        "75.9%; France, Belgium, Germany, and the Netherlands",
+        "30 percent"
+      ],
+      "label": 1,
+      "n_correct": 0
+    },
+    {
+      "question": "Which artist has a daughter and two sons with Jane Asher, whom he married in 1981?",
+      "gold_answers": [
+        "Gerald Scarfe",
+        "Gerald Anthony Scarfe",
+        "Gerald Scarfe"
+      ],
+      "responses": [
+        "Marilyna Smith",
+        "Picasso",
+        "John Singer Sargent, Oscar nominations",
+        "Alexander McCall Smith",
+        "Michelangelo",
+        "Jean-Claude Rougier and Patrick Duggan",
+        "Andy Warhol and Diane Arbus",
+        "William Burroughs",
+        "John Galland, born in 1821 and James Henry Anderson, born in 1820",
+        "Paul Klee and Carl Dohm"
+      ],
+      "label": 1,
+      "n_correct": 0
+    },
+    {
+      "question": "Which famous fishing town of east Scotland lies roughly half-way between Montrose and Dundee?",
+      "gold_answers": [
+        "ARBROATH",
+        "Arbroath, Scotland",
+        "Aberbrothock",
+        "Arbraoth, Forfarshire",
+        "ARBROATH",
+        "Arbroath, Angus",
+        "Arbroath",
+        "Burgh of Arbroath",
+        "Arbroath, Forfarshire",
+        "Arbraoth, Angus",
+        "Arbroth"
+      ],
+      "responses": [
+        "St. Andrews",
+        "Inverness",
+        "Dundee",
+        "Largs",
+        "Stranraer",
+        "Montrose",
+        "Portree",
+        "Lorneals",
+        "Stornoway",
+        "The little port of Castlemaine"
+      ],
+      "label": 1,
+      "n_correct": 0
+    },
+    {
+      "question": "Which was the first commercial jet airliner to go into service in the UK?",
+      "gold_answers": [
+        "COMET",
+        "Cometary nuclei",
+        "☄",
+        "Disconnection event",
+        "COMET",
+        "Dirty snowball model",
+        "Long period comet",
+        "Tail (comet)",
+        "Dark comet",
+        "Dirty snowball theory",
+        "Dirty snowball hypothesis",
+        "Short-period comet",
+        "Black comets",
+        "Short period comets",
+        "Halley-type comet",
+        "Long-period comet",
+        "Comet Tails",
+        "Jupiter family",
+        "Plasma tail",
+        "Comet",
+        "Jupiter-family comet",
+        "Jupiter family comet",
+        "Comets",
+        "Dirty snowball",
+        "Comet tails",
+        "A1 comet",
+        "Coma (astronomy)",
+        "Commet",
+        "Coma (comet)",
+        "Cometary"
+      ],
+      "responses": [
+        "Boeing 707",
+        "Virgin New York",
+        "Yacht Aer Lingus",
+        "The Wright Brothers' Model A",
+        "Airbus D-330",
+        "Airbus",
+        "Beechcraft King Air",
+        "Douglas A. McLeod and Wilbur Wright",
+        "General Electric",
+        "Beechcraft Baroness Airline"
+      ],
+      "label": 1,
+      "n_correct": 0
+    },
+    {
+      "question": "The word Tet in the Tet Offensive (N Vietnam/Viet Cong against S Vietnam/US forces on 30 Jan 1968) referred to the national?",
+      "gold_answers": [
+        "New Year",
+        "New-year",
+        "Annunciation style dating",
+        "New Year",
+        "Annunciation Style dating",
+        "Annunciation style",
+        "Annunciation Style",
+        "Turn of the year",
+        "New Year Festival",
+        "New Year's",
+        "New Years",
+        "New year"
+      ],
+      "responses": [
+        "Tet",
+        "Tet",
+        "Tet offensive",
+        "Tet Offensive",
+        "Democratic Republic of the Congo",
+        "Tet National Committee",
+        "Tet",
+        "Viet Nam. It was chosen by the Viet Cong as a symbol of rebellion and resistance. So, Tet had the goal to gain support from the Viet Minh",
+        "Tet Offensive",
+        "Tet."
+      ],
+      "label": 1,
+      "n_correct": 0
+    },
+    {
+      "question": "What are marram, fescue, and rye?",
+      "gold_answers": [
+        "Types of grass",
+        "Types of grass"
+      ],
+      "responses": [
+        "Marram, flax with hemp-seed hulls, rye; fescue hay made from wheat,",
+        "Marram, German grain",
+        "Bramblecrop, Cattin, and Soybean",
+        "These are the names of the rye and marram that have the same",
+        "Fescue",
+        "Marram, which is a weed grass, resembles rye, which is a highly edible grain.",
+        "These three grains were grown as a food source in the area",
+        "Millet’s rye",
+        "Marron",
+        "Corn"
+      ],
+      "label": 1,
+      "n_correct": 0
+    },
+    {
+      "question": "What was the name of politician Cecil Parkinson's mistress and mother of his child?",
+      "gold_answers": [
+        "Sarah Keays",
+        "Sarah Keays"
+      ],
+      "responses": [
+        "Helen of Troy",
+        "Elizabeth II",
+        "Ida Platt, actress",
+        "Margaret Thatcher",
+        "Dorothy Parker",
+        "Angela",
+        "Elizabeth",
+        "Elizabeth Wideman",
+        "Gladys Flocklage",
+        "Myra Bradlee and Mary Ann"
+      ],
+      "label": 1,
+      "n_correct": 0
+    },
+    {
+      "question": "\"What organisation was founded in 1831 by James Winston, Samuel James Arnold, Samuel Beazley, Sir Andrew Francis Barnard, and Francis Mills to \"\"tend to the regeneration of the Drama\"\"?\"",
+      "gold_answers": [
+        "The Garrick Club",
+        "The Garrick",
+        "The Garrick Club",
+        "Garrick Club"
+      ],
+      "responses": [
+        "The Theatre of Henry Irving.",
+        "The Society for the Promotion of the Dramatic Arts",
+        "The Society for the Promotion of the Fine Arts (1665-1680).",
+        "The Royal Academy of Dramatic Art",
+        "The Rational Society of Dramatists and Commisariators (RSDC)",
+        "the National Society for Theatre and Radio Record\"",
+        "The Royal Shakespeare Company",
+        "The Royal Dramatic Theatre of England",
+        "Society of British Drama - Theatre",
+        "The Royal Shakespeare Company"
+      ],
+      "label": 1,
+      "n_correct": 0
+    },
+    {
+      "question": "Which famous British actor is/was married to Anouk Aimee?",
+      "gold_answers": [
+        "ALBERT FINNEY",
+        "Albert Finney",
+        "ALBERT FINNEY"
+      ],
+      "responses": [
+        "Stephen Hawking",
+        "Paul Ashton",
+        "Steve Coogan (famous as Dr. Seuss - Goop)",
+        "David Carradine",
+        "John Travolta",
+        "Hugh Grant",
+        "Michael Gambon",
+        "John Gilbert; William Bain",
+        "Anthony Rylands",
+        "Eddie Murphy"
+      ],
+      "label": 1,
+      "n_correct": 0
+    },
+    {
+      "question": "The River Durance flows into the Rhone near to which French town or city?",
+      "gold_answers": [
+        "Avignon",
+        "Avignon, France",
+        "Historic Centre of Avignon: Papal Palace, Episcopal Ensemble and Avignon Bridge",
+        "Popes of Avignon",
+        "Avignon",
+        "The weather in Avignon"
+      ],
+      "responses": [
+        "Paris",
+        "Paris, Lyon, Nantes",
+        "Péronne",
+        "Albi",
+        "Montpellier",
+        "Paris",
+        "Dijon",
+        "Paris",
+        "Puteaux",
+        "The city of Amiens but many other towns"
+      ],
+      "label": 1,
+      "n_correct": 0
+    },
+    {
+      "question": "What would you expect if you asked for Focaccia in an Italian restaurant?",
+      "gold_answers": [
+        "Bread",
+        "Somun",
+        "Crust of bread",
+        "Leavened bread",
+        "Scali",
+        "Pão",
+        "Round bread",
+        "Loaves",
+        "Bread round",
+        "Crust of Bread",
+        "Batch bread",
+        "Double roti",
+        "Bread crust",
+        "Bread making",
+        "Breadmaking",
+        "Ammunition bread",
+        "Bread",
+        "Crusty bread",
+        "Bread Making",
+        "Breads",
+        "Raw Toast",
+        "🍞",
+        "Soft-tack",
+        "Milk Loaf",
+        "Round of bread",
+        "Crust (bread)",
+        "Heel (bread)"
+      ],
+      "responses": [
+        "Cheese",
+        "Focaccia with Tomatoes",
+        "A Caesar salad",
+        "The answer: “I don’t think so.”",
+        "I'd expect a dish of fennel fries",
+        "A slice of foccaccia.",
+        "Pizza",
+        "Sicilian Focaccia",
+        "It would be a Focaccia",
+        "A glass of Verbal"
+      ],
+      "label": 1,
+      "n_correct": 0
+    },
+    {
+      "question": "'Professor Cuthbert Calculus' is an associate of which character?",
+      "gold_answers": [
+        "'TINTIN'",
+        "Tin-tin",
+        "Tin-Tin",
+        "Tin tin",
+        "TinTin",
+        "TINTIN",
+        "'TINTIN'",
+        "Tintin (disambiguation)",
+        "Tin Tin",
+        "Tintin (TV series)",
+        "Tintin"
+      ],
+      "responses": [
+        "'Professor Cur'",
+        "Arthur C. Clarke (in his book - The Curious Inc. : Science Fiction, Fantasy, and Romance in a Very Short Term )",
+        "Robert MacFarquhar",
+        "Cuthbert Calculus",
+        "Mr. Calculus",
+        "Arthur Cuthbert",
+        "Professor Calculus",
+        "Dr. Cuthbert Calculus",
+        "Cuthbert Calculus",
+        "Michael Paine"
+      ],
+      "label": 1,
+      "n_correct": 0
+    },
+    {
+      "question": "Who had a top album in 1985 with Like A Virgin",
+      "gold_answers": [
+        "Madonna",
+        "Madonna",
+        "Madonna (disambiguation)",
+        "Madonna (album) (disambiguation)",
+        "Madonna (film)"
+      ],
+      "responses": [
+        "Alain Doinel",
+        "Bono",
+        "Black Muddy, The Way",
+        "Iggy Pop",
+        "Tegan and Sara",
+        "M83",
+        "A Day at the Museum",
+        "Bob Dylan",
+        "George Harrison, John Lennon, and Paul McCartney",
+        "Dire Straits"
+      ],
+      "label": 1,
+      "n_correct": 0
+    },
+    {
+      "question": "Formula 1 driver Ayrton Senna died while leading the 1994 San Marino Grand Prix at which motor racing circuit?",
+      "gold_answers": [
+        "Imola",
+        "Imolensis",
+        "Ìmola",
+        "Forum Cornelii",
+        "Rocca Sforzesca",
+        "Imola"
+      ],
+      "responses": [
+        "San Marino",
+        "Tarn",
+        "Ayrton Senna",
+        "San Marino Grand Prix",
+        "San Marino Grand Prix",
+        "San Marino Grand Prix",
+        "San Marino",
+        "San Marino Grand Prix",
+        "San Marino Circuit",
+        "San Marino"
+      ],
+      "label": 1,
+      "n_correct": 0
+    },
+    {
+      "question": "Which is the only non-European country to have hosted the Winter Olympics only once?",
+      "gold_answers": [
+        "CANADA (1988)",
+        "CANADA (1988)"
+      ],
+      "responses": [
+        "Switzerland",
+        "Finland and South Korea",
+        "Russia",
+        "Kazakhstan",
+        "Russia",
+        "France",
+        "Norway",
+        "Switzerland",
+        "Russia (2004)",
+        "Sweden"
+      ],
+      "label": 1,
+      "n_correct": 0
+    },
+    {
+      "question": "What spirit, in Ireland and Scotland, makes noises near a house when someone is about to die?",
+      "gold_answers": [
+        "Banshee",
+        "Bean sidhe",
+        "Ben side",
+        "Bean síth",
+        "Bean Shìth",
+        "Bean sídhe",
+        "Ban-sith",
+        "Banshees",
+        "Bean-shidh",
+        "The banshee",
+        "Bean-sídhe",
+        "Bean Shith",
+        "Bansidhe",
+        "Ben shee",
+        "Bahr geist",
+        "Ban side",
+        "Bean sith",
+        "Banshee",
+        "Bean Sidhe",
+        "Benshee",
+        "Bán síde",
+        "Bean-shìdh",
+        "Ben síde",
+        "Bean Sídhe",
+        "Beah shith",
+        "Ban-sìth"
+      ],
+      "responses": [
+        "The Devil",
+        "Cymrita, Uilleamh",
+        "The air",
+        "The Devil",
+        "Death (Irish)",
+        "The Fear of Necessity",
+        "Euphoria",
+        "Irish. Irish. Irish. Irish people are not happy",
+        "Death itself",
+        "The Spirit of the Church of Ireland"
+      ],
+      "label": 1,
+      "n_correct": 0
+    },
+    {
+      "question": "Which Frenchman, a football administrator and head of FIFA from 1921 to1954 is regarded as the founder of the football World Cup?",
+      "gold_answers": [
+        "JULES RIMET",
+        "Jules Rimet",
+        "JULES RIMET"
+      ],
+      "responses": [
+        "Arsène Lunel",
+        "Marseille",
+        "Henri de Pradt",
+        "Didier Deschamps",
+        "Jacques Chirac",
+        "Robert Gignoux",
+        "Marius Petipa",
+        "Georges Bischoff (1954-1961)",
+        "Jean Désarmona",
+        "Paul Dréan"
+      ],
+      "label": 1,
+      "n_correct": 0
+    },
+    {
+      "question": "Star Trek: TOS was cancelled in 1969 after how many years on the air?",
+      "gold_answers": [
+        "3",
+        "3",
+        "three"
+      ],
+      "responses": [
+        "Ten years",
+        "",
+        "One, maybe two; it was re-created in 1974 and only the first few episodes were aired. (TOS: The Next Generation and Star Trek:",
+        "Four",
+        "14?",
+        "Seven",
+        "2",
+        "5 years",
+        "Eighty-two",
+        "One(1)"
+      ],
+      "label": 1,
+      "n_correct": 0
+    },
+    {
+      "question": "New Zealander Jack Lovelock gained fame in the1930's in which field?",
+      "gold_answers": [
+        "ATHLETICS",
+        "Athletics (track & field)",
+        "Athletics",
+        "Athletics (track+field)",
+        "Athletics (disambiguation)",
+        "Athletics (track 'n field)",
+        "The Athletics",
+        "Athletics (track 'n' field)",
+        "Athletics (overview)",
+        "Athletics (track n' field)",
+        "ATHLETICS",
+        "Athletics (track n field)",
+        "Athletics (track + field)",
+        "Athletics (sports)"
+      ],
+      "responses": [
+        "Biochemistry",
+        "Physic",
+        "Astrophysicist",
+        "Aerospace Technology",
+        "Biochemistry",
+        "Aerospace",
+        "Physics",
+        "Geology",
+        "Astronomics",
+        "Environmental science"
+      ],
+      "label": 1,
+      "n_correct": 0
+    },
+    {
+      "question": "John Hannah and Ken Stott have both appeared in the role of which fictional detective?",
+      "gold_answers": [
+        "John Rebus",
+        "Insepctor Rebus",
+        "Detective Sergeant John Rebus",
+        "Detective Inspector John Rebus",
+        "Detective Inspector Rebus",
+        "DI John Rebus",
+        "Inspector John Rebus",
+        "DI Rebus",
+        "John Rebus"
+      ],
+      "responses": [
+        "Detective Lt. John Smith and Detective Investigator Lieutenant Parnell",
+        "Tom Welling and John Barry",
+        "John Hannah and Ken Stott",
+        "Jasper Constable and Hercule Poirot",
+        "John Hannah",
+        "Ken and Ken",
+        "The Dirty Dozen Unit",
+        "Ken Stott from Police vs. Crime",
+        "John Hancock and Inspector Reginald Fawlty",
+        "John Doe"
+      ],
+      "label": 1,
+      "n_correct": 0
+    },
+    {
+      "question": "What is the last name name of the doctor who first described a certain disease in An Essay on the Shaking Palsy written in 1817?",
+      "gold_answers": [
+        "Dr. (James) Parkinson",
+        "Dr. (James) Parkinson"
+      ],
+      "responses": [
+        "Simon Pline",
+        "William Shakespeare",
+        "Sigmund Freud",
+        "Francis Galton",
+        "George Bernard Shaw",
+        "Daniel Leete",
+        "David M. Hare",
+        "Charles Darwin",
+        "Galen",
+        "John Parkinson"
+      ],
+      "label": 1,
+      "n_correct": 0
+    },
+    {
+      "question": "Who had an 80s No 1 hit with Hold On To The Nights?",
+      "gold_answers": [
+        "Richard Marx",
+        "Richard Noel Marx",
+        "Richard Marx"
+      ],
+      "responses": [
+        "Elvis Presley",
+        "Stephen Foster",
+        "Mick Jagger",
+        "George Michael",
+        "The Beatles",
+        "Dita Von Teese",
+        "Elvis",
+        "John Lennon",
+        "Mandy Moore",
+        "The Beatles"
+      ],
+      "label": 1,
+      "n_correct": 0
+    },
+    {
+      "question": "Elizabeth Gaskill based her fictional village 'Cranford' on which place in Cheshire?",
+      "gold_answers": [
+        "KNUTSFORD",
+        "Knuttesford",
+        "High Legh Primary School",
+        "High Legh primary shool",
+        "Knutsford",
+        "KNUTSFORD"
+      ],
+      "responses": [
+        "In Flintshire",
+        "Cranford",
+        "Manchester",
+        "Cranford",
+        "Cotswold",
+        "Cranford",
+        "England",
+        "East Cheshire",
+        "The village of Cranford, Lancashire",
+        "Gillingham, near Ipswich"
+      ],
+      "label": 1,
+      "n_correct": 0
+    },
+    {
+      "question": "How many coloured squares are there on the surface of a Rubik's cube?",
+      "gold_answers": [
+        "54",
+        "54",
+        "fifty-four"
+      ],
+      "responses": [
+        "One",
+        "Four",
+        "4",
+        "3",
+        "Two",
+        "1, 2, 3, 4, 6, 8, and 16",
+        "4",
+        "Six",
+        "4",
+        "8"
+      ],
+      "label": 1,
+      "n_correct": 0
+    },
+    {
+      "question": "The book The Red badge of Courage was set during which war?",
+      "gold_answers": [
+        "AMERICAN CIVIL WAR",
+        "Civil War in the United States",
+        "USA civil war",
+        "United States civil war",
+        "Recent Unpleasantness",
+        "Civil war usa",
+        "Civil War (US)",
+        "Upcountry Unionist",
+        "Secession winter",
+        "War of the States",
+        "Civil War (U.S. history)",
+        "Us Civil war",
+        "The War of Northern Agression",
+        "American Civil War",
+        "The Recent Unpleasantness",
+        "Buchanan's War",
+        "Civil War (American)",
+        "American Secession War",
+        "Secession War",
+        "U.S. Civil War",
+        "Civil War (United States)",
+        "The us civil war",
+        "Us civil war",
+        "Civil War Era",
+        "The American Civil War",
+        "American Civil war",
+        "The U.S. Civil War",
+        "United States Civil War",
+        "The War Between the States",
+        "U.S. Civil war",
+        "The Late Unpleasantness",
+        "AMERICAN CIVIL WAR",
+        "Us Civil War",
+        "Conservative Rebellion",
+        "Secession, War of",
+        "Civil War States",
+        "Civil War of the United States",
+        "US civil war",
+        "American civil war",
+        "American States Secession War",
+        "United states civil war",
+        "Civil War, American",
+        "Military history of the Confederate States",
+        "Civil War (U.S.)",
+        "Civil war of the us",
+        "The War of the Rebellion",
+        "American sivil war",
+        "U S Civil War",
+        "US Civil war",
+        "U. S. Civil War",
+        "US Civil War"
+      ],
+      "responses": [
+        "The War of 1812",
+        "1918",
+        "The French Resistance",
+        "The war that ended World War I",
+        "In the First and Second World Wars, during the First World War.",
+        "From the time of Romeo and Juliet to World War II",
+        "The Second World War 1939-1945",
+        "The Great War",
+        "Desert Storm",
+        "The Second World War"
+      ],
+      "label": 1,
+      "n_correct": 0
+    },
+    {
+      "question": "What 2009 hit record by Lily Allen concerns her boyfriend's performance in the bedroom?",
+      "gold_answers": [
+        "Not Fair",
+        "Not Fair",
+        "Not Fair (Lily Allen song)",
+        "Not Fair (song)"
+      ],
+      "responses": [
+        "The Sound Of Music",
+        "'Sick'",
+        "'Just Friends'.",
+        "It's the sexiest sex ever",
+        "The Sex Shop",
+        "'I just finished recording the video on YouTube, and I love it so much it got into the top 10.'",
+        "'Lily Allen with the 'F**k You' album'",
+        "She has never taken performance-enhancing drugs",
+        "'Moonlight' (2012) - #35 on UK Singles Chart",
+        "Lush"
+      ],
+      "label": 1,
+      "n_correct": 0
+    },
+    {
+      "question": "What does a querulous person do?",
+      "gold_answers": [
+        "Complain",
+        "Formal complaint",
+        "Complaining",
+        "Complaint (law)",
+        "Fussers",
+        "Police report",
+        "Legal action",
+        "Bitching",
+        "Complaint",
+        "Complains",
+        "Fusser",
+        "Fusses",
+        "Fussed",
+        "Amended complaint",
+        "Carping",
+        "Complaints",
+        "Criminal complaint",
+        "Complain",
+        "Complained",
+        "Carpers",
+        "Cross-complaint",
+        "Complainer",
+        "Fussingly",
+        "Complainers",
+        "Carped",
+        "Fussing"
+      ],
+      "responses": [
+        "Hide",
+        "To ask questions",
+        "Go on a rollercoaster",
+        "Repeat every five years",
+        "Tell people when they are wrong",
+        "Quit",
+        "Calls the government's attention to",
+        "Fail",
+        "Cue-cue-cue",
+        "Read an article about an alleged UFO."
+      ],
+      "label": 1,
+      "n_correct": 0
+    },
+    {
+      "question": "What is the name of the life-size plastic dummies in the television series Doctor Who, the first of which arrived on Earth in hollow plastic meteorites with deadly weapons concealed in their hands?",
+      "gold_answers": [
+        "Autons",
+        "Nestene Consciousness",
+        "Nestene",
+        "Auton",
+        "Autons",
+        "Nestenes"
+      ],
+      "responses": [
+        "A Dalek",
+        "Dr. Barbara Hambros",
+        "The Monty Python's Flying Circus",
+        "The Deus Pater Patriae",
+        "Stenographic Man",
+        "the Cybermen",
+        "\"Doomsday Clock\"",
+        "Jodie Foster",
+        "The Rookies",
+        "The D-V-S-R-I."
+      ],
+      "label": 1,
+      "n_correct": 0
+    },
+    {
+      "question": "In Norse mythology, what group of female figures decides who lives and dies during battle, and then transports half of the dead to Valhalla?",
+      "gold_answers": [
+        "Valkyries",
+        "Valkyre",
+        "Göl",
+        "Walkyries",
+        "Valkyr",
+        "Goell",
+        "Valkyrs",
+        "Wælcyrge",
+        "Valmeyjar",
+        "Valkaria",
+        "Valkryie",
+        "Gol (Valkyrie)",
+        "Hlokk",
+        "Valkrie",
+        "Valkyria",
+        "Hair link",
+        "Skeggjald",
+        "Choosers of the Slain",
+        "Valkyrjur",
+        "Herfjoturr",
+        "Valkyries",
+        "Walkyrie",
+        "Valcyrie",
+        "Wagner's valkyries",
+        "Valkyrie (Norse mythology)",
+        "Choosers of the slain",
+        "Wælcyrige",
+        "Valkyrie",
+        "Goll (Valkyrie)",
+        "Waelcyrge",
+        "Valkyrie (Wagner)"
+      ],
+      "responses": [
+        "Odin, Borí, Knut, Thor, Freyr, and Aengus",
+        "",
+        "Rhea",
+        "Valhalla and the Nordic Frost-Gods",
+        "Freya and Hestia.",
+        "Brunnhilde, Heloise, Athena, and the Goddess of Beauty",
+        "Ginnungagap and",
+        "Thor",
+        "Ragnarök (literally \"The Last Sage\"). This event is also known as \"Age of Mjolnir\" or \"Ragnar",
+        "Ava (female aspect) and Loki"
+      ],
+      "label": 1,
+      "n_correct": 0
+    },
+    {
+      "question": "Which island has belonged to Carthage, Rome, the Saracens, the King of Aragon, the Dukes of Savoy, United Italy under Victor Emmanuel and was granted autonomous government in 1947?",
+      "gold_answers": [
+        "Sardinia",
+        "Sardic",
+        "Sardinia",
+        "Sardegna",
+        "Sardinia (Italy)",
+        "Sardigna",
+        "Sardinia in the Middle Ages",
+        "Sɑrˈdɪnɪə",
+        "Sardinia, Italy"
+      ],
+      "responses": [
+        "The Ionian Islands",
+        "Italy",
+        "Gallia Regia",
+        "Palermo",
+        "Sicily",
+        "Sicily",
+        "Sicily",
+        "Sicily",
+        "Sicily",
+        "Sicily"
+      ],
+      "label": 1,
+      "n_correct": 0
+    },
+    {
+      "question": "Which writer created the detective Charlie Chan?",
+      "gold_answers": [
+        "EARL DERR BIGGERS",
+        "EARL DERR BIGGERS",
+        "Earl Biggers",
+        "Earl Derr Biggers"
+      ],
+      "responses": [
+        "Graham Greene",
+        "Philip K. Dick",
+        "Joseph Blot",
+        "Punchy",
+        "Charles Lamont",
+        "John Galsworthy",
+        "Frank Herbert",
+        "Albert Fleisner and Richard Aldrich",
+        "Charles Babbage",
+        "James Bond"
+      ],
+      "label": 1,
+      "n_correct": 0
+    },
+    {
+      "question": "In 1919, which Dadaist created L.H.O.O.Q., a parody of the Mona Lisa, in which a moustache and goatee beard were added to a reproduction of the painting?",
+      "gold_answers": [
+        "Marcel Duchamp",
+        "Marcel du Champ",
+        "Duchampian",
+        "Marcel Duchamp",
+        "Duchamp",
+        "R.Mutt",
+        "Marcel duChamp",
+        "Henri-Robert-Marcel Duchamp"
+      ],
+      "responses": [
+        "Dada",
+        "Dada",
+        "Unknown (it probably did not survive).",
+        "Louis C. Kahn",
+        "Georges Rouault",
+        "The Mona Lisa",
+        "L.H.O.O.Q., Mona Lisa of 1919",
+        "L.H.O.O.Q.",
+        "Paul Celan",
+        "Alphonse Daudet"
+      ],
+      "label": 1,
+      "n_correct": 0
+    },
+    {
+      "question": "Which war veterna, who died in 2009 had the nickname 'The Last Fighting Tommy'?",
+      "gold_answers": [
+        "HARRY PATCH",
+        "Harry Patch",
+        "HARRY PATCH",
+        "Henry John Patch"
+      ],
+      "responses": [
+        "World War II",
+        "Desert Storm",
+        "The Vietnam War",
+        "Afghanistan in 2008",
+        "The Cold War",
+        "The Vietnam War",
+        "World War Z",
+        "The Last Fighting Tommy",
+        "The Falklands War",
+        "The last fighting Tommy"
+      ],
+      "label": 1,
+      "n_correct": 0
+    },
+    {
+      "question": "Beethoven wrote only one opera, can you name it?",
+      "gold_answers": [
+        "Fidelio",
+        "Leonore",
+        "Fidelio, Opus 72c (Beethoven)",
+        "Fidelio",
+        "Leonore Overture No. 1",
+        "Leonore Overture No. 3",
+        "Leonore Overture No. 2",
+        "Leonore No. 2",
+        "Leonore No. 3",
+        "Leonore No. 1",
+        "Leonore III",
+        "Leonore I",
+        "Leonora Overtures",
+        "Leonore II"
+      ],
+      "responses": [
+        "The Last Mussorgal",
+        "Le nozze di Figaro",
+        "Nope",
+        "Symphony no. 39 in B minor; opus No. 3 in C.",
+        "Op. 14",
+        "Violin Concerto in B minor",
+        "First Choral drama written by J. S. Bach",
+        "I don't know.",
+        "Visions of light",
+        "Symphony in D, No. 15 (Op. 13; \"Ave Maria\")"
+      ],
+      "label": 1,
+      "n_correct": 0
+    },
+    {
+      "question": "What is the collective name for a group of hawks or falcons?",
+      "gold_answers": [
+        "CAST",
+        "CAST",
+        "CAST (disambiguation)"
+      ],
+      "responses": [
+        "The Black Parakeet",
+        "Corvidae",
+        "Spangled Breeches",
+        "Scimitus",
+        "Hawks",
+        "Falcons",
+        "Aragorn",
+        "The Hens",
+        "Pheasants",
+        "Falcons."
+      ],
+      "label": 1,
+      "n_correct": 0
+    },
+    {
+      "question": "Which Norwegian firm supposedly produced the first fleece fabrics in the 1960s?",
+      "gold_answers": [
+        "Helly Hansen",
+        "Helly Juell Hansen",
+        "Helly-Hansen",
+        "Helly Hansen"
+      ],
+      "responses": [
+        "H&M",
+        "Johan, Johan, Johan",
+        "Muddy.",
+        "Røde Hagen and Solex",
+        "Norway",
+        "Yarnbarn & Co (now known as Spandau Arts Museum) which was founded by a Norwegian immigrant (now in his nineties)",
+        "Sonderland AB",
+        "Løwe",
+        "Torsøl (Norway)",
+        "A/S Håkon Hare"
+      ],
+      "label": 1,
+      "n_correct": 0
+    },
+    {
+      "question": "For what role in the film musical 'Chicago' did Catherine Zeta Jones win the Best Supporting Actress Oscar?",
+      "gold_answers": [
+        "Velma",
+        "Velma (disambiguation)",
+        "Velma"
+      ],
+      "responses": [
+        "Catherine Zeta Jones",
+        "Marie Curie",
+        "Catherine Zeta Jones",
+        "Christine Laird (played by Cate Blanchett)",
+        "Songstress, Chicago-esque.",
+        "As a comic relief character in a play by Edward S. Lowe",
+        "Vera Miles",
+        "The Girl of the Rock",
+        "The first cast member to win an Oscar but who was not on the cast. The most Oscar winning woman was Jane Powell, but she was a bit nervous when",
+        "Cathy Baker"
+      ],
+      "label": 1,
+      "n_correct": 0
+    },
+    {
+      "question": "What was the name of Shari Lewis' sassy sock puppet?",
+      "gold_answers": [
+        "Lamb Chop.",
+        "Lamb Chop",
+        "Lamb chop",
+        "Lamb Chop.",
+        "Lamb chop (disambiguation)",
+        "Lamb chops",
+        "Lambchop"
+      ],
+      "responses": [
+        "R.E.M.The Eagles",
+        "Dodo",
+        "Lady Squeers",
+        "Blondie",
+        "Shari Lewis",
+        "Shari Lewis",
+        "\"Blaze!\"",
+        "Shari Lewis",
+        "Stink Bubs",
+        "\"The Cat in the Hat\""
+      ],
+      "label": 1,
+      "n_correct": 0
+    },
+    {
+      "question": "What was the first name of the Kray twins' mother",
+      "gold_answers": [
+        "Violet",
+        "Violet LP",
+        "Violets",
+        "Violet (character)",
+        "Violet",
+        "Violet (song)",
+        "Violet (film)",
+        "Violet Single",
+        "Violet (disambiguation)",
+        "Violet (Character)",
+        "Violet (album)"
+      ],
+      "responses": [
+        "Annette",
+        "Mary",
+        "Ickymoo",
+        "Mira",
+        "Moe and Nola",
+        "Brienne",
+        "William",
+        "Anne and Joseph KrayThe present invention relates to systems for providing computer networks and more particularly to the use of shared network components such as computer workstations",
+        "Dena and Rhea",
+        "Eileen"
+      ],
+      "label": 1,
+      "n_correct": 0
+    },
+    {
+      "question": "Which bridge connects Detroit, Michigan, USA and Windsor, Ontario, Canada?",
+      "gold_answers": [
+        "Ambassador bridge",
+        "Canada Transit Company",
+        "Detroit International Bridge Company",
+        "WPYF269",
+        "Canadian Transit Company",
+        "Ambassador International Bridge",
+        "Ambassador bridge",
+        "The Ambassador Bridge",
+        "Ambassador Bridge"
+      ],
+      "responses": [
+        "Detroit-Westville-New Windsor",
+        "PNC",
+        "Canada, Canada",
+        "Canada and Ontario",
+        "Ontario Street Bridge",
+        "Niagara Falls",
+        "Canada",
+        "Tweed Arm",
+        "Rockbridge Bridge",
+        "Michigan Avenue"
+      ],
+      "label": 1,
+      "n_correct": 0
+    },
+    {
+      "question": "Since the foundation of the Football League which is the only team from outside the League (or Premier League) to win the FA Cup, doing so in 1901?",
+      "gold_answers": [
+        "Tottenham Hotspur",
+        "Tottenham Hotspurs F.C.",
+        "Tottenham Hotspur F. C.",
+        "Spurs manager",
+        "Tottenham Hotspur Foundation",
+        "Tottenham Hostpur",
+        "Tottenham FC",
+        "The lilywhites",
+        "Hotspur F.C.",
+        "Hotspur Football Club",
+        "Tottenham Hotspur F C",
+        "Hotspurs",
+        "COYS",
+        "Hotspur (disambiguation)",
+        "Tottenham Hotspur F.C",
+        "THFC",
+        "Tottenham Hotspurs",
+        "Tottenham Hotspur F.C.",
+        "Tottenham Hotspur Football Club",
+        "Hotspur",
+        "Tottenham Hotspur FC",
+        "Tottenham Hotspur",
+        "Thfc",
+        "Tottenham Hotspurs FC",
+        "Audere est facere",
+        "FC Tottenham",
+        "Spurs FC",
+        "Yid Army"
+      ],
+      "responses": [
+        "Arsenal",
+        "The League and I.",
+        "Sir Harry Lever",
+        "1905",
+        "Newcastle United",
+        "1905",
+        "Harry Neale",
+        "Leeds United",
+        "1909",
+        "Manchester United from 1923 (after they won the FA Cup)"
+      ],
+      "label": 1,
+      "n_correct": 0
+    },
+    {
+      "question": "Which St Helens born ex Rugby League player died recently after a seven year battle with cancer during which he raised thousands of pounds for charity?",
+      "gold_answers": [
+        "STEVE PRESCOTT",
+        "Stephen Prescott",
+        "Steve Prescott",
+        "STEVE PRESCOTT"
+      ],
+      "responses": [
+        "Harry Barnes who died in 2007 following a life long battle with cancer",
+        "Stephen Finell – ex Scotland winger died in October 2013",
+        "Tom Finch",
+        "St Helens Rugby League",
+        "John Riddell",
+        "Sir Tom Paine",
+        "Jack Gower",
+        "David Hogg, a former school teacher, and his wife, Sally, a journalist, had three lives inextricably linked",
+        "Michael Pritchard",
+        "Jim Smitfield"
+      ],
+      "label": 1,
+      "n_correct": 0
+    },
+    {
+      "question": "Taphephobia is the abnormal fear of being what?",
+      "gold_answers": [
+        "Buried alive",
+        "Texan funeral",
+        "Burying alive",
+        "Premature burial",
+        "Buried alive",
+        "Was buried alive",
+        "Be buried alive",
+        "Burial Alive",
+        "Being buried alive",
+        "Live burial",
+        "Texas funeral",
+        "Vivisepulture",
+        "Premature Interment",
+        "Living burial",
+        "Burial alive",
+        "London Association for the Prevention of Premature Burial"
+      ],
+      "responses": [
+        "Being what you are not",
+        "I am being attacked by a tiger",
+        "Taphero",
+        "Touching others as being important",
+        "I am angry because the government in Egypt has just invaded Gaza.",
+        "Being a woman (or a person of a certain sex)",
+        "Talking",
+        "Being",
+        "What",
+        "Lactophobia"
+      ],
+      "label": 1,
+      "n_correct": 0
+    },
+    {
+      "question": "Which singer had a 2008 number one hit with the song 'Take A Bow'?",
+      "gold_answers": [
+        "RIHANNA",
+        "RihRih",
+        "Rianna",
+        "Robyn R. Fenty",
+        "Emergency room (song)",
+        "Whipping My Hair",
+        "Ihanna",
+        "Westbury Road Entertainment",
+        "Rihanna (singer)",
+        "Emergency Room (Rihanna song)",
+        "James Joint",
+        "Emergency Room (Featuring Akon)",
+        "Diamonds tour",
+        "Rihanna in popular culture",
+        "RiRi",
+        "Robyn Fenty",
+        "Rihanna Fenty",
+        "Whippin' My Hair",
+        "Whipping My Hair (Rihanna Song)",
+        "RIHANNA",
+        "Rihana",
+        "Riri",
+        "Rihanna",
+        "Renown (Rihanna album)",
+        "Rihannah",
+        "Coffret 4 CD",
+        "Rihanna: World Tour 2013",
+        "Robyn Rihanna",
+        "Robyn Rihanna Fenty"
+      ],
+      "responses": [
+        "Bono",
+        "Lady Gaga",
+        "Bono",
+        "Miley Cyrus",
+        "'Just one more time', 'The one thing I need'",
+        "Marianne Faithfull",
+        "Katy Perry",
+        "David Brophy",
+        "Katy Perry",
+        "Madonna"
+      ],
+      "label": 1,
+      "n_correct": 0
+    },
+    {
+      "question": "Which US President died in office in July 1850 to be succeeded by his Vice President Millard Fillmore?",
+      "gold_answers": [
+        "ZACHARY TAYLOR",
+        "Zachary Talor",
+        "General Taylor",
+        "President Taylor",
+        "Zach Taylor",
+        "12th President of the United States",
+        "ZACHARY TAYLOR",
+        "General Zachary Taylor",
+        "Old rough and ready",
+        "Zachary taylor",
+        "Zachary Taylor judicial appointments",
+        "Zachery Taylor",
+        "List of judicial appointments made by Zachary Taylor",
+        "Zachary Tyler",
+        "Taylor Administration",
+        "List of federal judges appointed by Zachary Taylor",
+        "Zachary Taylor",
+        "Presidency of Zachary Taylor",
+        "Old Rough and Ready"
+      ],
+      "responses": [
+        "Millard Fillmore",
+        "Millard Fillmore",
+        "Abraham Lincoln on April 3, 1809",
+        "Millard Fillmore",
+        "Ulysses Grant",
+        "Millard Fillmore",
+        "John Quincy Adams",
+        "Millard Fillmore",
+        "Abraham Lincoln",
+        "Abraham Lincoln"
+      ],
+      "label": 1,
+      "n_correct": 0
+    },
+    {
+      "question": "Wednesday Friday is the youngest member of which TV family from the 1960s?",
+      "gold_answers": [
+        "ADDAMS",
+        "Addams Family, The",
+        "ADDAMS",
+        "The Addams Family",
+        "The addams family",
+        "Adam's Family",
+        "Addam's Family",
+        "The Addams",
+        "Pubert",
+        "The new Addams Family",
+        "The Addams Family (1992)",
+        "The Addams Family (1973)",
+        "0001 Cemetery Ridge",
+        "Addams Family",
+        "The Addams Family (1964)",
+        "The Beinekes",
+        "Addams family"
+      ],
+      "responses": [
+        "The O'Mollons (from 1965), the Perrins (from 1973), and the Stromers (from 1978)The purpose of this",
+        "My Dad",
+        "Bill Nye the Science Guy",
+        "The family of NBC's \"The Adventures of Superman\"",
+        "My mother",
+        "Mia",
+        "Michael Jackson",
+        "My dad",
+        "Michael Jackson",
+        "Betty White from Little Women from 1976"
+      ],
+      "label": 1,
+      "n_correct": 0
+    },
+    {
+      "question": "At what fret are found the same notes as the open strings, but an octave higher, on a standard guitar?",
+      "gold_answers": [
+        "12th",
+        "12th",
+        "12",
+        "twelve"
+      ],
+      "responses": [
+        "A sharp B",
+        "G major",
+        "Bb, F#4, Gb, as required",
+        "In G",
+        "Clocks",
+        "G#(D)",
+        "There are no fretting notes. The frets are tuned to one tone in the open string, and one tone in the string that is used to create the",
+        "3/4 octave",
+        "1",
+        "V"
+      ],
+      "label": 1,
+      "n_correct": 0
+    }
+  ],
+  "scanned": 69,
+  "model_id": "EleutherAI/pythia-410m"
+}
