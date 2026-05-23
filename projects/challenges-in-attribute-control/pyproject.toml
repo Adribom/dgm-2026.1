@@ -1,0 +1,65 @@
+[project]
+name = "binding-research"
+version = "0.1.0"
+description = "Investigation of attribute binding failures in Stable Diffusion: dataset bias, CLIP blindness, and corrective finetuning."
+requires-python = ">=3.10"
+readme = "README.md"
+
+dependencies = [
+    # core numerics & data
+    "numpy>=1.26",
+    "pandas>=2.1",
+    "scipy>=1.11",
+    "pyyaml>=6.0",
+
+    # plotting (only used in notebooks; safe to keep in main deps for Colab)
+    "matplotlib>=3.8",
+    "seaborn>=0.13",
+
+    # ML core
+    "torch>=2.1",
+    "transformers>=4.40",         # CLIP and VLMs
+    "diffusers>=0.27",             # Stable Diffusion 1.5 pipeline
+    "accelerate>=0.30",            # Required by diffusers for device handling
+    "safetensors>=0.4",
+    "Pillow>=10.0",
+
+    # dataset access
+    "datasets>=2.18",              # LAION streaming (Exp 1)
+    "huggingface_hub>=0.23",
+
+    # progress & utilities
+    "tqdm>=4.66",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "pytest-cov>=4.1",
+    "ruff>=0.4",                   # linter + formatter
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/binding"]
+
+# ── Ruff: linting + formatting in one tool ──────────────────────────────────
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
+ignore = ["E501"]
+
+[tool.ruff.format]
+quote-style = "double"
+
+# ── pytest configuration ────────────────────────────────────────────────────
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+addopts = "-v --strict-markers"

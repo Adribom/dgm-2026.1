@@ -1,0 +1,31 @@
+# Shared object × color taxonomy.
+#
+# These lists define the pair space (12 × 10 = 120 pairs) used across
+# all experiments. Centralizing them here prevents drift between
+# experiments and makes the "120 pairs" claim verifiable.
+
+objects:
+  - "polar bear"
+  - "chalkboard"
+  - "banana"
+  - "apple"
+  - "dog"
+  - "chair"
+  - "flower"
+  - "shoe"
+  - "bag"
+  - "frog"
+  - "ball"
+  - "car"
+
+colors:
+  - "blue"
+  - "yellow"
+  - "red"
+  - "green"
+  - "pink"
+  - "orange"
+  - "purple"
+  - "white"
+  - "black"
+  - "brown"
