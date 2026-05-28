@@ -16,6 +16,16 @@ Output:
 
 The manifest records the original LAION URL and caption for provenance and
 debugging ONLY. Per the design rule, those captions never reach training.
+
+Usage:
+    python experiments/exp5_collect_laion.py \\
+        --split results/exp5_split/finetuning_split.csv \\
+        --out-root data/finetuning/candidates \\
+        --per-pair 30 \\
+        --max-scan 3000000
+
+Note on --per-pair: collect MORE than the final target (e.g. 30 to end up
+with 15), because the VLM verification step will reject a fraction.
 """
 
 from __future__ import annotations
@@ -29,10 +39,8 @@ _REPO_ROOT = Path(__file__).resolve().parent.parent
 if str(_REPO_ROOT / "src") not in sys.path:
     sys.path.insert(0, str(_REPO_ROOT / "src"))
 
-from binding.laion_collect import CollectionTargets, download_image, iter_candidates 
-from binding.seeds import set_all_seeds  
-
-
+from binding.laion_collect import CollectionTargets, download_image, iter_candidates  
+from binding.seeds import set_all_seeds 
 
 import re  
 
@@ -91,8 +99,24 @@ def main() -> int:
     targets = CollectionTargets(needed={pair: args.per_pair for pair in pairs})
 
     print(f"\n[collect] loading LAION-400M (streaming)…")
+    
+    import os
     from datasets import load_dataset
-    dataset = load_dataset("laion/laion400m", split="train", streaming=True)
+    from huggingface_hub import HfFolder
+
+    token = os.environ.get("HF_TOKEN") or HfFolder.get_token()
+    if not token:
+        raise RuntimeError(
+            "No Hugging Face token found. Either:\n"
+            "  (a) set the HF_TOKEN environment variable, or\n"
+            "  (b) run `huggingface-cli login` once on this machine.\n"
+            "The token also needs access to https://huggingface.co/datasets/laion/laion400m "
+            "(accept the dataset terms on the page if you haven't)."
+        )
+
+    dataset = load_dataset(
+        "laion/laion400m", split="train", streaming=True, token=token,
+    )
     dataset = dataset.shuffle(buffer_size=10000, seed=args.seed)
 
     args.out_root.mkdir(parents=True, exist_ok=True)
@@ -122,9 +146,11 @@ def main() -> int:
         pair_dir.mkdir(parents=True, exist_ok=True)
         img_path = pair_dir / f"cand_{idx:03d}.png"
         img.save(img_path)
+    
+        rel_path = img_path.relative_to(args.out_root).as_posix()
         writer.writerow([
             cand.object_name, cand.color, idx,
-            str(img_path.relative_to(args.out_root)),
+            rel_path,
             cand.url, cand.original_caption[:300],
         ])
         mf.flush()
