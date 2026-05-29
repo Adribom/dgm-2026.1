@@ -1,6 +1,6 @@
 # FakeVLM-Extended
 
-Extends [FakeVLM](https://github.com/) (LLaVA 1.5) with a modular frequency-domain feature branch for improved deepfake detection on FakeClue.
+Extends [FakeVLM](https://huggingface.co/lingcco/fakeVLM) (LLaVA 1.5) with a modular frequency-domain feature branch for improved deepfake detection on FakeClue.
 
 ## Architecture
 
@@ -38,19 +38,32 @@ torchrun --nproc_per_node=1 -m FakeVLM_extended.train \
     --model_local_path ../models/FakeVLM \
     --data_path ../data/external/FakeClue/data_json/train_frequency.json \
     --image_folder ../data/external/FakeClue/train \
-    --output_dir FakeVLM_extended/output/stage1 \
+    --output_dir ../models/FakeVLM_extended/stage1 \
     --bf16 True \
-    --num_train_epochs 3 \
+    --num_train_epochs 1 \
     --per_device_train_batch_size 8 \
+    --gradient_accumulation_steps 2 \
     --learning_rate 1e-3 \
+    --warmup_steps 186 \
+    --lr_scheduler_type cosine \
+    --weight_decay 0.01 \
+    --eval_split_ratio 0.05 \
+    --eval_strategy steps \
+    --eval_steps 1000 \
+    --logging_steps 50 \
+    --save_strategy steps \
+    --save_steps 1000 \
+    --save_total_limit 3 \
+    --report_to none \
     --freq_extractor_name fft \
     --freq_pool_size 32 \
     --training_stage 1 \
     --use_lora False \
+    --dataloader_num_workers 4 \
     --deepspeed FakeVLM_extended/ds_configs/zero2.json
 ```
 
-Output: `FakeVLM_extended/output/stage1/freq_projector.pt`
+Output: `freq_projector.pt` + trainer state in the output directory.
 
 ### Stage 2 -- Fine-tune Vicuna with LoRA + frequency projector
 
@@ -62,22 +75,34 @@ torchrun --nproc_per_node=1 -m FakeVLM_extended.train \
     --model_local_path ../models/FakeVLM \
     --data_path ../data/external/FakeClue/data_json/train_frequency.json \
     --image_folder ../data/external/FakeClue/train \
-    --output_dir FakeVLM_extended/output/stage2 \
+    --output_dir ../models/FakeVLM_extended/stage2 \
     --bf16 True \
-    --num_train_epochs 5 \
+    --num_train_epochs 3 \
     --per_device_train_batch_size 4 \
+    --gradient_accumulation_steps 4 \
+    --gradient_checkpointing True \
     --learning_rate 2e-5 \
+    --warmup_steps 558 \
+    --weight_decay 0.0 \
+    --lr_scheduler_type cosine \
+    --eval_split_ratio 0.05 \
+    --eval_strategy steps \
+    --eval_steps 1000 \
+    --logging_steps 50 \
+    --save_strategy steps \
+    --save_steps 1000 \
+    --save_total_limit 3 \
+    --report_to none \
     --freq_extractor_name fft \
     --freq_pool_size 32 \
     --training_stage 2 \
-    --freq_projector_checkpoint FakeVLM_extended/output/stage1/freq_projector.pt \
     --use_lora True \
-    --lora_r 8 \
-    --lora_alpha 16 \
+    --freq_projector_checkpoint ../models/FakeVLM_extended/stage1/freq_projector.pt \
+    --dataloader_num_workers 4 \
     --deepspeed FakeVLM_extended/ds_configs/zero2.json
 ```
 
-Output: LoRA adapter in `FakeVLM_extended/output/stage2/` + `freq_projector.pt`
+Output: LoRA adapter (`adapter_model.safetensors`) + `freq_projector.pt` in the output directory.
 
 ### Quick CPU test
 
@@ -124,14 +149,28 @@ python -m FakeVLM_extended.train \
 
 ## Evaluation
 
+The `--freq-projector-checkpoint` argument is optional. Omit it to evaluate the base FakeVLM model (baseline).
+
+### Baseline (FakeVLM without frequency features)
+
 ```bash
 python -m FakeVLM_extended.eval \
     --model-local-path ../models/FakeVLM \
-    --freq-projector-checkpoint FakeVLM_extended/output/stage2/freq_projector.pt \
-    --lora-adapter-path FakeVLM_extended/output/stage2 \
-    --data-path ../data/external/FakeClue/data_json/test_frequency.json \
+    --data-path ../data/external/FakeClue/data_json/test.json \
     --image-folder ../data/external/FakeClue/test \
-    --output-path FakeVLM_extended/results.json
+    --output-path ../reports/baseline/eval_results.json
+```
+
+### FakeVLM-Extended (Stage 2)
+
+```bash
+python -m FakeVLM_extended.eval \
+    --model-local-path ../models/FakeVLM \
+    --freq-projector-checkpoint ../models/FakeVLM_extended/stage2/freq_projector.pt \
+    --lora-adapter-path ../models/FakeVLM_extended/stage2 \
+    --data-path ../data/external/FakeClue/data_json/test.json \
+    --image-folder ../data/external/FakeClue/test \
+    --output-path ../reports/fft/eval_results.json
 ```
 
 ### Quick CPU test
@@ -147,6 +186,27 @@ python -m FakeVLM_extended.eval \
     --device cpu \
     --max-samples 2
 ```
+
+## Publishing to HuggingFace Hub
+
+Push the Stage 2 LoRA adapter, frequency projector weights, and inference code to HuggingFace:
+
+```bash
+huggingface-cli login
+
+python -m FakeVLM_extended.push_to_hub \
+    --stage2-dir ../models/FakeVLM_extended/stage2 \
+    --repo-id <username>/FakeVLM-extended \
+    --private
+```
+
+The script uploads:
+- `adapter_model.safetensors` -- LoRA weights (~39 MB)
+- `freq_projector.pt` -- frequency projector weights (~81 MB)
+- `adapter_config.json` -- LoRA config (base model path fixed to `lingcco/fakeVLM`)
+- Tokenizer files
+- `FakeVLM_extended/` -- inference code (model, extractors, loader)
+- `README.md` -- model card with usage example
 
 ## Creating a new extractor
 
@@ -234,6 +294,8 @@ FakeVLM_extended/
 |   |-- __init__.py             # Registry: get_extractor(name, **kwargs)
 |   |-- base.py                 # BaseFrequencyExtractor ABC
 |   +-- fft.py                  # FFTExtractor (log-magnitude FFT spectrum)
+|-- ds_configs/
+|   +-- zero2.json              # DeepSpeed ZeRO-2 configuration
 |-- model.py                    # ExtendedProjector + extend_model()
 |-- frequency_projector.py      # FrequencyProjector MLP (trainable)
 |-- collator.py                 # Extended collator (577-token expansion)
@@ -243,6 +305,7 @@ FakeVLM_extended/
 |-- utils.py                    # Trainer, helpers (adapted from FakeVLM)
 |-- train.py                    # Training entrypoint (Stage 1 / Stage 2)
 |-- eval.py                     # Evaluation entrypoint
+|-- push_to_hub.py              # Upload model to HuggingFace Hub
 +-- requirements.txt
 ```
 
