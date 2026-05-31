@@ -15,10 +15,18 @@ class FFTMode(Enum):
     PHASE = "phase"
 
 class FFTExtractor(BaseFrequencyExtractor):
-    """Extracts log-magnitude FFT spectrum as frequency-domain features.
+    """Extracts frequency-domain features from images via 2D FFT.
 
     Deterministic, no learnable parameters. Applies 2D FFT per channel,
-    centers the DC component, takes log-magnitude, and pools to a fixed size.
+    centers the DC component, and extracts either log-magnitude or phase
+    of the spectrum, controlled by the mode parameter. The result is
+    pooled to a fixed spatial size and flattened into a feature vector.
+
+    Modes:
+        "magnitude" : log-magnitude (log1p(|F|)), captures spectral
+            energy distribution; robust to phase noise.
+        "phase" : raw phase angle (angle(F)), captures structural
+            and edge information; sensitive to spatial alignment.
     """
 
     _TRANSFORMS: dict[FFTMode, Callable[[Tensor], Tensor]] = {
