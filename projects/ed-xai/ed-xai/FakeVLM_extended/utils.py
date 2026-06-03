@@ -57,6 +57,49 @@ def safe_save_model_for_hf_trainer(
         trainer._save(output_dir, state_dict=cpu_state_dict)
 
 
+def plot_fft_spectra(image_path: str, output_path: str = None) -> None:
+    """Plots log-magnitude and phase FFT spectra of an image side by side."""
+    import os
+
+    import matplotlib.pyplot as plt
+    from PIL import Image
+
+    from .extractors import get_extractor
+
+    if output_path is None:
+        base = os.path.splitext(os.path.abspath(image_path))[0]
+        output_path = f"{base}_fft_spectra.png"
+
+    img = Image.open(image_path).convert("RGB")
+    extractor = get_extractor("fft")
+
+    x = extractor.preprocess([img]).float()
+    freq = torch.fft.fft2(x, dim=(-2, -1))
+    freq = torch.fft.fftshift(freq, dim=(-2, -1))
+
+    magnitude = torch.log1p(freq.abs())[0].mean(0).numpy()
+    phase = freq.angle()[0].mean(0).numpy()
+
+    _, axes = plt.subplots(1, 3, figsize=(13, 4))
+
+    axes[0].imshow(img)
+    axes[0].set_title("Original")
+    axes[0].axis("off")
+
+    axes[1].imshow(magnitude, cmap="inferno")
+    axes[1].set_title("Log-magnitude spectrum")
+    axes[1].axis("off")
+
+    axes[2].imshow(phase, cmap="twilight")
+    axes[2].set_title("Phase spectrum")
+    axes[2].axis("off")
+
+    plt.tight_layout()
+    plt.savefig(output_path, dpi=150, bbox_inches="tight")
+    print(f"Saved plot to {output_path}")
+    plt.show()
+
+
 class NoTextOnlyBatchSampler(Sampler):
     """Ensures no batch is text-only (required for DeepSpeed)."""
 

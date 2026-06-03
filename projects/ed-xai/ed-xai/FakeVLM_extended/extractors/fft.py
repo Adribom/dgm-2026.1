@@ -1,5 +1,5 @@
 from enum import Enum
-from typing import List,Callable
+from typing import Callable, List
 
 import torch
 import torch.nn.functional as F
@@ -9,9 +9,6 @@ from PIL import Image
 
 from .base import BaseFrequencyExtractor
 
-import os
-import sys
-import matplotlib.pyplot as plt
 
 class FFTMode(Enum):
     MAGNITUDE = "magnitude"
@@ -65,54 +62,3 @@ class FFTExtractor(BaseFrequencyExtractor):
         feature = self._transform(freq)
         pooled = self.pool(feature)
         return pooled.flatten(1).to(input_dtype)
-
-
-def plot_fft_spectra(image_path: str, output_path: str = None) -> None:
-    """Plots and saves the FFT spectra of an image.
-
-    This function follows the forward process without the pooling method,
-    ploting the log-magnitude spectrum and the phase spectrum.
-
-    If output_path is not provided, the plot is saved in the same directory
-    as the input image, with the suffix '_fft_spectra.png'.
-
-    Args:
-        image_path: Path to the input image file.
-        output_path: Path to save the output plot. If None, defaults to
-            <image_path_without_extension>_fft_spectra.png.
-    """
-    if output_path is None:
-        base = os.path.splitext(os.path.abspath(image_path))[0]
-        output_path = f"{base}_fft_spectra.png"
-
-    img = Image.open(image_path).convert("RGB")
-    extractor = FFTExtractor()
-
-    x = extractor.preprocess([img]).float()
-    freq = torch.fft.fft2(x, dim=(-2, -1))
-    freq = torch.fft.fftshift(freq, dim=(-2, -1))
-
-    magnitude = torch.log1p(freq.abs())[0].mean(0).numpy()
-    phase = freq.angle()[0].mean(0).numpy()
-
-    _, axes = plt.subplots(1, 3, figsize=(13, 4))
-
-    axes[0].imshow(img)
-    axes[0].set_title("Original")
-    axes[0].axis("off")
-
-    axes[1].imshow(magnitude, cmap="inferno")
-    axes[1].set_title("Log-magnitude spectrum")
-    axes[1].axis("off")
-
-    axes[2].imshow(phase, cmap="twilight")        
-    axes[2].set_title("Phase spectrum")
-    axes[2].axis("off")
-
-    plt.tight_layout()
-    plt.savefig(output_path, dpi=150, bbox_inches="tight")
-    print(f"Graph saves in {output_path}")
-    plt.show()
-
-if __name__ == "__main__":
-    plot_fft_spectra(sys.argv[1])
