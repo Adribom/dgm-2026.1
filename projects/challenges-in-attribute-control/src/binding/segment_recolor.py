@@ -31,6 +31,7 @@ Tests in tests/test_segment_recolor.py validate the recoloration math
 against hand-checked cases (red→blue shifts hue 180 degrees, white→...
 goes to saturated colors, etc.) and the mask boundary handling.
 """
+
 from __future__ import annotations
 
 from dataclasses import dataclass
@@ -46,7 +47,7 @@ CANONICAL_HUE: dict[str, int] = {
     "red":    0,
     "orange": 13,    
     "yellow": 28,    
-    "green":  60,    
+    "green":  60,   
     "blue":   110,   
     "purple": 140,   
     "pink":   163,   
@@ -59,10 +60,10 @@ DESATURATED = {"brown"}
 class RecolorResult:
     """Outcome of a recoloration attempt."""
     image: np.ndarray              
-    mask: np.ndarray               
+    mask: np.ndarray              
     mask_area_frac: float          
     accepted: bool                 
-    reason: str                    
+    reason: str                   
 
 def _rgb_to_hsv_uint8(rgb: np.ndarray) -> np.ndarray:
     """
@@ -180,7 +181,7 @@ def recolor_hsv(
         new_hue = CANONICAL_HUE[target_color]
         h[mask_bool] = new_hue
         s_boosted = np.clip(s.astype(np.float32) * sat_boost, 0, 255).astype(np.uint8)
-        s[mask_bool] = np.maximum(s_boosted[mask_bool], 100)  
+        s[mask_bool] = np.maximum(s_boosted[mask_bool], 100)  # floor at 100/255
     elif target_color == "white":
         s[mask_bool] = 0
         v[mask_bool] = np.clip(v[mask_bool].astype(np.float32) * 1.3, 200, 255).astype(np.uint8)
@@ -226,6 +227,7 @@ class SegmentationPipeline:
     def _ensure_loaded(self) -> None:
         if self._dino_model is not None:
             return
+        
         import torch
         from transformers import AutoProcessor, AutoModelForZeroShotObjectDetection
         from sam2.sam2_image_predictor import SAM2ImagePredictor
@@ -237,9 +239,18 @@ class SegmentationPipeline:
         self._sam_predictor = SAM2ImagePredictor.from_pretrained(self.sam_model_id)
         self._torch = torch
 
-    def segment(self, image: "Image", object_name: str) -> np.ndarray | None:
+    def segment(
+        self,
+        image: "Image",
+        object_name: str | None = None,
+        text_prompt: str | None = None,
+    ) -> np.ndarray | None:
         """
-        Detect and segment `object_name` in `image`.
+        Detect and segment an object in `image`.
+
+        Accepts either `object_name` (current style) or `text_prompt`
+        (legacy keyword used by older callers). When both are passed,
+        `object_name` wins. At least one must be provided.
 
         Returns a (H, W) bool mask of the highest-confidence detection, or
         None if no detection passed the thresholds. The caller can then pass
@@ -248,6 +259,10 @@ class SegmentationPipeline:
         Strategy: Grounding DINO finds the bounding box from the text prompt,
         SAM2 produces the pixel-accurate mask from the box.
         """
+        if object_name is None and text_prompt is None:
+            raise ValueError("segment() needs object_name or text_prompt")
+        if object_name is None:
+            object_name = text_prompt
         self._ensure_loaded()
         torch = self._torch
 
