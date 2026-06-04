@@ -19,7 +19,6 @@ Usage (Colab, after installing sam2 + transformers):
         --per-object 3 \\
         --colors blue purple
 """
-
 from __future__ import annotations
 
 import argparse
@@ -36,7 +35,7 @@ _REPO_ROOT = Path(__file__).resolve().parent.parent
 if str(_REPO_ROOT / "src") not in sys.path:
     sys.path.insert(0, str(_REPO_ROOT / "src"))
 
-from binding.seeds import set_all_seeds  
+from binding.seeds import set_all_seeds 
 from binding.segment_recolor import SegmentationPipeline, recolor_hsv  
 
 def parse_args() -> argparse.Namespace:
@@ -155,11 +154,17 @@ def main() -> int:
         result = recolor_hsv(rgb, mask, target)
         area = result.mask_area_frac
 
+        if result.accepted:
+            right_panel = result.image
+            right_label = f"recolored ({target})"
+        else:
+            right_panel = np.full_like(rgb, 200)
+            right_label = f"REJECTED: {result.reason}"
         strip = make_strip(
-            [rgb, overlay_mask(rgb, mask), result.image],
+            [rgb, overlay_mask(rgb, mask), right_panel],
             [f"original ({original_color})",
              f"mask: {area:.0%} area",
-             f"recolored ({target})"],
+             right_label],
         )
         safe_obj = obj.replace(" ", "_")
         src_stem = src_path.stem

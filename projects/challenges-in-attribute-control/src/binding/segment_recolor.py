@@ -31,7 +31,6 @@ Tests in tests/test_segment_recolor.py validate the recoloration math
 against hand-checked cases (red→blue shifts hue 180 degrees, white→...
 goes to saturated colors, etc.) and the mask boundary handling.
 """
-
 from __future__ import annotations
 
 from dataclasses import dataclass
@@ -46,7 +45,7 @@ if TYPE_CHECKING:
 CANONICAL_HUE: dict[str, int] = {
     "red":    0,
     "orange": 13,    
-    "yellow": 28,   
+    "yellow": 28,    
     "green":  60,    
     "blue":   110,   
     "purple": 140,   
@@ -128,8 +127,8 @@ def recolor_hsv(
     image_rgb: np.ndarray,
     mask: np.ndarray,
     target_color: str,
-    min_area: float = 0.05,
-    max_area: float = 0.95,
+    min_area: float = 0.02,
+    max_area: float = 0.98,
     sat_boost: float = 1.2,
 ) -> RecolorResult:
     """
@@ -181,7 +180,7 @@ def recolor_hsv(
         new_hue = CANONICAL_HUE[target_color]
         h[mask_bool] = new_hue
         s_boosted = np.clip(s.astype(np.float32) * sat_boost, 0, 255).astype(np.uint8)
-        s[mask_bool] = np.maximum(s_boosted[mask_bool], 100)  # floor at 100/255
+        s[mask_bool] = np.maximum(s_boosted[mask_bool], 100)  
     elif target_color == "white":
         s[mask_bool] = 0
         v[mask_bool] = np.clip(v[mask_bool].astype(np.float32) * 1.3, 200, 255).astype(np.uint8)
@@ -227,7 +226,7 @@ class SegmentationPipeline:
     def _ensure_loaded(self) -> None:
         if self._dino_model is not None:
             return
-
+        
         import torch
         from transformers import AutoProcessor, AutoModelForZeroShotObjectDetection
         from sam2.sam2_image_predictor import SAM2ImagePredictor
