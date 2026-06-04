@@ -84,6 +84,18 @@ def parse_args() -> argparse.Namespace:
                         "if VLM rejection rate is high.")
     p.add_argument("--groups", nargs="+", default=["treated"],
                    help="Which split groups to process. Default: treated only.")
+    p.add_argument("--chromatic-boost-mode", choices=["default", "aggressive_achromatic"],
+                   default="default",
+                   help="How to handle chromatic recoloration. 'default' (used for the "
+                        "188 approved in the first run) applies modest saturation boost. "
+                        "'aggressive_achromatic' detects achromatic source regions "
+                        "(mean S < 30 in mask) and forces high saturation, which is "
+                        "needed for transitions like 'white polar bear → orange'. Use "
+                        "this when re-running only the pairs that came up empty.")
+    p.add_argument("--pairs", nargs="+", default=None,
+                   help="OPTIONAL: explicit list of 'object:color' pairs to process, "
+                        "overriding the split filtering. Use when re-running specific "
+                        "pairs (e.g. the zero-approved ones from a previous run).")
     p.add_argument("--seed", type=int, default=42)
     return p.parse_args()
 
@@ -118,8 +130,19 @@ def main() -> int:
     set_all_seeds(args.seed)
 
     pool = load_pool(args.pool)
-    treated_pairs = load_treated_pairs(args.split, args.groups)
-    print(f"[full] {len(treated_pairs)} pairs to recolor")
+    if args.pairs:
+        treated_pairs = []
+        for spec in args.pairs:
+            if ":" not in spec:
+                print(f"[full] ERROR: --pairs entry {spec!r} must be 'object:color'")
+                return 1
+            o, c = spec.rsplit(":", 1)
+            treated_pairs.append((o.strip(), c.strip()))
+        print(f"[full] {len(treated_pairs)} pairs from --pairs override (ignoring --groups)")
+    else:
+        treated_pairs = load_treated_pairs(args.split, args.groups)
+        print(f"[full] {len(treated_pairs)} pairs to recolor")
+    print(f"[full] chromatic_boost_mode = {args.chromatic_boost_mode}")
     print(f"[full] pool covers {len(pool)} objects")
 
     missing = []
@@ -178,6 +201,7 @@ def main() -> int:
         sources = pool[obj]
         attempts = 0
         approved_this_run = 0
+        
         safe_obj = obj.replace(" ", "_")
         pair_dir = args.out_root / safe_obj / target_color
         pair_dir.mkdir(parents=True, exist_ok=True)
@@ -231,7 +255,10 @@ def main() -> int:
                 rf.flush()
                 continue
 
-            result = recolor_hsv(rgb_array, mask, target_color)
+            result = recolor_hsv(
+                rgb_array, mask, target_color,
+                chromatic_boost_mode=args.chromatic_boost_mode,
+            )
             if not result.accepted:
                 rw.writerow({
                     "object": obj, "target_color": target_color,
@@ -251,6 +278,7 @@ def main() -> int:
                 img_path = pair_dir / f"img_{tentative_idx:03d}.png"
             Image.fromarray(result.image).save(img_path)
 
+            
             try:
                 judgment = judge.judge_image(
                     image_path=img_path,

@@ -31,6 +31,7 @@ Tests in tests/test_segment_recolor.py validate the recoloration math
 against hand-checked cases (red→blue shifts hue 180 degrees, white→...
 goes to saturated colors, etc.) and the mask boundary handling.
 """
+
 from __future__ import annotations
 
 from dataclasses import dataclass
@@ -80,7 +81,7 @@ def _rgb_to_hsv_uint8(rgb: np.ndarray) -> np.ndarray:
     rc = cmax == r
     gc = cmax == g
     bc = cmax == b
-    
+
     safe_delta = np.where(mask_delta, delta, 1.0)
     h_r = (60 * ((g - b) / safe_delta) + 360) % 360
     h_g = (60 * ((b - r) / safe_delta) + 120)
@@ -130,6 +131,7 @@ def recolor_hsv(
     min_area: float = 0.02,
     max_area: float = 0.98,
     sat_boost: float = 1.2,
+    chromatic_boost_mode: str = "default",
 ) -> RecolorResult:
     """
     Apply target_color to the masked region by substituting hue (and
@@ -179,11 +181,27 @@ def recolor_hsv(
     if target_color in CANONICAL_HUE:
         new_hue = CANONICAL_HUE[target_color]
         h[mask_bool] = new_hue
-        s_boosted = np.clip(s.astype(np.float32) * sat_boost, 0, 255).astype(np.uint8)
-        s[mask_bool] = np.maximum(s_boosted[mask_bool], 100)  
+        
+        if chromatic_boost_mode == "aggressive_achromatic":
+            mean_sat = float(s[mask_bool].mean()) if mask_bool.any() else 0.0
+            if mean_sat < 30:
+                s[mask_bool] = 200
+            else:
+                s_boosted = np.clip(s.astype(np.float32) * sat_boost, 0, 255).astype(np.uint8)
+                s[mask_bool] = np.maximum(s_boosted[mask_bool], 100)
+        else:
+            s_boosted = np.clip(s.astype(np.float32) * sat_boost, 0, 255).astype(np.uint8)
+            s[mask_bool] = np.maximum(s_boosted[mask_bool], 100)
     elif target_color == "white":
         s[mask_bool] = 0
-        v[mask_bool] = np.clip(v[mask_bool].astype(np.float32) * 1.3, 200, 255).astype(np.uint8)
+        v_inside = v[mask_bool].astype(np.float32)
+        v_lo, v_hi = float(v_inside.min()), float(v_inside.max())
+        if v_hi - v_lo > 5:
+            v_norm = (v_inside - v_lo) / (v_hi - v_lo)
+        else:
+            v_norm = np.ones_like(v_inside)
+        v_remapped = (230 + v_norm * 25).clip(230, 255).astype(np.uint8)
+        v[mask_bool] = v_remapped
     elif target_color == "black":
         s[mask_bool] = 0
         v[mask_bool] = np.clip(v[mask_bool].astype(np.float32) * 0.3, 0, 80).astype(np.uint8)
@@ -205,7 +223,6 @@ class SegmentationPipeline:
     Heavy imports are deferred so this module can be imported on a CPU-only
     machine for unit testing the recoloration math.
     """
-
     def __init__(
         self,
         dino_model_id: str = "IDEA-Research/grounding-dino-tiny",
