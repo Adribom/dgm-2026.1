@@ -31,7 +31,6 @@ Tests in tests/test_segment_recolor.py validate the recoloration math
 against hand-checked cases (red→blue shifts hue 180 degrees, white→...
 goes to saturated colors, etc.) and the mask boundary handling.
 """
-
 from __future__ import annotations
 
 from dataclasses import dataclass
@@ -81,7 +80,7 @@ def _rgb_to_hsv_uint8(rgb: np.ndarray) -> np.ndarray:
     rc = cmax == r
     gc = cmax == g
     bc = cmax == b
-
+    
     safe_delta = np.where(mask_delta, delta, 1.0)
     h_r = (60 * ((g - b) / safe_delta) + 360) % 360
     h_g = (60 * ((b - r) / safe_delta) + 120)
@@ -179,9 +178,11 @@ def recolor_hsv(
     h, s, v = hsv[..., 0].copy(), hsv[..., 1].copy(), hsv[..., 2].copy()
 
     if target_color in CANONICAL_HUE:
-        new_hue = CANONICAL_HUE[target_color]
+        if chromatic_boost_mode == "aggressive_achromatic" and target_color == "orange":
+            new_hue = 18
+        else:
+            new_hue = CANONICAL_HUE[target_color]
         h[mask_bool] = new_hue
-        
         if chromatic_boost_mode == "aggressive_achromatic":
             mean_sat = float(s[mask_bool].mean()) if mask_bool.any() else 0.0
             if mean_sat < 30:
@@ -223,6 +224,7 @@ class SegmentationPipeline:
     Heavy imports are deferred so this module can be imported on a CPU-only
     machine for unit testing the recoloration math.
     """
+
     def __init__(
         self,
         dino_model_id: str = "IDEA-Research/grounding-dino-tiny",
