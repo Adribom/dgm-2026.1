@@ -172,7 +172,7 @@ def compute_leveled_point_cloud(
         z_expected = np.zeros_like(z_raw)
         
     Z_leveled = z_raw - z_expected
-    points_3d = np.stack((X, Y, Z_leveled), axis=-1)
+    points_3d = np.stack((X, Y, -Z_leveled), axis=-1)
     
     # 5. Clean flying noisy pixels using Statistical Outlier Removal
     if len(points_3d) > 20: # ensure enough points exist to filter

@@ -1,17 +1,43 @@
-"""
-Pothole Dataset DataLoader Module.
+"""Pothole dataset loading and augmentation utilities.
 
-This script manages loading paired pothole images and their generated point clouds.
+This module loads paired pothole images and point clouds, applies optional
+training augmentations, and prepares Point-E batches.
 """
 
+from __future__ import annotations
+
+import random
 from pathlib import Path
 from PIL import Image
 import numpy as np
 import torch
 from torch.utils.data import Dataset, DataLoader
 
+from src.data.transforms.geometric import horizontal_flip
+from src.data.transforms.lighting import apply_color_jitter, apply_fake_shadow
+from src.data.transforms.noise import apply_cutout, apply_gaussian_blur, apply_motion_blur
+
 # Supported image extensions for dataset pairing.
 IMAGE_EXTENSIONS: tuple[str, ...] = (".png", ".jpg", ".jpeg", ".bmp", ".webp")
+
+_DEFAULT_AUGMENTATION_PROBABILITIES = {
+    "horizontal_flip": 0.5,
+    "fake_shadow": 0.3,
+    "color_jitter": 0.4,
+    "gaussian_blur": 0.2,
+    "motion_blur": 0.2,
+    "cutout": 0.3,
+}
+
+_AUGMENTATION_TRANSFORMS = {
+    "horizontal_flip": horizontal_flip,
+    "fake_shadow": apply_fake_shadow,
+    "color_jitter": apply_color_jitter,
+    "gaussian_blur": apply_gaussian_blur,
+    "motion_blur": apply_motion_blur,
+    "cutout": apply_cutout,
+}
+
 
 class PotholeDataset(Dataset):
     """
@@ -22,9 +48,10 @@ class PotholeDataset(Dataset):
       - point_cloud_6d: torch.FloatTensor with shape [6, K]
       - sample_id: stem name used for traceability/debug
     """
-    def __init__(self, image_dir: str | Path, cloud_dir: str | Path):
+    def __init__(self, image_dir: str | Path, cloud_dir: str | Path, augmentation_config: dict | None = None):
         self.image_dir = Path(image_dir)
         self.cloud_dir = Path(cloud_dir)
+        self.augmentation_config = augmentation_config
         self.samples = self._pair_samples()
 
     def _pair_samples(self):
@@ -44,7 +71,7 @@ class PotholeDataset(Dataset):
             cloud_path = self.cloud_dir / f"{img_path.stem}.npy"
             if cloud_path.exists():
                 samples.append((img_path, cloud_path))
-                
+
         return samples
 
     def __len__(self):
@@ -79,20 +106,61 @@ class PotholeDataset(Dataset):
 
         return pts_6d.transpose(0, 1)
 
+    def _apply_augmentations(self, image: Image.Image, pts_raw: np.ndarray) -> tuple[Image.Image, np.ndarray, list[str]]:
+        """Apply configured augmentations to an image and point cloud pair.
+
+        The horizontal flip path must update the image and point cloud together
+        before any further transform is applied.
+        """
+        if not self.augmentation_config or not self.augmentation_config.get("active_transforms"):
+            return image, pts_raw, []
+
+        applied_transforms: list[str] = []
+        probabilities = {
+            **_DEFAULT_AUGMENTATION_PROBABILITIES,
+            **(self.augmentation_config.get("probabilities") or {}),
+        }
+
+        current_image = image
+        current_pts = pts_raw
+        for transform_name in self.augmentation_config.get("active_transforms", []):
+            probability = probabilities.get(transform_name, 0.0)
+            if random.random() >= probability:
+                continue
+
+            transform_fn = _AUGMENTATION_TRANSFORMS.get(transform_name)
+            if transform_fn is None:
+                continue
+
+            if transform_name == "horizontal_flip":
+                current_image, current_pts = transform_fn(current_image, current_pts)
+                assert isinstance(current_pts, np.ndarray)
+            else:
+                current_image = transform_fn(current_image)
+
+            applied_transforms.append(transform_name)
+
+        return current_image, current_pts, applied_transforms
+
     def __getitem__(self, idx):
         img_path, cloud_path = self.samples[idx]
 
         # Load image as raw RGB for Point-E CLIP conditioning path.
         image = Image.open(img_path).convert("RGB")
-            
-        # T007 + T008: Point cloud loading and strict normalization to Point-E [6, K]
-        pts = np.load(cloud_path)
-        pts_final = self._normalize_point_cloud(pts)
+
+        pts_raw = np.load(cloud_path)
+        if self.augmentation_config is not None:
+            image, pts_raw, applied_transforms = self._apply_augmentations(image, pts_raw)
+        else:
+            applied_transforms = []
+
+        pts_final = self._normalize_point_cloud(pts_raw)
 
         return {
             "image_for_conditioning": image,
             "point_cloud_6d": pts_final,
             "sample_id": img_path.stem,
+            "applied_transforms": applied_transforms,
         }
 
 
@@ -103,20 +171,30 @@ def point_e_collate_fn(batch: list[dict]) -> dict:
       - images: list[PIL.Image]
       - point_cloud_6d: torch.FloatTensor [B, 6, K]
       - sample_id: list[str]
+            - applied_transforms: list[list[str]]
     """
     images = [item["image_for_conditioning"] for item in batch]
     point_clouds = torch.stack([item["point_cloud_6d"] for item in batch], dim=0)
     sample_ids = [item["sample_id"] for item in batch]
+    applied_transforms = [item["applied_transforms"] for item in batch]
 
     return {
         "images": images,
         "point_cloud_6d": point_clouds,
         "sample_id": sample_ids,
+        "applied_transforms": applied_transforms,
     }
 
 
 # T009: Dataloader wrapper setup to serve minibatches globally
-def create_dataloader(image_dir: str | Path, cloud_dir: str | Path, batch_size: int = 8, shuffle: bool = True, num_workers: int = 0):
+def create_dataloader(
+    image_dir: str | Path,
+    cloud_dir: str | Path,
+    batch_size: int = 8,
+    shuffle: bool = True,
+    num_workers: int = 0,
+    augmentation_config: dict | None = None,
+):
     """
     Creates and returns a PyTorch DataLoader for the PotholeDataset.
 
@@ -125,7 +203,7 @@ def create_dataloader(image_dir: str | Path, cloud_dir: str | Path, batch_size: 
             - point_cloud_6d: torch.FloatTensor [B, 6, K]
             - sample_id: list[str]
     """
-    dataset = PotholeDataset(image_dir, cloud_dir)
+    dataset = PotholeDataset(image_dir, cloud_dir, augmentation_config=augmentation_config)
     return DataLoader(
         dataset,
         batch_size=batch_size,

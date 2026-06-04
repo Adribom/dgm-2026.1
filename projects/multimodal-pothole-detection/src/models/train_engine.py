@@ -5,7 +5,9 @@ This script contains the OOP architecture to orchestrate the Point-E fine-tuning
 loop utilizing PyTorch AMP, Checkpointing, and native Diffusion logic.
 """
 
+import json
 import logging
+from collections import Counter
 from pathlib import Path
 import torch
 from tqdm import tqdm
@@ -39,7 +41,7 @@ class PointETrainer:
         device_type = self.device.type if isinstance(self.device, torch.device) else (self.device if isinstance(self.device, str) else 'cuda')
         self.scaler = torch.amp.GradScaler(device_type)
 
-    def train_step(self, dataloader, epochs: int = 1, start_epoch: int = 0, save_dir=None, save_interval: int = 1):
+    def train_step(self, dataloader, epochs: int = 1, start_epoch: int = 0, save_dir=None, save_interval: int = 1, augmentation_record_file=None):
         """
         Executes the core training loop for a given number of epochs.
         """
@@ -47,6 +49,9 @@ class PointETrainer:
         
         for epoch in range(start_epoch, epochs):
             self.logger.info(f"Starting Epoch {epoch + 1}/{epochs}")
+            augmented_sample_entries: list[dict] = []
+            transform_counter: Counter[str] = Counter()
+            augmented_sample_count = 0
             
             # T014: Wrap the loop loader using the tqdm library for real-time postfix observation
             pbar = tqdm(dataloader, desc=f"Epoch {epoch + 1}/{epochs}", unit="batch")
@@ -54,6 +59,21 @@ class PointETrainer:
             for step, batch in enumerate(pbar):
                 images = batch["images"]
                 point_clouds = batch["point_cloud_6d"].to(self.device)
+                sample_ids = batch.get("sample_id", [])
+                batch_applied_transforms = batch.get("applied_transforms", [])
+
+                for sample_id, applied_transforms in zip(sample_ids, batch_applied_transforms):
+                    if not applied_transforms:
+                        continue
+                    augmented_sample_count += 1
+                    transform_counter.update(applied_transforms)
+                    augmented_sample_entries.append(
+                        {
+                            "epoch": epoch + 1,
+                            "sample_id": sample_id,
+                            "transforms_applied": list(applied_transforms),
+                        }
+                    )
                 
                 batch_size = point_clouds.shape[0]
                 
@@ -86,6 +106,19 @@ class PointETrainer:
                 # Log periodically to standard output independently from tqdm
                 if step % 50 == 0:
                     self.logger.info(f"Epoch {epoch+1} | Step {step} | Loss: {loss_val:.4f}")
+
+            if augmentation_record_file is not None and augmented_sample_entries:
+                for entry in augmented_sample_entries:
+                    augmentation_record_file.write(json.dumps(entry) + "\n")
+                augmentation_record_file.flush()
+
+            if transform_counter:
+                transform_summary = " ".join(f"{name}:{count}" for name, count in sorted(transform_counter.items()))
+            else:
+                transform_summary = "no augmentations"
+            self.logger.info(
+                f"Epoch {epoch + 1} augmentation summary: {augmented_sample_count} samples | {transform_summary}"
+            )
 
             # Handle checkpoint saving at the end of epoch
             if save_dir and (epoch + 1) % save_interval == 0:
