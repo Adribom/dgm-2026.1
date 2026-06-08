@@ -23,7 +23,7 @@ class PyTorchDataset(Dataset):
         metadata (torch.Tensor): Combined normalized age and encoded gender.
     """
 
-    def __init__(self, images, labels, metadata):
+    def __init__(self, images, labels, metadata, masks=None):
         """Initialize PyTorchDataset.
 
         Args:
@@ -33,6 +33,7 @@ class PyTorchDataset(Dataset):
                                      (normalized age, encoded gender).
         """
         self.images = images
+        self.masks = masks
         self.labels = labels
         # Ensure metadata is a float tensor
         self.metadata = metadata.float()
@@ -46,6 +47,10 @@ class PyTorchDataset(Dataset):
         assert (
             len(self.images) == len(self.metadata)
         ), f"Images ({len(self.images)}) and metadata ({len(self.metadata)}) length mismatch"
+        if self.masks is not None:
+            assert (
+                len(self.images) == len(self.masks)
+            ), f"Images ({len(self.images)}) and masks ({len(self.masks)}) length mismatch"
 
     def __len__(self):
         """Return dataset size."""
@@ -70,6 +75,14 @@ class PyTorchDataset(Dataset):
             img = img.convert('L')
         img_array = np.array(img, dtype=np.float32) / 255.0  # Normalize to [0, 1]
         img_tensor = torch.from_numpy(img_array).unsqueeze(0)  # Add channel dimension
+
+        if self.masks is not None:
+            mask = self.masks[idx]
+            if mask.mode != 'L':
+                mask = mask.convert('L')
+            mask_array = np.array(mask, dtype=np.float32) / 255.0
+            mask_tensor = torch.from_numpy(mask_array).unsqueeze(0)
+            img_tensor = torch.cat([img_tensor, mask_tensor], dim=0)
 
         # Get label and metadata
         label_tensor = self.labels[idx]

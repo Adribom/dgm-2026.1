@@ -311,6 +311,7 @@ def save_cvae_change_heatmap_sweep(
     colormap: str = "hot",
     overlay_alpha: float = 0.55,
     blur_sigma: float = 2.0,
+    max_batches: int | None = None,
 ) -> list[Path]:
     """Save CVAE change heatmaps for the full test set.
 
@@ -342,6 +343,8 @@ def save_cvae_change_heatmap_sweep(
 
     saved_paths = []
     for batch_idx in tqdm(range(n_batches), desc="Saving CVAE change heatmaps"):
+        if max_batches is not None and batch_idx >= max_batches:
+            break
         save_path = output_dir / f"cvae_change_heatmap_{batch_idx + 1:03d}.png"
         render_cvae_change_heatmap_batch(
             healthy_batches[batch_idx],
