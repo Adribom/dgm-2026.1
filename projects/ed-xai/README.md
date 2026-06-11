@@ -13,7 +13,10 @@ This project originated in the context of the graduate course _IA376N - Generati
 | Willian Rampazzo | 095284 | Computer Science |
 
 [Presentation slides - Delivery 1](https://docs.google.com/presentation/d/1V1y0yXc5bIu-aL4Mxb0qvgtki1xSr7cgxzO9rrx3jEg/edit?usp=sharing)
+
 [Presentation slides - Delivery 2](https://docs.google.com/presentation/d/1OnVXgFKJ_YD9YWqOhWJEKezZAr8kcWVYNKairkxZkY8/edit?usp=sharing)
+
+[Presentation slides - Final Delivery](https://docs.google.com/presentation/d/1aKPGR9dD77WwaY-Y1WUEIMT6Qpk3cYQqYnRg2TEEZFY/edit?usp=sharing)
 
 ## Abstract
 
@@ -21,9 +24,13 @@ This project augments the FakeVLM deepfake detection framework with frequency-do
 
 ## Problem Description / Motivation
 
-AI-generated images have reached a level of visual fidelity that renders them virtually indistinguishable from authentic photographs to human observers. While generative models continue to advance, the maturation of this technology has blurred the boundary between real and synthetic content, heightening the risk of misuse in misinformation, fraud, and social manipulation. The research community has responded with numerous detection models that achieve high classification accuracy; however, most operate as black boxes, producing a binary decision without articulating the forensic reasoning behind it. This lack of transparency creates a critical trust gap that hinders deployment in high-stakes domains such as forensic investigation and journalistic verification.
+AI-generated images have reached a level of visual fidelity that renders them virtually indistinguishable from authentic photographs to human observers. Driven by advances in Generative Adversarial Networks (GANs) and diffusion models, synthetic content can now be produced from a simple text prompt with photorealistic quality [1, 2]. This capability, while enabling creative applications, introduces risks of misuse in misinformation, fraud, and social manipulation. The research community has responded with numerous detection methods that achieve high classification accuracy; however, the vast majority of these detectors operate as black boxes, producing a binary label or a probability score without articulating the forensic reasoning behind their decisions [3]. This inherent opacity constitutes a critical barrier to adoption in high-stakes domains such as forensic investigation, journalistic verification, and legal proceedings, where a model that cannot explain its reasoning is of limited practical value [3].
 
-The recently proposed FakeVLM framework [1] addresses this gap by leveraging Large Multimodal Models (LMMs). Rather than performing opaque classification, FakeVLM maps visual tokens from a CLIP-ViT encoder into the reasoning space of an LLM (Vicuna 7B), enabling the system to classify an image as real or synthetic while simultaneously generating natural-language explanations of the specific artifacts that expose the forgery. However, standard vision encoders such as CLIP-ViT are trained on semantic features and remain blind to forensic traces that manifest primarily in the frequency domain—artifacts introduced by the upsampling operations common in generative architectures [2, 4, 5].
+The recently proposed FakeVLM framework [4] addresses this explainability gap by leveraging Large Multimodal Models (LMMs). Rather than performing opaque classification, FakeVLM maps visual tokens from a CLIP-ViT encoder into the reasoning space of an LLM (Vicuna 7B), enabling the system to classify an image as real or synthetic while simultaneously generating natural-language explanations of the specific artifacts that expose the forgery. FakeVLM achieves performance comparable to expert classification models while also providing human-interpretable artifact descriptions [4]. However, its visual pipeline relies exclusively on CLIP-ViT, a semantic encoder trained for visual understanding tasks. CLIP-ViT captures high-level spatial and semantic features but remains blind to low-level forensic traces that manifest primarily in the frequency domain.
+
+Multiple lines of research have established that generative models leave detectable artifacts in the frequency domain. Frank et al. [5] demonstrated that GAN-generated images exhibit severe spectral artifacts caused by upsampling operations, and that these artifacts are consistent across different neural network architectures, datasets, and resolutions. Bammey [2] extended this finding to diffusion models, showing that frequency peaks in the Fourier transform of a high-pass residual can reliably distinguish diffusion-generated images from authentic ones, even under mild JPEG compression. Karageorgiou et al. [6] further showed that the spectral distribution of real images constitutes an invariant and discriminative pattern for AI-generated image detection, achieving state-of-the-art results across 13 generative approaches. These findings indicate that frequency-domain signals provide complementary information to the spatial features that CLIP-based encoders capture.
+
+This project investigates whether adding a parallel frequency feature branch to FakeVLM can improve detection accuracy while preserving the model's ability to produce natural-language explanations of detected artifacts.
 
 ## Objective
 
@@ -48,16 +55,16 @@ To train FakeVLM-Extended, the model must learn to associate frequency-domain ar
 
 The pipeline operates in two stages. First, we run 17 pre-trained frequency-domain classifiers from four families on every image in the FakeClue dataset:
 
-- **GANDCTAnalysis** [2]: Ridge and Lasso regression on DCT coefficients and raw pixel values (3 models).
-- **FakeImageDetection** [3]: ResNet-50 and CLIP ViT-L/14 variants with frequency-domain spectral masking at multiple bands (12 models).
-- **SPAI** [4]: Patch-based multi-frequency ViT operating on FFT-decomposed spectral components at the original image resolution (1 model).
-- **NPR** [5]: ResNet-50 on neighboring pixel residuals, capturing upsampling artifacts in the spatial domain (1 model). Included for completeness, although its features are spatial rather than strictly frequency-domain.
+- **GANDCTAnalysis** [5]: Ridge and Lasso regression on DCT coefficients and raw pixel values (3 models).
+- **FakeImageDetection** [7]: ResNet-50 and CLIP ViT-L/14 variants with frequency-domain spectral masking at multiple bands (12 models).
+- **SPAI** [6]: Patch-based multi-frequency ViT operating on FFT-decomposed spectral components at the original image resolution (1 model).
+- **NPR** [1]: ResNet-50 on neighboring pixel residuals, capturing upsampling artifacts in the spatial domain (1 model). Included for completeness, although its features are spatial rather than strictly frequency-domain.
 
 Second, for each of the seven FakeClue image categories, we select the classifier that maximizes the number of true positives (fake images correctly classified as fake). For each true-positive detection, the sentence *"The image also presents artifacts in the frequency domain."* is appended to the existing natural-language explanation in the FakeClue label. This conservative strategy ensures that frequency annotations are only applied to images where a frequency-domain classifier provides corroborating evidence of synthetic origin.
 
 ### FakeVLM-Extended Architecture
 
-FakeVLM-Extended augments the original FakeVLM (LLaVA 1.5 [6]) architecture with a parallel frequency-domain feature branch. The design preserves full compatibility with the Hugging Face `LlavaForConditionalGeneration` implementation, including DeepSpeed ZeRO-2/3 and LoRA fine-tuning.
+FakeVLM-Extended augments the original FakeVLM (LLaVA 1.5 [8]) architecture with a parallel frequency-domain feature branch. The design preserves full compatibility with the Hugging Face `LlavaForConditionalGeneration` implementation, including DeepSpeed ZeRO-2/3 and LoRA fine-tuning.
 
 The architecture operates as follows:
 
@@ -79,7 +86,7 @@ Training follows a two-stage approach:
 
 ### FFT Feature Extraction
 
-Generative architectures such as GANs and diffusion models introduce systematic artifacts during upsampling operations that, while often imperceptible in the spatial domain, manifest as distinctive patterns in the frequency spectrum [2, 5]. The 2D Discrete Fourier Transform (DFT) decomposes an image into its constituent spatial frequencies, making these artifacts explicit and amenable to automated analysis. This theoretical motivation underlies the choice of frequency-domain features as a complementary signal to the semantic features captured by CLIP-ViT.
+Generative architectures such as GANs and diffusion models introduce systematic artifacts during upsampling operations that, while often imperceptible in the spatial domain, manifest as distinctive patterns in the frequency spectrum [1, 5]. The 2D Discrete Fourier Transform (DFT) decomposes an image into its constituent spatial frequencies, making these artifacts explicit and amenable to automated analysis. This theoretical motivation underlies the choice of frequency-domain features as a complementary signal to the semantic features captured by CLIP-ViT.
 
 The FFT extractor applies the 2D DFT independently to each color channel, centers the zero-frequency (DC) component via spectral shifting, and computes the log-magnitude spectrum $\log(1 + |F(u,v)|)$. The logarithmic scaling compresses the dynamic range of the spectrum, allowing both low-frequency structural information and high-frequency detail, where generative artifacts are most prevalent, to be represented within the same feature space. The resulting spectrum is spatially pooled to produce a compact feature vector that encodes the image's frequency-domain signature. Figure 1 compares the log-magnitude FFT spectra of a real and a synthetic face image from the FakeClue dataset. While the spectra may appear similar to human inspection, the subtle distributional differences, particularly in the high-frequency components, encode discriminative information that the FrequencyProjector learns to exploit during training.
 
@@ -113,13 +120,13 @@ The per-category coverage on the training split is summarized below:
 
 | Category | Best Model | Technique | TPs | Fake Images | Coverage |
 |----------|-----------|-----------|-----|-------------|----------|
-| deepfake | ridge_dct | DCT coefficients [2] | 19,066 | 19,166 | 99.5% |
-| satellite | spai | FFT spectral learning [4] | 8,397 | 9,557 | 87.9% |
-| object | spai | FFT spectral learning [4] | 8,304 | 10,993 | 75.5% |
-| animal | spai | FFT spectral learning [4] | 5,983 | 7,905 | 75.7% |
-| human | spai | FFT spectral learning [4] | 4,577 | 6,647 | 68.9% |
-| scene | spai | FFT spectral learning [4] | 2,892 | 4,694 | 61.6% |
-| doc | rn50\_modft\_spectralmask | Spectral masking [3] | 1,785 | 9,434 | 18.9% |
+| deepfake | ridge_dct | DCT coefficients [5] | 19,066 | 19,166 | 99.5% |
+| satellite | spai | FFT spectral learning [6] | 8,397 | 9,557 | 87.9% |
+| object | spai | FFT spectral learning [6] | 8,304 | 10,993 | 75.5% |
+| animal | spai | FFT spectral learning [6] | 5,983 | 7,905 | 75.7% |
+| human | spai | FFT spectral learning [6] | 4,577 | 6,647 | 68.9% |
+| scene | spai | FFT spectral learning [6] | 2,892 | 4,694 | 61.6% |
+| doc | rn50\_modft\_spectralmask | Spectral masking [7] | 1,785 | 9,434 | 18.9% |
 | **Total** | | | **51,004** | **68,396** | **74.6%** |
 
 ### Workflow
@@ -142,7 +149,7 @@ The project follows a three-stage pipeline:
 
 We evaluated 17 pre-trained classifiers from four model families on the FakeClue dataset. The evaluation criterion was the number of true positives—fake images correctly classified as fake, since the augmentation pipeline only annotates images for which a frequency-domain classifier provides corroborating evidence.
 
-The results reveal substantial variation in classifier performance across image categories. DCT-based ridge regression [2] achieves near-perfect coverage (99.5%) on the deepfake category, which is expected given that these models were trained on face-centric datasets (FFHQ). SPAI [4], operating on FFT spectral decomposition at the original image resolution, provides the best coverage for five of the seven categories (satellite, object, animal, human, scene), with coverage ranging from 61.6% to 87.9%. The document category presents the most challenging case, where spectral masking on a modified ResNet-50 [3] achieves only 18.9% coverage—likely because document forgeries involve different manipulation techniques that leave weaker frequency-domain traces.
+The results reveal substantial variation in classifier performance across image categories. DCT-based ridge regression [5] achieves near-perfect coverage (99.5%) on the deepfake category, which is expected given that these models were trained on face-centric datasets (FFHQ). SPAI [6], operating on FFT spectral decomposition at the original image resolution, provides the best coverage for five of the seven categories (satellite, object, animal, human, scene), with coverage ranging from 61.6% to 87.9%. The document category presents the most challenging case, where spectral masking on a modified ResNet-50 [7] achieves only 18.9% coverage—likely because document forgeries involve different manipulation techniques that leave weaker frequency-domain traces.
 
 The overall augmentation achieves 74.6% coverage on training fake images (51,004 out of 68,396) and 73.9% on test fake images (2,359 out of 3,192). The test split coverage per category is shown below:
 
@@ -163,7 +170,7 @@ The consistent coverage between train and test splits indicates that the classif
 
 The original project proposal envisioned a multi-domain feature extraction pipeline incorporating spatial, structural, statistical, physical, spectral, and semantic extractors. During the exploratory phase, we concluded that this scope was not feasible within the project timeline, primarily because suitable dataset annotations did not exist for most of these domains and creating them would require domain-specific classifiers and validation processes that exceeded the available resources.
 
-We therefore adopted a revised strategy: narrow the feature extraction to a single frequency-domain branch, which has strong theoretical motivation in the generative model literature [2, 4, 5], and invest the recovered effort into two complementary contributions that were not in the original proposal:
+We therefore adopted a revised strategy: narrow the feature extraction to a single frequency-domain branch, which has strong theoretical motivation in the generative model literature [1, 5, 6], and invest the recovered effort into two complementary contributions that were not in the original proposal:
 
 1. A **dataset annotation pipeline** that systematically evaluates frequency-domain classifiers and produces training labels, making the frequency feature branch viable.
 2. A **benchmarking framework** for standardized cross-model evaluation, enabling rigorous comparison between the baseline and extended models.
@@ -187,9 +194,11 @@ The remaining work for the final delivery includes:
 
 ## Bibliographic References
 
-1. Wen, J., Xia, Z., Liu, Q., Li, J., Gao, L., & Song, J. [Spot the Fake: Large Multimodal Model-Based Synthetic Image Detection with Artifact Explanation](https://neurips.cc/virtual/2025/loc/san-diego/poster/115251). NeurIPS 2025.
-2. Frank, J., Eisenhofer, T., Schönherr, L., Fischer, A., Kolber, D., & Holz, T. [Leveraging Frequency Analysis for Deep Fake Image Recognition](https://proceedings.mlr.press/v119/frank20a.html). ICML 2020.
-3. Doloriel, C. T. & Cheung, N.-M. [Frequency Masking for Universal DeepFake Detection](https://ieeexplore.ieee.org/document/10446290). ICASSP 2024.
-4. Karageorgiou, G., Koutlis, C., Papadopoulos, S., & Kompatsiaris, I. [Any-Resolution AI-Generated Image Detection by Spectral Learning](https://openaccess.thecvf.com/content/CVPR2025/html/Karageorgiou_Any-Resolution_AI-Generated_Image_Detection_by_Spectral_Learning_CVPR_2025_paper.html). CVPR 2025.
-5. Tan, C., Zhao, Y., Wei, S., Gu, G., & Wei, Y. [Rethinking the Up-Sampling Operations in CNN-based Generative Network for Generalizable Deepfake Detection](https://arxiv.org/abs/2312.10461). CVPR 2024.
-6. Liu, H., Li, C., Wu, Q., & Lee, Y. J. [Visual Instruction Tuning](https://arxiv.org/abs/2304.08485). NeurIPS 2023.
+1. Tan, C., Zhao, Y., Wei, S., Gu, G., & Wei, Y. [Rethinking the Up-Sampling Operations in CNN-based Generative Network for Generalizable Deepfake Detection](https://arxiv.org/abs/2312.10461). CVPR 2024.
+2. Bammey, Q. [Synthbuster: Towards Detection of Diffusion Model Generated Images](https://ieeexplore.ieee.org/document/10334046). IEEE Open Journal of Signal Processing, 5. 2024.
+3. Qian, H., Xia, L., Ge, R., Fan, Y., Wang, Q., & Jing, Z. [From Black Boxes to Glass Boxes: Explainable AI for Trustworthy Deepfake Forensics](https://www.mdpi.com/2410-387X/9/4/61). Cryptography, 9, 61. 2025.
+4. Wen, S., Ye, J., Feng, P., Kang, H., Wen, Z., Chen, Y., Wu, J., Wu, W., He, C., & Li, W. [Spot the Fake: Large Multimodal Model-Based Synthetic Image Detection with Artifact Explanation](https://neurips.cc/virtual/2025/loc/san-diego/poster/115251). NeurIPS 2025.
+5. Frank, J., Eisenhofer, T., Schönherr, L., Fischer, A., Kolber, D., & Holz, T. [Leveraging Frequency Analysis for Deep Fake Image Recognition](https://proceedings.mlr.press/v119/frank20a.html). ICML 2020.
+6. Karageorgiou, D., Papadopoulos, S., Kompatsiaris, I., & Gavves, E. [Any-Resolution AI-Generated Image Detection by Spectral Learning](https://openaccess.thecvf.com/content/CVPR2025/html/Karageorgiou_Any-Resolution_AI-Generated_Image_Detection_by_Spectral_Learning_CVPR_2025_paper.html). CVPR 2025.
+7. Doloriel, C. T. & Cheung, N.-M. [Frequency Masking for Universal DeepFake Detection](https://ieeexplore.ieee.org/document/10446290). ICASSP 2024.
+8. Liu, H., Li, C., Wu, Q., & Lee, Y. J. [Visual Instruction Tuning](https://arxiv.org/abs/2304.08485). NeurIPS 2023.
