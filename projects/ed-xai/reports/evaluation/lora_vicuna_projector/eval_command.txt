@@ -1,0 +1,6 @@
+python -m FakeVLM.eval \
+    --model-local-path ../models/FakeVLM \
+    --lora-adapter-path ../models/FakeVLM/lora_vicuna_projector \
+    --data-path ../data/external/FakeClue/data_json/test.json \
+    --image-folder ../data/external/FakeClue/test \
+    --output-path ../reports/lora_vicuna_projector/eval_results.json
