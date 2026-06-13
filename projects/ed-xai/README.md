@@ -157,6 +157,33 @@ The frequency extractor applies the 2D DFT independently to each color channel a
   <em>Figure 2: Log-magnitude FFT spectra of a real (top) and a synthetic (bottom) face image from FakeClue.</em>
 </p>
 
+### Training
+
+Training follows a two-stage procedure adapted from the LLaVA training strategy [8], where the projection layer is first trained in isolation to align a new modality with the language model before joint fine-tuning. This prevents the randomly initialized projection network from destabilizing the pre-trained language model weights. In the original LLaVA framework, this approach aligns visual tokens with the language model; we apply the same principle to the frequency projection network, training it to produce a meaningful frequency token before adapting the language model to use it.
+
+In Stage 1, all model parameters are frozen except the frequency projection network (approximately 22 million parameters). The projection network is trained for one epoch on the augmented FakeClue training set with a learning rate of $1 \times 10^{-3}$ and cosine scheduling. This stage teaches the network to map the frequency extractor's output into a token that is meaningful in the language model's embedding space.
+
+In Stage 2, the Stage 1 projection weights are loaded and LoRA [9] adapters (rank 8, alpha 16) are applied to all linear layers of Vicuna 7B. Both the LoRA adapters and the frequency projection network are trained jointly for three epochs with a learning rate of $2 \times 10^{-5}$. LoRA [9] enables parameter-efficient fine-tuning of the language model, adapting it to incorporate frequency-domain information without modifying the full set of pre-trained weights.
+
+The following table summarizes the hyperparameters for each training stage:
+
+| Parameter | Stage 1 | Stage 2 |
+|---|---|---|
+| Trainable components | Frequency projector | LoRA (Vicuna) + Frequency projector |
+| Epochs | 1 | 3 |
+| Learning rate | 1e-3 | 2e-5 |
+| LR scheduler | Cosine | Cosine |
+| Batch size (per device) | 8 | 4 |
+| Gradient accumulation steps | 2 | 4 |
+| Effective batch size | 16 | 16 |
+| Warmup steps | 186 | 558 |
+| Weight decay | 0.01 | 0.0 |
+| LoRA rank / alpha | N/A | 8 / 16 |
+| Precision | bf16 | bf16 |
+| Optimizer | AdamW | AdamW |
+
+All training runs use DeepSpeed ZeRO-2 for memory optimization on a single NVIDIA RTX Pro 6000 GPU. Stage 1 completes in approximately 4 hours and Stage 2 in approximately 22 hours. Both stages are trained on the augmented FakeClue training set, with a 5% random split held out for validation.
+
 ### Evaluation Methodology
 
 The benchmarking framework supports cross-model, cross-dataset evaluation with the following metrics:
