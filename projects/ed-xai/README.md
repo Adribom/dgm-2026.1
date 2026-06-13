@@ -192,52 +192,45 @@ The evaluation compares three model configurations. The baseline is the original
 
 ## Experiments, Results, and Discussion
 
-### Frequency Classifier Evaluation
+### Results
 
-We evaluated 17 pre-trained classifiers from four model families on the FakeClue dataset. The evaluation criterion was the number of true positives—fake images correctly classified as fake, since the augmentation pipeline only annotates images for which a frequency-domain classifier provides corroborating evidence.
+Both FFT magnitude and FFT phase models were trained following the two-stage procedure described in the Training section. Figure 3 presents the training loss curves for all four training runs. In both modes, Stage 1 converges rapidly within a single epoch as the frequency projector learns to map spectral features into the language model's embedding space. Stage 2 exhibits the expected slower convergence over three epochs as the LoRA adapters and the frequency projector are jointly optimized.
 
-The results reveal substantial variation in classifier performance across image categories. DCT-based ridge regression [5] achieves near-perfect coverage (99.5%) on the deepfake category, which is expected given that these models were trained on face-centric datasets (FFHQ). SPAI [6], operating on FFT spectral decomposition at the original image resolution, provides the best coverage for five of the seven categories (satellite, object, animal, human, scene), with coverage ranging from 61.6% to 87.9%. The document category presents the most challenging case, where spectral masking on a modified ResNet-50 [7] achieves only 18.9% coverage—likely because document forgeries involve different manipulation techniques that leave weaker frequency-domain traces.
+<p align="center">
+  <img src="images/loss_stage1_magnitude.png" width="400">
+  <img src="images/loss_stage2_magnitude.png" width="400">
+</p>
+<p align="center">
+  <img src="images/loss_stage1_phase.png" width="400">
+  <img src="images/loss_stage2_phase.png" width="400">
+</p>
+<p align="center"><em>Figure 3. Training loss curves. Top row: FFT magnitude (Stage 1, Stage 2). Bottom row: FFT phase (Stage 1, Stage 2).</em></p>
 
-The overall augmentation achieves 74.6% coverage on training fake images (51,004 out of 68,396) and 73.9% on test fake images (2,359 out of 3,192). The test split coverage per category is shown below:
+The table below summarizes the evaluation results for the baseline and the two extended model configurations, using the metrics described in the Evaluation Methodology section.
 
-| Category | TPs | Fake Images | Coverage |
-|----------|-----|-------------|----------|
-| deepfake | 929 | 932 | 99.7% |
-| satellite | 388 | 443 | 87.6% |
-| object | 362 | 479 | 75.6% |
-| animal | 267 | 370 | 72.2% |
-| human | 190 | 282 | 67.4% |
-| scene | 123 | 226 | 54.4% |
-| doc | 100 | 460 | 21.7% |
-| **Total** | **2,359** | **3,192** | **73.9%** |
+| Model | Dataset | Accuracy ↑ | F1 ↑ | ROUGE-L ↑ | CSS ↑ |
+|-------|---------|----------|------|---------|------|
+| FakeVLM (baseline) | FakeClue (original) | 0.9876 | 0.9828 | 0.4950 | 0.9230 |
+| FakeVLM-Extended (magnitude) | FakeClue (augmented) | 0.9912 | 0.9878 | 0.5706 | 0.9342 |
+| FakeVLM-Extended (phase) | FakeClue (augmented) | 0.9900 | 0.9861 | 0.5712 | 0.9344 |
 
-The consistent coverage between train and test splits indicates that the classifier selection generalizes across the dataset and is not an artifact of overfitting to a particular split.
+Both extended models improve classification accuracy over the baseline. The magnitude variant increases accuracy from 98.76% to 99.12% (+0.36 percentage points), while the phase variant reaches 99.00% (+0.24 percentage points). F1 scores follow the same trend, rising from 0.9828 to 0.9878 and 0.9861, respectively. Although these gains are modest in absolute terms, the baseline already operates at a high performance level where further improvement is increasingly difficult.
 
-### Scope Change Discussion
+The more substantial improvements appear in the generation quality metrics. ROUGE-L increases from 0.4950 to 0.5706 (magnitude) and 0.5712 (phase), representing a roughly 15% relative improvement in lexical overlap with the reference annotations. CSS rises from 0.9230 to 0.9342 (magnitude) and 0.9344 (phase). These gains indicate that the combination of frequency-domain features and augmented training labels enables the model to produce explanations more closely aligned with the reference annotations, both in terms of surface-level wording and semantic content.
 
-The original project proposal envisioned a multi-domain feature extraction pipeline incorporating spatial, structural, statistical, physical, spectral, and semantic extractors. During the exploratory phase, we concluded that this scope was not feasible within the project timeline, primarily because suitable dataset annotations did not exist for most of these domains and creating them would require domain-specific classifiers and validation processes that exceeded the available resources.
+The two FFT extraction modes yield remarkably similar results across all four metrics. The magnitude mode achieves a slight advantage in classification accuracy (99.12% vs. 99.00%), while the phase mode produces marginally higher generation quality scores (ROUGE-L 0.5712 vs. 0.5706, CSS 0.9344 vs. 0.9342). These differences fall within a narrow margin, suggesting that both spectral representations encode comparable information about the artifacts left by generative models. This finding is consistent with prior work demonstrating that generative processes introduce anomalies in both the amplitude and phase structure of the frequency spectrum [5, 6].
 
-We therefore adopted a revised strategy: narrow the feature extraction to a single frequency-domain branch, which has strong theoretical motivation in the generative model literature [1, 5, 6], and invest the recovered effort into two complementary contributions that were not in the original proposal:
+### Ablation
 
-1. A **dataset annotation pipeline** that systematically evaluates frequency-domain classifiers and produces training labels, making the frequency feature branch viable.
-2. A **benchmarking framework** for standardized cross-model evaluation, enabling rigorous comparison between the baseline and extended models.
+*(to be written)*
 
-This revised scope produces a complete, end-to-end system from dataset annotation through model training to evaluation, rather than a broader but incomplete multi-feature prototype.
+### Discussion
 
-### Current Status
-
-The training framework (FakeVLM-Extended) is fully implemented and has been trained (Stage 1 + Stage 2 LoRA fine-tuning). The benchmarking framework is fully implemented, including classification metrics (Accuracy, F1), ROUGE-L, and CSS (BERTScore F1 on the explanation portion of responses). Evaluation of both the baseline FakeVLM and the FFT fine-tuned model against the FakeClue test sets is in progress.
+*(to be written)*
 
 ## Conclusion
 
-This intermediate delivery presents three main contributions toward the project's objective of augmenting FakeVLM with frequency-domain features. First, we developed and executed a frequency-domain label augmentation pipeline that annotates 74.6% of fake images in the FakeClue training set with frequency artifact descriptions, using the best-performing classifier from a pool of 17 pre-trained models evaluated per image category. Second, we implemented FakeVLM-Extended, a modular training framework that extends LLaVA 1.5 with a parallel frequency-domain feature branch, supporting pluggable extractors and a two-stage training procedure. Third, we implemented the base structure of a benchmarking framework for cross-model evaluation with both classification and generation quality metrics.
-
-The remaining work for the final delivery includes:
-
-- Execute Stage 1 and Stage 2 training on the augmented FakeClue dataset.
-- Evaluate the trained FakeVLM-Extended model and compare its performance against the baseline FakeVLM using the benchmarking framework.
-- Experiment with additional frequency-domain extractors beyond the current FFT implementation, depending on initial training results and available time.
-- Refine the benchmarking framework based on actual model outputs.
+*(to be written)*
 
 ## Bibliographic References
 
