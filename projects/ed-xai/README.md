@@ -186,13 +186,9 @@ All training runs use DeepSpeed ZeRO-2 for memory optimization on a single NVIDI
 
 ### Evaluation Methodology
 
-The benchmarking framework supports cross-model, cross-dataset evaluation with the following metrics:
+All models are evaluated on the FakeClue test set (5,000 images) using the same metrics adopted by the original FakeVLM evaluation [4], enabling direct comparison with the published results. Classification performance is measured by accuracy and F1 score, which assess the model's ability to correctly distinguish real from synthetic images. Explanation quality is measured by ROUGE-L and Contextual Semantic Similarity (CSS). ROUGE-L computes the longest common subsequence between the generated explanation and the reference annotation, capturing lexical overlap with the ground truth. CSS measures the semantic similarity between the generated and reference explanations using BERTScore F1, computed on the explanation portion of the response only (excluding the initial real/fake verdict).
 
-- **Classification metrics**: Accuracy and F1 Score.
-- **ROUGE-L**: Measures the longest common subsequence between generated explanations and reference annotations, assessing lexical overlap with the ground-truth annotation.
-- **CSS (Contextual Semantic Similarity)**: Measures semantic similarity between the model's generated explanation and the reference annotation using BERTScore F1 (`roberta-large`). Computed on the explanation part of the response only (the sentence following the initial real/fake verdict). Both ROUGE-L and CSS require a natural-language output and are therefore not applicable to expert binary classifiers such as NPR. Note: HuggingFace emits a benign warning about uninitialized pooler weights when loading `roberta-large`; BERTScore does not use the pooler layer and the warning can be safely ignored.
-
-Evaluation focuses on the FakeClue dataset. Additional benchmarks such as ER-FF++ and LOKI are considered for future work.
+The evaluation compares three model configurations. The baseline is the original FakeVLM evaluated on the original FakeClue test set without any fine-tuning. The two extended models (FakeVLM-Extended with FFT magnitude features and FakeVLM-Extended with FFT phase features) are evaluated on the augmented FakeClue test set, assessing the combined effect of frequency-domain features and label augmentation.
 
 ### Workflow
 
