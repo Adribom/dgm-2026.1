@@ -133,36 +133,26 @@ The results reveal substantial variation in classifier performance across image 
 
 For each true-positive detection, the sentence *"The image also presents artifacts in the frequency domain."* is appended to the existing natural-language explanation in the FakeClue label. This selective strategy ensures that frequency annotations are only applied to images where a classifier provides corroborating evidence, avoiding the introduction of unsupported claims into the training data. The augmentation covers 74.6% of fake training images (51,004 out of 68,396). The test split exhibits consistent coverage at 73.9% (2,359 out of 3,192), indicating that the per-category classifier selection generalizes across the dataset and is not an artifact of overfitting to a particular split.
 
-### FakeVLM-Extended Architecture
+### Proposed Architecture
 
-FakeVLM-Extended augments the original FakeVLM (LLaVA 1.5 [8]) architecture with a parallel frequency-domain feature branch. The design preserves full compatibility with the Hugging Face `LlavaForConditionalGeneration` implementation, including DeepSpeed ZeRO-2/3 and LoRA fine-tuning.
-
-The architecture operates as follows:
+FakeVLM-Extended augments FakeVLM (LLaVA 1.5 [8]) with a parallel frequency-domain feature branch. In the original architecture, the input image is encoded by CLIP-ViT-L/14 and projected into 576 visual tokens in the language model's embedding space. FakeVLM-Extended adds a second branch that extracts frequency-domain features from the same input image, projects them into a single token in the same embedding space, and concatenates this token with the 576 visual tokens. The language model (Vicuna 7B) thus receives 577 tokens per image: 576 capturing spatial and semantic content, and one encoding frequency-domain information. This design preserves full compatibility with the original model's inference pipeline and training infrastructure.
 
 ```
-Image → CLIP-ViT-L/14 → 576 × 1024 → CLIP Projector → 576 × 4096 ──┐
-                                                                   ├─ concat → 577 × 4096 → Vicuna 7B
-Image → FreqExtractor → 3072 → FreqProjector (MLP) → 1 × 4096 ─────┘
+Image → Frequency Extractor → 3072 → Frequency Projector → 1 × 4096 ─┐
+                                                                     ├─ concat → 577 × 4096 → Vicuna 7B
+Image → CLIP-ViT-L/14 → 576 × 1024 → CLIP Projector → 576 × 4096 ────┘
 ```
 
-An `ExtendedProjector` wraps the original CLIP projector, concatenating a single frequency token with the 576 CLIP visual tokens to produce 577 total tokens for the language model. The frequency extraction pipeline consists of two components:
+The frequency branch consists of two stages: a deterministic feature extractor with no learnable parameters that produces a fixed-dimensional representation of the image's frequency content, and a trainable two-layer projection network with approximately 22 million parameters that maps this representation into the language model's embedding space. The projection network mirrors the architecture of the original CLIP projector in LLaVA (two linear layers with GELU activation), ensuring that the frequency token is representationally compatible with the visual tokens.
 
-- **FreqExtractor**: A frozen, modular extractor registered through a plugin-style registry (`extractors/`). Each extractor implements the `BaseFrequencyExtractor` abstract class and produces a fixed-dimensional feature vector. The current implementation provides an FFT extractor that computes a log-magnitude FFT spectrum (3072-dimensional output).
-- **FreqProjector**: A trainable 2-layer MLP (3072 → 3072 → 4096, ~22M parameters) that maps the extractor output to the language model's embedding space.
-
-Training follows a two-stage approach:
-
-- **Stage 1**: All parameters except the FrequencyProjector are frozen. The MLP is trained for 3 epochs to produce a meaningful token from frequency features (~22M trainable parameters).
-- **Stage 2**: The Stage 1 checkpoint is loaded, and LoRA adapters (r=8, alpha=16) are applied to Vicuna's linear layers. Both the LoRA adapters and the FrequencyProjector are trained jointly for 5 epochs.
-
-### FFT Feature Extraction
+### Feature Extraction
 
 Generative architectures such as GANs and diffusion models introduce systematic artifacts during upsampling operations that, while often imperceptible in the spatial domain, manifest as distinctive patterns in the frequency spectrum [1, 5]. The 2D Discrete Fourier Transform (DFT) decomposes an image into its constituent spatial frequencies, making these artifacts explicit and amenable to automated analysis. This theoretical motivation underlies the choice of frequency-domain features as a complementary signal to the semantic features captured by CLIP-ViT.
 
-The FFT extractor applies the 2D DFT independently to each color channel, centers the zero-frequency (DC) component via spectral shifting, and computes the log-magnitude spectrum $\log(1 + |F(u,v)|)$. The logarithmic scaling compresses the dynamic range of the spectrum, allowing both low-frequency structural information and high-frequency detail, where generative artifacts are most prevalent, to be represented within the same feature space. The resulting spectrum is spatially pooled to produce a compact feature vector that encodes the image's frequency-domain signature. Figure 2 compares the log-magnitude FFT spectra of a real and a synthetic face image from the FakeClue dataset. While the spectra may appear similar to human inspection, the subtle distributional differences, particularly in the high-frequency components, encode discriminative information that the FrequencyProjector learns to exploit during training.
+The frequency extractor applies the 2D DFT independently to each color channel and centers the zero-frequency component via spectral shifting. Two operating modes are supported, each trained and evaluated independently as a separate model configuration. The magnitude mode computes the log-magnitude spectrum $\log(1 + |F(u,v)|)$, where the logarithmic scaling compresses the dynamic range so that both low-frequency structural information and high-frequency generative artifacts are represented within the same feature space. The phase mode computes the phase angle of $F(u,v)$, capturing structural and edge information that complements the energy distribution encoded by the magnitude. In both modes, the resulting spectrum is spatially pooled to a fixed grid and flattened into a 3,072-dimensional feature vector (3 channels $\times$ 32 $\times$ 32), which serves as input to the projection network. Figure 2 compares the log-magnitude FFT spectra of a real and a synthetic face image from the FakeClue dataset. While the spectra may appear similar to human inspection, the subtle distributional differences, particularly in the high-frequency components, encode discriminative information that the projection network learns to exploit during training.
 
 <p align="center">
-  <img src="images/fft_comparison.png" width="500"/>
+  <img src="images/fft_comparison.png" width="400"/>
   <br>
   <em>Figure 2: Log-magnitude FFT spectra of a real (top) and a synthetic (bottom) face image from FakeClue.</em>
 </p>
