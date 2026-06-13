@@ -4,6 +4,10 @@
 /models/CycleGAN/checkpoints
 /models/CycleGAN/outputs/progress
 
+# Pretrained weights (large binary files — download separately)
+*.pth.tar
+models/Classifier/chexnet_arbiter.pt
+
 # Mac OS-specific storage files
 .DS_Store
 
@@ -200,3 +204,4 @@ counterfactuals/
 original/
 training-results/cvae/models/
 change_heatmaps/
+synthetic/

@@ -1,0 +1,14 @@
+{
+  "healthy_to_pneumonia": {
+    "n_pairs": 8978,
+    "flip_rate": 0.1875,
+    "delta_mean": 0.0461,
+    "delta_std": 0.265
+  },
+  "pneumonia_to_healthy": {
+    "n_pairs": 43,
+    "flip_rate": 0.1395,
+    "delta_mean": 0.0867,
+    "delta_std": 0.295
+  }
+}

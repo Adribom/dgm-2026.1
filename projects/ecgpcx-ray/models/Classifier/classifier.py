@@ -3,6 +3,8 @@
 import torch
 import torch.nn as nn
 import torchvision.models as tv_models
+from pathlib import Path
+from typing import Union
 
 
 class ConvBlock(nn.Module):
@@ -186,3 +188,97 @@ class FrozenDenseNet121(nn.Module):
         x = x.repeat(1, 3, 1, 1)
         x = (x - self.mean) / self.std
         return self.model(x)  # (B, 1)
+
+
+class CheXNet(nn.Module):
+    """CheXNet arbiter: DenseNet-121 pretrained on ChestX-ray14 (arnoweng weights).
+
+    Frozen oracle used to measure flip rate and confidence in counterfactual
+    evaluation — never fine-tuned, always in eval mode.
+
+    Input:  (B, 1, H, W) grayscale image, pixel values in [0, 1].
+            Images are resized to 224×224 *before* being passed here.
+    Output of predict_pneumonia(): (B,) float tensor, probability of pneumonia.
+
+    The checkpoint has 14 output classes; pneumonia is at index 6.
+    Keys in the saved state_dict carry a "module." prefix from DataParallel
+    training, which is stripped automatically on load.
+
+    Download weights from: https://github.com/arnoweng/CheXNet
+    Save to: models/Classifier/chexnet.pth.tar  (gitignored — binary, ~31 MB)
+    """
+
+    # ChestX-ray14 class order from the arnoweng checkpoint
+    CLASSES = [
+        "Atelectasis", "Cardiomegaly", "Effusion", "Infiltration",
+        "Mass", "Nodule", "Pneumonia", "Pneumothorax",
+        "Consolidation", "Edema", "Emphysema", "Fibrosis",
+        "Pleural_Thickening", "Hernia",
+    ]
+    PNEUMONIA_IDX = CLASSES.index("Pneumonia")  # 6
+
+    _MEAN = [0.485, 0.456, 0.406]
+    _STD = [0.229, 0.224, 0.225]
+
+    def __init__(self, checkpoint_path: Union[str, Path]):
+        super().__init__()
+
+        backbone = tv_models.densenet121(weights=None)
+        backbone.classifier = nn.Linear(backbone.classifier.in_features, 14)
+        self.model = backbone
+
+        self._load_weights(Path(checkpoint_path))
+
+        for p in self.parameters():
+            p.requires_grad = False
+        self.eval()
+
+        mean = torch.tensor(self._MEAN).view(1, 3, 1, 1)
+        std = torch.tensor(self._STD).view(1, 3, 1, 1)
+        self.register_buffer("mean", mean)
+        self.register_buffer("std", std)
+
+    def _load_weights(self, path: Path) -> None:
+        if not path.exists():
+            raise FileNotFoundError(
+                f"CheXNet checkpoint not found at {path}.\n"
+                "Download model.pth.tar from https://github.com/arnoweng/CheXNet "
+                "and place it at models/Classifier/chexnet.pth.tar"
+            )
+        checkpoint = torch.load(path, map_location="cpu", weights_only=False)
+        state_dict = checkpoint.get("state_dict", checkpoint)
+
+        # 1. Strip DataParallel "module." prefix
+        state_dict = {k.removeprefix("module."): v for k, v in state_dict.items()}
+
+        # 2. Strip "densenet121." wrapper prefix (arnoweng saves backbone inside a class)
+        state_dict = {k.removeprefix("densenet121."): v for k, v in state_dict.items()}
+
+        # 3. Remap old torchvision DenseNet layer names to modern names:
+        #    "norm.1" → "norm1", "conv.1" → "conv1", "norm.2" → "norm2", "conv.2" → "conv2"
+        #    The arnoweng checkpoint was saved with torchvision < 0.5.
+        import re
+        state_dict = {
+            re.sub(r'\.(norm|conv)\.(\d)', lambda m: f".{m.group(1)}{m.group(2)}", k): v
+            for k, v in state_dict.items()
+        }
+
+        # 4. Remap classifier: arnoweng wraps it in nn.Sequential ("classifier.0.*")
+        #    but modern torchvision uses a plain nn.Linear ("classifier.*").
+        state_dict = {
+            k.replace("classifier.0.", "classifier."): v for k, v in state_dict.items()
+        }
+
+        self.model.load_state_dict(state_dict)
+
+    def forward(self, x: torch.Tensor) -> torch.Tensor:
+        """Returns raw 14-class logits — shape (B, 14)."""
+        x = x.repeat(1, 3, 1, 1)
+        x = (x - self.mean) / self.std
+        return self.model(x)
+
+    @torch.inference_mode()
+    def predict_pneumonia(self, x: torch.Tensor) -> torch.Tensor:
+        """Probability of pneumonia for each image — shape (B,)."""
+        logits = self.forward(x)
+        return torch.sigmoid(logits[:, self.PNEUMONIA_IDX])
