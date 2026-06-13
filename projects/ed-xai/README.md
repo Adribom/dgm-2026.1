@@ -250,9 +250,28 @@ In generation quality, LoRA fine-tuning on Vicuna improves ROUGE-L from 0.4950 t
 
 The ablation results indicate that LoRA fine-tuning provides the primary mechanism for improving both classification and explanation quality. The frequency branch combined with augmented labels provides an additional, smaller but consistent, contribution to the generation quality metrics.
 
-#### Per-Image Classification Agreement
+#### Error Analysis by Category
 
-*(to be written)*
+To understand where the models differ in classification behavior, we examine the misclassifications broken down by FakeClue image category. Given that all models achieve accuracy above 98.7%, the total number of errors is small (44 to 65 out of 5,000 images), but the distribution across categories reveals patterns that aggregate metrics obscure.
+
+| Category | Images | Baseline | Magnitude | Phase | LoRA Vicuna | LoRA Vic+Proj |
+|----------|--------|----------|-----------|-------|-------------|---------------|
+| animal | 749 | 7 | 2 | 2 | 2 | 5 |
+| deepfake | 1168 | 39 | 26 | 30 | 28 | 45 |
+| doc | 576 | 2 | 2 | 2 | 2 | 2 |
+| human | 403 | 0 | 4 | 4 | 4 | 2 |
+| object | 867 | 9 | 9 | 10 | 10 | 8 |
+| satellite | 875 | 0 | 0 | 0 | 0 | 0 |
+| scene | 362 | 5 | 1 | 2 | 2 | 3 |
+| **Total** | **5000** | **62** | **44** | **50** | **48** | **65** |
+
+The deepfake category accounts for the majority of errors across all models. The baseline produces 39 misclassifications on this category, while the FFT magnitude model reduces this to 26, the largest per-category improvement observed. FFT phase and LoRA Vicuna also reduce deepfake errors (30 and 28, respectively), but LoRA Vicuna with CLIP projector increases them to 45, consistent with the overall degradation observed for this configuration.
+
+The satellite category achieves perfect classification across all five models, with zero misclassifications. The document category is equally stable at two errors per model, suggesting that neither LoRA fine-tuning nor the frequency branch affects classification on this category. The object category shows minimal variation (8 to 10 errors).
+
+The human category presents an unexpected pattern: the baseline produces zero misclassifications, but all fine-tuned models introduce errors on this category (four errors for magnitude, phase, and LoRA Vicuna; two for LoRA Vicuna with projector). This suggests that fine-tuning, regardless of configuration, slightly degrades performance on this particular category.
+
+The FFT magnitude model achieves the fewest errors in the animal (2 vs. 7 baseline) and scene (1 vs. 5 baseline) categories, where frequency-domain classifiers showed strong coverage during label augmentation (75.7% and 61.6%, respectively, as reported in the Frequency-Domain Label Augmentation section). This suggests that the frequency branch contributes most in categories where the augmented training labels carry reliable frequency-domain signals.
 
 ### Discussion
 
