@@ -4,6 +4,8 @@
 /models/CycleGAN/checkpoints
 /models/CycleGAN/outputs/progress
 
+/models/CycleGAN/mask/checkpoints
+/models/CycleGAN/mask/outputs/progress
 # Mac OS-specific storage files
 .DS_Store
 

@@ -4,7 +4,9 @@ from tqdm import tqdm
 from .losses import (
     GANLoss,
     CycleConsistencyLoss,
-    IdentityLoss
+    IdentityLoss,
+    MaskedCycleConsistencyLoss,
+    MaskedIdentityLoss,
 )
 
 from .image_buffer import ImageBuffer
@@ -17,10 +19,14 @@ class CycleGANTrainer:
         model,
         device,
         lambda_cycle=10.0,
-        lambda_identity=5.0
+        lambda_identity=5.0,
+        use_mask=False,
+        lambda_mask_inside=1.0,
+        lambda_mask_outside=1.0,
     ):
 
         self.device = device
+        self.use_mask = use_mask
 
         self.G_H2P = model.G_H2P.to(device)
         self.G_P2H = model.G_P2H.to(device)
@@ -33,8 +39,13 @@ class CycleGANTrainer:
 
         # Losses
         self.gan_loss = GANLoss()
-        self.cycle_loss = CycleConsistencyLoss()
-        self.identity_loss = IdentityLoss()
+
+        if use_mask:
+            self.cycle_loss = MaskedCycleConsistencyLoss(lambda_mask_inside, lambda_mask_outside)
+            self.identity_loss = MaskedIdentityLoss(lambda_mask_inside, lambda_mask_outside)
+        else:
+            self.cycle_loss = CycleConsistencyLoss()
+            self.identity_loss = IdentityLoss()
 
         # Optimizers
         self.optimizer_G = torch.optim.Adam(
@@ -81,8 +92,21 @@ class CycleGANTrainer:
 
         for batch in progress_bar:
 
-            real_healthy = batch["healthy"].to(self.device)
-            real_pneumonia = batch["pneumonia"].to(self.device)
+            healthy = batch["healthy"].to(self.device)
+            pneumonia = batch["pneumonia"].to(self.device)
+
+            if self.use_mask:
+                # Split image (ch 0) and lung mask (ch 1)
+                real_H = healthy[:, 0:1, :, :]
+                H_mask = healthy[:, 1:2, :, :]
+                real_P = pneumonia[:, 0:1, :, :]
+                P_mask = pneumonia[:, 1:2, :, :]
+                # Concatenated inputs for generators
+                H_input = torch.cat([real_H, H_mask], dim=1)
+                P_input = torch.cat([real_P, P_mask], dim=1)
+            else:
+                real_H = healthy
+                real_P = pneumonia
 
             # ==========================================
             # Train Generators
@@ -90,63 +114,61 @@ class CycleGANTrainer:
 
             self.optimizer_G.zero_grad()
 
-            # Identity loss
-            same_healthy = self.G_P2H(real_healthy)
+            if self.use_mask:
+                # Identity loss — generator should preserve images already in target domain
+                same_healthy = self.G_P2H(H_input)
+                loss_identity_H = self.identity_loss(same_healthy, real_H, H_mask)
 
-            loss_identity_H = self.identity_loss(
-                same_healthy,
-                real_healthy
-            )
+                same_pneumonia = self.G_H2P(P_input)
+                loss_identity_P = self.identity_loss(same_pneumonia, real_P, P_mask)
 
-            same_pneumonia = self.G_H2P(real_pneumonia)
+                # GAN loss — hard mask: background is taken directly from the real image
+                fake_pneumonia = self.G_H2P(H_input)
+                fake_pneumonia = fake_pneumonia * H_mask + real_H * (1 - H_mask)
 
-            loss_identity_P = self.identity_loss(
-                same_pneumonia,
-                real_pneumonia
-            )
+                fake_healthy = self.G_P2H(P_input)
+                fake_healthy = fake_healthy * P_mask + real_P * (1 - P_mask)
+
+                # Cycle loss — use source mask for the fake image (same spatial structure)
+                recovered_healthy = self.G_P2H(
+                    torch.cat([fake_pneumonia, H_mask], dim=1)
+                )
+                recovered_pneumonia = self.G_H2P(
+                    torch.cat([fake_healthy, P_mask], dim=1)
+                )
+
+                loss_cycle_H = self.cycle_loss(recovered_healthy, real_H, H_mask)
+                loss_cycle_P = self.cycle_loss(recovered_pneumonia, real_P, P_mask)
+            else:
+                # Identity loss
+                same_healthy = self.G_P2H(real_H)
+                loss_identity_H = self.identity_loss(same_healthy, real_H)
+
+                same_pneumonia = self.G_H2P(real_P)
+                loss_identity_P = self.identity_loss(same_pneumonia, real_P)
+
+                # GAN loss
+                fake_pneumonia = self.G_H2P(real_H)
+                fake_healthy = self.G_P2H(real_P)
+
+                # Cycle loss
+                recovered_healthy = self.G_P2H(fake_pneumonia)
+                recovered_pneumonia = self.G_H2P(fake_healthy)
+
+                loss_cycle_H = self.cycle_loss(recovered_healthy, real_H)
+                loss_cycle_P = self.cycle_loss(recovered_pneumonia, real_P)
+
+            # Discriminators see only the generated image (1 channel), not the mask
+            pred_fake_P = self.D_P(fake_pneumonia)
+            pred_fake_H = self.D_H(fake_healthy)
 
             loss_identity = (
                 loss_identity_H +
                 loss_identity_P
             ) * self.lambda_identity
 
-            # GAN loss
-            fake_pneumonia = self.G_H2P(real_healthy)
-
-            pred_fake_P = self.D_P(fake_pneumonia)
-
-            loss_GAN_H2P = self.gan_loss(
-                pred_fake_P,
-                True
-            )
-
-            fake_healthy = self.G_P2H(real_pneumonia)
-
-            pred_fake_H = self.D_H(fake_healthy)
-
-            loss_GAN_P2H = self.gan_loss(
-                pred_fake_H,
-                True
-            )
-
-            # Cycle loss
-            recovered_healthy = self.G_P2H(
-                fake_pneumonia
-            )
-
-            loss_cycle_H = self.cycle_loss(
-                recovered_healthy,
-                real_healthy
-            )
-
-            recovered_pneumonia = self.G_H2P(
-                fake_healthy
-            )
-
-            loss_cycle_P = self.cycle_loss(
-                recovered_pneumonia,
-                real_pneumonia
-            )
+            loss_GAN_H2P = self.gan_loss(pred_fake_P, True)
+            loss_GAN_P2H = self.gan_loss(pred_fake_H, True)
 
             loss_cycle = (
                 loss_cycle_H +
@@ -171,7 +193,7 @@ class CycleGANTrainer:
 
             self.optimizer_D_H.zero_grad()
 
-            pred_real_H = self.D_H(real_healthy)
+            pred_real_H = self.D_H(real_H)
 
             loss_real_H = self.gan_loss(
                 pred_real_H,
@@ -208,7 +230,7 @@ class CycleGANTrainer:
 
             self.optimizer_D_P.zero_grad()
 
-            pred_real_P = self.D_P(real_pneumonia)
+            pred_real_P = self.D_P(real_P)
 
             loss_real_P = self.gan_loss(
                 pred_real_P,
@@ -269,11 +291,11 @@ class CycleGANTrainer:
         return {
             "losses": epoch_losses,
             "images": {
-                "real_healthy": real_healthy.detach().cpu(),
+                "real_healthy": real_H.detach().cpu(),
                 "fake_pneumonia": fake_pneumonia.detach().cpu(),
                 "recovered_healthy": recovered_healthy.detach().cpu(),
 
-                "real_pneumonia": real_pneumonia.detach().cpu(),
+                "real_pneumonia": real_P.detach().cpu(),
                 "fake_healthy": fake_healthy.detach().cpu(),
                 "recovered_pneumonia": recovered_pneumonia.detach().cpu(),
             }

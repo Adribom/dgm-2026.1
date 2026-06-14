@@ -1,4 +1,10 @@
-DEVICE = "cuda"
+import torch
+from pathlib import Path
+
+# ecgpcx-ray/ root (3 levels up from models/CycleGAN/config.py)
+_DATA_ROOT = Path(__file__).parent.parent.parent / "data" / "processed"
+
+DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 
 IMAGE_SIZE = 128
 
@@ -16,18 +22,7 @@ LAMBDA_IDENTITY = 5.0
 
 CHECKPOINT_DIR = "checkpoints"
 
-TRAIN_HEALTHY_DIR = (
-    "/home/gfreitas/ia376n/final_project/dgm-2026.1/projects/ecgpcx-ray/data/processed/train/healthy"
-)
-
-TRAIN_PNEUMONIA_DIR = (
-    "/home/gfreitas/ia376n/final_project/dgm-2026.1/projects/ecgpcx-ray/data/processed/train/pneumonia"
-)
-
-VAL_HEALTHY_DIR = (
-    "/home/gfreitas/ia376n/final_project/dgm-2026.1/projects/ecgpcx-ray/data/processed/val/healthy"
-)
-
-VAL_PNEUMONIA_DIR = (
-    "/home/gfreitas/ia376n/final_project/dgm-2026.1/projects/ecgpcx-ray/data/processed/val/pneumonia"
-)
+TRAIN_HEALTHY_DIR   = str(_DATA_ROOT / "train" / "healthy")
+TRAIN_PNEUMONIA_DIR = str(_DATA_ROOT / "train" / "pneumonia")
+VAL_HEALTHY_DIR     = str(_DATA_ROOT / "val"   / "healthy")
+VAL_PNEUMONIA_DIR   = str(_DATA_ROOT / "val"   / "pneumonia")

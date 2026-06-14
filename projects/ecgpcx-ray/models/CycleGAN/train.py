@@ -1,3 +1,6 @@
+import matplotlib
+matplotlib.use('Agg')  # non-interactive backend — avoids Tkinter/threading conflict on Windows
+
 from model_utils.cyclegan import CycleGAN
 
 from training.trainer import (
