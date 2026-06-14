@@ -19,10 +19,9 @@ PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
 DEFAULT_INPUT_DIR = PROJECT_ROOT / "data" / "interim" / "point_e_baseline_predictions"
 DEFAULT_OUTPUT_CSV = PROJECT_ROOT / "reports" / "point_e_baseline_results.csv"
 
-# Engineering severity thresholds (in meters)
-# Represent absolute metric depth values.
-THRESHOLD_SUPERFICIAL = 0.05  # up to 5cm
-THRESHOLD_TWO_LAYER = 0.12    # up to 12cm
+# Rui Fan MVP severity thresholds (in centimeters)
+MVP_THRESHOLD_LOW_CM = 7.0
+MVP_THRESHOLD_MEDIUM_CM = 10.0
 
 def calculate_p05_depth(coords: np.ndarray) -> float:
     """
@@ -47,14 +46,50 @@ def calculate_p05_depth(coords: np.ndarray) -> float:
 
 def classify_severity(depth: float) -> str:
     """
-    Classifies the absolute depth into infrastructure engineering severity levels.
+    Classify a depth value in meters into the legacy severity buckets.
+
+    This is kept as a thin compatibility wrapper so existing notebooks and
+    scripts can transition to the Rui Fan MVP centimeter-based classifier
+    without breaking immediately.
+
+    Args:
+        depth: Absolute depth value in meters.
+
+    Returns:
+        str: One of ``low``, ``medium``, or ``high``.
     """
-    if depth < THRESHOLD_SUPERFICIAL:
-        return "Superficial Patching"
-    elif depth < THRESHOLD_TWO_LAYER:
-        return "Two-layer Paving"
-    else:
-        return "Deep Base Failure"
+    return classify_severity_cm(depth * 100.0)
+
+
+def classify_severity_cm(depth_cm: float) -> str:
+    """
+    Classify a depth value in centimeters into the Rui Fan MVP severity bins.
+
+    Args:
+        depth_cm: Absolute depth value in centimeters.
+
+    Returns:
+        str: One of ``low``, ``medium``, or ``high``.
+    """
+    if depth_cm < MVP_THRESHOLD_LOW_CM:
+        return "low"
+    if depth_cm < MVP_THRESHOLD_MEDIUM_CM:
+        return "medium"
+    return "high"
+
+
+def calculate_effective_depth_cm(coords: np.ndarray) -> float:
+    """
+    Calculate the outlier-resistant effective depth in centimeters.
+
+    Args:
+        coords: Point cloud coordinates in meters, with the pothole depth encoded
+            as negative Z values.
+
+    Returns:
+        float: P05 depth converted to centimeters.
+    """
+    return calculate_p05_depth(coords) * 100.0
 
 def evaluate_batch(args):
     """Execution block for evaluating a directory of .npy point clouds."""

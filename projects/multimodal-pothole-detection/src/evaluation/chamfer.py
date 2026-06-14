@@ -11,6 +11,7 @@ de-normalisation overhead.
 
 from __future__ import annotations
 
+import numpy as np
 import torch
 from torch.utils.data import DataLoader
 
@@ -102,3 +103,26 @@ def compute_mean_chamfer_distance(
 
     model.train()
     return total_cd / total_samples if total_samples > 0 else float("inf")
+
+
+def compute_symmetric_chamfer_distance_points(pred: np.ndarray, gt: np.ndarray) -> float:
+    """Compute symmetric Chamfer Distance for two point clouds.
+
+    Parameters
+    ----------
+    pred:
+        Predicted point cloud with shape [N, 3].
+    gt:
+        Ground-truth point cloud with shape [M, 3].
+
+    Returns
+    -------
+    float
+        Symmetric Chamfer Distance using squared Euclidean distances.
+    """
+
+    if pred.size == 0 or gt.size == 0:
+        return float("inf")
+
+    dist = np.linalg.norm(pred[:, None, :] - gt[None, :, :], axis=-1) ** 2
+    return float(dist.min(axis=1).mean() + dist.min(axis=0).mean())
