@@ -7,6 +7,11 @@ adaptations necessary for the Generative 3D model inputs.
 import numpy as np
 import cv2
 
+# Threshold for hybrid padding strategy: 
+# If max_padding / crop_size >= 15%, we assume the pothole is clipped and use Inpaint.
+# Otherwise, we use Reflect 101 for better texture continuity.
+DEFAULT_HYBRID_PAD_THRESHOLD = 0.15
+
 def get_square_bbox_from_mask(mask: np.ndarray, margin_px: int = 50) -> tuple:
     """
     Finds a square bounding box around a given mask, including a margin.
@@ -95,6 +100,58 @@ def apply_square_crop(image: np.ndarray, bbox: tuple) -> np.ndarray:
 
     return crop
 
+def apply_square_crop_hybrid(image: np.ndarray, bbox: tuple, threshold: float = DEFAULT_HYBRID_PAD_THRESHOLD) -> np.ndarray:
+    """
+    Crops an image using a square bounding box and applies a hybrid padding strategy
+    to avoid artifacts detrimental to CLIP encoders.
+
+    Strategy:
+    - If padding ratio < threshold: Use BORDER_REFLECT_101 (best for texture continuity).
+    - If padding ratio >= threshold: Use cv2.inpaint (best for clipped objects at image edges).
+
+    Args:
+        image (np.ndarray): The 2D or 3D image array (H, W, C) or (H, W).
+        bbox (tuple): (y_min, y_max, x_min, x_max).
+        threshold (float): Ratio of max padding to crop size above which inpainting is used.
+
+    Returns:
+        np.ndarray: The square cropped image with optimized padding.
+    """
+    img_h, img_w = image.shape[:2]
+    y_min, y_max, x_min, x_max = bbox
+    crop_size = y_max - y_min
+
+    # Calculate padding amounts
+    pad_top    = max(0, -y_min)
+    pad_bottom = max(0, y_max - img_h)
+    pad_left   = max(0, -x_min)
+    pad_right  = max(0, x_max - img_w)
+    
+    max_pad = max(pad_top, pad_bottom, pad_left, pad_right)
+    pad_ratio = max_pad / crop_size if crop_size > 0 else 0
+
+    if pad_ratio < threshold:
+        # Reflect 101 strategy
+        padded_img = cv2.copyMakeBorder(image, pad_top, pad_bottom, pad_left, pad_right, cv2.BORDER_REFLECT_101)
+        # Coordinates in padded image
+        return padded_img[y_min+pad_top : y_max+pad_top, x_min+pad_left : x_max+pad_left]
+    else:
+        # Inpaint Telea strategy
+        # 1. Get baseline black crop
+        crop_black = apply_square_crop(image, bbox)
+        
+        # 2. Build mask for missing areas (where it was black-padded)
+        src_y_min, src_y_max = max(0, y_min), min(img_h, y_max)
+        src_x_min, src_x_max = max(0, x_min), min(img_w, x_max)
+        dst_y_min, dst_y_max = src_y_min - y_min, src_y_max - y_min
+        dst_x_min, dst_x_max = src_x_min - x_min, src_x_max - x_min
+        
+        mask = np.full((crop_black.shape[0], crop_black.shape[1]), 255, dtype=np.uint8)
+        mask[dst_y_min:dst_y_max, dst_x_min:dst_x_max] = 0
+        
+        # 3. Telea Inpaint
+        return cv2.inpaint(crop_black, mask, inpaintRadius=3, flags=cv2.INPAINT_TELEA)
+
 def compute_leveled_point_cloud(
     rgb_img: np.ndarray, 
     depth_img: np.ndarray, 
@@ -172,7 +229,7 @@ def compute_leveled_point_cloud(
         z_expected = np.zeros_like(z_raw)
         
     Z_leveled = z_raw - z_expected
-    points_3d = np.stack((X, Y, Z_leveled), axis=-1)
+    points_3d = np.stack((X, Y, -Z_leveled), axis=-1)
     
     # 5. Clean flying noisy pixels using Statistical Outlier Removal
     if len(points_3d) > 20: # ensure enough points exist to filter

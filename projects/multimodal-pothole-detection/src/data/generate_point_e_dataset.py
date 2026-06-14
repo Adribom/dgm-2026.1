@@ -20,6 +20,7 @@ from pothole_geometry import load_yolo_mask
 from point_e_pipeline_utils import (
     get_square_bbox_from_mask, 
     apply_square_crop,
+    apply_square_crop_hybrid,
     compute_leveled_point_cloud, 
     format_point_e_tensor
 )
@@ -99,7 +100,7 @@ def main():
 
             # --- 2D PHASE ---
             square_bbox = get_square_bbox_from_mask(mask_img, margin_px=CONTEXT_MARGIN_PX)
-            rgb_crop = apply_square_crop(rgb_img, square_bbox)
+            rgb_crop = apply_square_crop_hybrid(rgb_img, square_bbox)
 
             # --- 3D PHASE ---
             points_3d, colors_3d = compute_leveled_point_cloud(

@@ -1,0 +1,17 @@
+{
+  "evaluated_samples": 27,
+  "mean_geometric_fidelity": 0.08829696296296295,
+  "mean_depth_error_cm": 1.510423814814815,
+  "severity_match_rate": 1.0,
+  "severity_confusion_matrix": {
+    "low_to_low": 27,
+    "low_to_medium": 0,
+    "low_to_high": 0,
+    "medium_to_low": 0,
+    "medium_to_medium": 0,
+    "medium_to_high": 0,
+    "high_to_low": 0,
+    "high_to_medium": 0,
+    "high_to_high": 0
+  }
+}
