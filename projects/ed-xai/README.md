@@ -1,6 +1,6 @@
-# ed-xai: Detecção e Explicação de Deepfakes com Visão-Linguagem Aumentada por Frequência
+# ed-xai: Detecção e Explicação de Imagens Sintéticas com Visão-Linguagem Aumentada por Frequência
 
-# ed-xai: Frequency-Augmented Vision-Language Deepfake Detection and Explanation
+# ed-xai: Frequency-Augmented Vision-Language Synthetic Image Detection and Explanation
 
 ## Presentation
 
@@ -20,7 +20,7 @@ This project originated in the context of the graduate course _IA376N - Generati
 
 ## Abstract
 
-This work augments the FakeVLM deepfake detection framework with frequency-domain features. We extend its LLaVA 1.5 architecture with a parallel FFT feature branch that injects a frequency token into the visual pipeline, and augment the FakeClue training labels with frequency artifact descriptions derived from 17 pre-trained classifiers, covering 74.6% of fake images. The FFT magnitude model achieves 98.92% accuracy (from 98.76%) and 0.5706 ROUGE-L (from 0.4950) on the FakeClue benchmark. Ablation experiments reveal that LoRA fine-tuning drives the classification improvement, while the frequency branch and augmented labels primarily enhance the quality of generated artifact explanations.
+This work augments the FakeVLM synthetic image detection framework with frequency-domain features. We extend its LLaVA 1.5 architecture with a parallel FFT feature branch that injects a frequency token into the visual pipeline, and augment the FakeClue training labels with frequency artifact descriptions derived from 17 pre-trained classifiers, covering 74.6% of fake images. The FFT magnitude model achieves 98.92% accuracy (from 98.76%) and 0.5706 ROUGE-L (from 0.4950) on the FakeClue benchmark. Ablation experiments reveal that LoRA fine-tuning drives the classification improvement, while the frequency branch and augmented labels primarily enhance the quality of generated artifact explanations.
 
 ## Problem Description / Motivation
 
@@ -34,7 +34,7 @@ This project investigates whether adding a parallel frequency feature branch to 
 
 ## Objective
 
-The general objective of this project is to investigate whether augmenting the FakeVLM framework with frequency-domain features can improve deepfake detection accuracy and the quality of artifact explanations on the FakeClue dataset.
+The general objective of this project is to investigate whether augmenting the FakeVLM framework with frequency-domain features can improve synthetic image detection accuracy and the quality of artifact explanations on the FakeClue dataset.
 
 The specific objectives are:
 
@@ -54,7 +54,7 @@ Figure 1 summarizes the project workflow across three phases. Phase 1 evaluates 
 
 ## Related Work
 
-FakeVLM [4] is a VLM-based deepfake detector built on LLaVA 1.5 [8] that fine-tunes the model on the FakeClue dataset for simultaneous classification and natural-language artifact explanation, achieving accuracy comparable to expert binary classifiers while providing human-interpretable forensic descriptions. Qian et al. [3] survey the broader landscape of explainable deepfake detection, identifying three main paradigms (forensic analysis, model-centric methods, and multimodal explanations) and highlighting the critical gap between detection accuracy and interpretability that VLM-based approaches aim to bridge.
+FakeVLM [4] is a specialized large multimodal model built on LLaVA 1.5 [8], designed for both general synthetic image and deepfake detection on the FakeClue dataset, achieving accuracy comparable to expert binary classifiers while providing human-interpretable forensic descriptions. Qian et al. [3] survey the broader landscape of explainable synthetic image detection, identifying three main paradigms (forensic analysis, model-centric methods, and multimodal explanations) and highlighting the critical gap between detection accuracy and interpretability that VLM-based approaches aim to bridge.
 
 Several works have demonstrated that generative models leave exploitable artifacts in the frequency domain. Frank et al. [5] showed that GAN-generated images exhibit consistent spectral artifacts in DCT coefficients caused by upsampling operations, enabling detection via simple linear classifiers. Doloriel and Cheung [7] proposed frequency masking as a training strategy for universal deepfake detection, applying spectral masks at multiple frequency bands to improve generalization across unseen generators. Karageorgiou et al. [6] introduced SPAI, a spectral learning approach that operates on FFT-decomposed components at the original image resolution, reporting state-of-the-art results across 13 generative approaches at the time of publication. Bammey [2] extended frequency-domain analysis to diffusion models with Synthbuster, demonstrating that frequency peaks in the Fourier transform of high-pass residuals can reliably distinguish diffusion-generated images from authentic ones. These four methods form the basis of the frequency-domain classifier evaluation used to produce the augmented training dataset in this project.
 
@@ -66,9 +66,9 @@ During the classifier evaluation, NPR [1] was also considered as a candidate for
 
 | Dataset | Web Address | Descriptive Summary |
 |---------|-------------|---------------------|
-| FakeClue | [huggingface.co/datasets/lingcco/FakeClue](https://huggingface.co/datasets/lingcco/FakeClue) | Large-scale multimodal dataset for deepfake detection with over 100,000 images spanning seven categories, each annotated with fine-grained artifact descriptions in conversational format. |
+| FakeClue | [huggingface.co/datasets/lingcco/FakeClue](https://huggingface.co/datasets/lingcco/FakeClue) | Large-scale multimodal dataset for synthetic image detection and artifact explanation, with over 100,000 images spanning seven categories, each annotated with fine-grained artifact descriptions in conversational format. |
 
-FakeClue [4] is a large-scale multimodal dataset designed for deepfake detection and artifact explanation. It contains 104,343 training and 5,000 test images across seven categories: deepfake, document, satellite, animal, human, scene, and object. The images are sourced from GenImage, FaceForensics++, Chameleon, and domain-specific collections for remote sensing and document forgeries. Labels follow the convention 0 = fake, 1 = real. Each entry contains an image path, a binary label, an image category, and a `conversations` array pairing a human question with a GPT-generated natural-language explanation that describes the visual artifacts observed in the image.
+FakeClue [4] is a large-scale multimodal dataset designed for synthetic image detection and artifact explanation. It contains 104,343 training and 5,000 test images across seven categories: deepfake, document, satellite, animal, human, scene, and object. The images are sourced from GenImage, FaceForensics++, Chameleon, and domain-specific collections for remote sensing and document forgeries. Labels follow the convention 0 = fake, 1 = real. Each entry contains an image path, a binary label, an image category, and a `conversations` array pairing a human question with a GPT-generated natural-language explanation that describes the visual artifacts observed in the image.
 
 <p align="center">
   <img src="images/fakeclue_deepfake_real.png" width="110"/>
@@ -309,7 +309,7 @@ Several limitations constrain the generalizability of these findings. First, all
 
 ## Conclusion
 
-This work investigated whether frequency-domain features can improve deepfake detection and explanation quality in a VLM framework. We augmented the FakeVLM detector with a parallel frequency-domain feature branch (FakeVLM-Extended) and trained it on FakeClue labels enriched with frequency artifact annotations. The results show that the extended models improve both classification accuracy (from 98.76% to 98.92% with FFT magnitude) and explanation quality (ROUGE-L from 0.4950 to 0.5706), with the more substantial gains appearing in the generation metrics. The ablation study indicates that LoRA fine-tuning is the primary driver of classification improvement, while the frequency branch combined with augmented labels provides an additional contribution to explanation quality.
+This work investigated whether frequency-domain features can improve synthetic image detection and explanation quality in a VLM framework. We augmented the FakeVLM detector with a parallel frequency-domain feature branch (FakeVLM-Extended) and trained it on FakeClue labels enriched with frequency artifact annotations. The results show that the extended models improve both classification accuracy (from 98.76% to 98.92% with FFT magnitude) and explanation quality (ROUGE-L from 0.4950 to 0.5706), with the more substantial gains appearing in the generation metrics. The ablation study indicates that LoRA fine-tuning is the primary driver of classification improvement, while the frequency branch combined with augmented labels provides an additional contribution to explanation quality.
 
 All five specific objectives were achieved. We evaluated 17 frequency-domain classifiers across four frameworks and used the best-performing classifier per category to augment 74.6% of fake training images with frequency artifact annotations. We designed and implemented FakeVLM-Extended, a modular architecture that injects a single frequency token alongside the 576 CLIP visual tokens into the language model. We trained and evaluated both FFT magnitude and FFT phase variants, finding that both modes yield comparable improvements. We conducted an ablation study with two LoRA-only configurations, establishing that the frequency branch contributes beyond LoRA fine-tuning alone, primarily in generation quality. Finally, we implemented a benchmarking framework for standardized cross-model evaluation with classification and generation metrics.
 
@@ -317,13 +317,13 @@ Several directions remain for future investigation. First, alternative frequency
 
 ## Ethical Considerations
 
-Deepfake detection research operates in a dual-use context. The same generative models that enable legitimate creative, educational, and accessibility applications can also be used to produce misinformation, non-consensual imagery, and fraudulent content [10]. Detection tools such as FakeVLM-Extended are designed to counter harmful uses, but their development also advances understanding of generative artifacts, knowledge that could inform adversarial evasion strategies. Responsible development in this area requires balancing openness (for reproducibility and scientific progress) with caution regarding potential misuse.
+Synthetic image detection research operates in a dual-use context. The same generative models that enable legitimate creative, educational, and accessibility applications can also be used to produce misinformation, non-consensual imagery, and fraudulent content [10]. Detection tools such as FakeVLM-Extended are designed to counter harmful uses, but their development also advances understanding of generative artifacts, knowledge that could inform adversarial evasion strategies. Responsible development in this area requires balancing openness (for reproducibility and scientific progress) with caution regarding potential misuse.
 
 A distinguishing feature of VLM-based detectors is their ability to provide natural-language explanations alongside classification decisions. This explainability is ethically significant: in forensic and legal contexts, a binary real/fake verdict is insufficient without a justification that human reviewers can evaluate [3]. By augmenting FakeVLM with frequency-domain reasoning, this work expands the vocabulary of explanations the model can produce, supporting more informed decision-making. However, generated explanations are not forensic evidence; they reflect learned patterns in the training data and may be inaccurate or misleading for out-of-distribution images.
 
 The FakeClue dataset, while large and diverse across seven categories, carries inherent biases. The category distribution is uneven (deepfake images represent approximately 40% of the fake training set, while document images represent only 13%). The images originate from specific generative models and manipulation techniques that may not represent the full diversity of synthetic content encountered in practice. Demographic biases in the face-centric categories (deepfake and human) are also a concern, as detection performance may vary across demographic groups depending on the representation in the training data. As Bender et al. [11] note in the context of LLMs, training data biases propagate through the model and can lead to systematically skewed outputs.
 
-Automated deepfake detection systems, including the models presented in this work, should not be treated as definitive arbiters of image authenticity. False positives can wrongly flag genuine content, potentially harming individuals or organizations, while false negatives can allow harmful synthetic content to circulate undetected. These risks are compounded when detection tools are deployed without human oversight [10]. We recommend that VLM-based detectors be used as decision-support tools within broader verification workflows that include human review.
+Automated synthetic image detection systems, including the models presented in this work, should not be treated as definitive arbiters of image authenticity. False positives can wrongly flag genuine content, potentially harming individuals or organizations, while false negatives can allow harmful synthetic content to circulate undetected. These risks are compounded when detection tools are deployed without human oversight [10]. We recommend that VLM-based detectors be used as decision-support tools within broader verification workflows that include human review.
 
 Training and evaluating the models in this project required substantial computational resources. Each Stage 2 training run consumed approximately 22 hours on a single NVIDIA RTX Pro 6000 GPU, and the full experimental pipeline (two extended models, two ablation configurations, and evaluation of all five models) required multiple days of continuous GPU utilization. While the use of parameter-efficient fine-tuning (LoRA) and a single-GPU setup reduces the environmental footprint compared to full model training, the cumulative energy cost of iterative research remains a consideration [11].
 
