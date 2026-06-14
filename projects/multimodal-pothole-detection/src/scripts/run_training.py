@@ -10,7 +10,7 @@ optional Chamfer Distance monitoring module.
 import argparse
 import json
 import random
-from datetime import datetime
+from datetime import datetime, timedelta
 from pathlib import Path
 import sys
 
@@ -37,12 +37,20 @@ DEFAULT_CONFIG = {
         "epochs": 50,
         "learning_rate": 1e-5,
         "save_interval": 5,
-        "save_dir": "artifacts/checkpoints",
+        "save_dir": "checkpoints",
+    },
+    "lr_scheduler": {
+        "type": None,
+        "eta_min": 1e-6,
+    },
+    "training": {
+        "max_grad_norm": None,
     },
     "seed": None,
     "augmentation": {
         "active_transforms": [],
         "probabilities": {
+            "pure_image": 0.1,
             "horizontal_flip": 0.5,
             "fake_shadow": 0.3,
             "color_jitter": 0.4,
@@ -99,6 +107,8 @@ def load_config(config_path: str | None, cli_overrides: dict) -> dict:
 
     config = _deep_merge(config, cli_overrides)
     config["model"] = _deep_merge(DEFAULT_CONFIG["model"], config.get("model", {}))
+    config["lr_scheduler"] = _deep_merge(DEFAULT_CONFIG["lr_scheduler"], config.get("lr_scheduler", {}))
+    config["training"] = _deep_merge(DEFAULT_CONFIG["training"], config.get("training", {}))
     config["augmentation"] = _deep_merge(DEFAULT_CONFIG["augmentation"], config.get("augmentation", {}))
     config["validation"] = _deep_merge(DEFAULT_CONFIG["validation"], config.get("validation", {}))
     config.setdefault("data", {})
@@ -114,6 +124,21 @@ def set_seed(seed: int) -> None:
         torch.cuda.manual_seed_all(seed)
     torch.backends.cudnn.deterministic = True
     torch.backends.cudnn.benchmark = False
+
+
+def _resolve_run_artifact_path(run_root: Path, path_value: str | None) -> Path:
+    """Resolve a configured artifact path under the current run directory."""
+    if path_value is None:
+        return run_root
+
+    configured_path = Path(path_value)
+    if configured_path.is_absolute():
+        return configured_path
+
+    if configured_path.parts[:1] == ("artifacts",):
+        configured_path = Path(*configured_path.parts[1:])
+
+    return run_root / configured_path
 
 
 def main():
@@ -165,9 +190,13 @@ def main():
     cloud_dir_value = config["data"]["cloud_dir"]
     save_dir_value = config["model"]["save_dir"]
 
+    run_timestamp = datetime.now().strftime("%Y-%m-%dT%H-%M-%S")
+    run_artifacts_dir = root_dir / "artifacts" / f"run_{run_timestamp}"
+    run_artifacts_dir.mkdir(parents=True, exist_ok=True)
+
     image_dir = root_dir / image_dir_value if image_dir_value and not Path(image_dir_value).is_absolute() else Path(image_dir_value)
     cloud_dir = root_dir / cloud_dir_value if cloud_dir_value and not Path(cloud_dir_value).is_absolute() else Path(cloud_dir_value)
-    save_dir = root_dir / save_dir_value if save_dir_value and not Path(save_dir_value).is_absolute() else Path(save_dir_value)
+    save_dir = _resolve_run_artifact_path(run_artifacts_dir, save_dir_value)
     save_dir.mkdir(parents=True, exist_ok=True)
 
     resolved_config_path = save_dir / f"run_config_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
@@ -193,12 +222,12 @@ def main():
     print(f"Batch Size: {config['model']['batch_size']} | Epochs: {config['model']['epochs']}")
     print(f"==================================================")
 
-    augmentation_record_dir = root_dir / "artifacts" / "augmentation_records"
+    augmentation_record_dir = run_artifacts_dir / "augmentation_records"
     augmentation_record_dir.mkdir(parents=True, exist_ok=True)
     augmentation_record_path = augmentation_record_dir / f"aug_record_{datetime.now().strftime('%Y%m%d_%H%M%S')}.jsonl"
 
     # Val records directory
-    val_records_dir = root_dir / "artifacts" / "val_records"
+    val_records_dir = run_artifacts_dir / "val_records"
     val_records_dir.mkdir(parents=True, exist_ok=True)
     val_log_path = val_records_dir / f"val_log_{datetime.now().strftime('%Y%m%d_%H%M%S')}.jsonl"
 
@@ -255,7 +284,7 @@ def main():
     # Launch Loop
     with augmentation_record_path.open("a", encoding="utf-8") as augmentation_record_file, \
          val_log_path.open("w", encoding="utf-8") as val_log_file:
-        trainer.train_step(
+        run_result = trainer.train_step(
             dataloader=dataloader,
             epochs=config["model"]["epochs"],
             start_epoch=start_epoch,
@@ -265,7 +294,35 @@ def main():
             val_dataloader=val_dataloader,
             val_config=config["validation"],
             val_log_file=val_log_file,
+            scheduler_config=config.get("lr_scheduler"),
+            max_grad_norm=config.get("training", {}).get("max_grad_norm"),
         )
+
+    metadata_path = run_artifacts_dir / "metadata.json"
+    metadata = {
+        "run_timestamp": run_timestamp,
+        "artifacts_dir": str(run_artifacts_dir),
+        "save_dir": str(save_dir),
+        "base_model": "base40M",
+        "resumed_from": str(resume_path) if args.resume_from else None,
+        "start_epoch": start_epoch,
+        "final_epoch_requested": config["model"]["epochs"],
+        "total_epochs_trained": run_result["total_epochs_trained"],
+        "best_epoch": run_result["best_epoch"],
+        "best_val_metric": run_result["best_val_metric"],
+        "elapsed_seconds": run_result["elapsed_seconds"],
+        "elapsed_formatted": str(timedelta(seconds=int(run_result["elapsed_seconds"]))),
+        "final_lr": run_result["final_lr"],
+        "learning_rate": config["model"]["learning_rate"],
+        "lr_scheduler": config.get("lr_scheduler"),
+        "batch_size": config["model"]["batch_size"],
+        "epochs": config["model"]["epochs"],
+        "train_set_size": len(all_stems) - len(val_ids),
+        "val_set_size": len(val_ids),
+        "val_interval": config["validation"].get("val_interval"),
+    }
+    with metadata_path.open("w", encoding="utf-8") as handle:
+        json.dump(metadata, handle, indent=2)
     
     print("Training session complete!")
 

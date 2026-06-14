@@ -18,17 +18,37 @@ def _array_to_pil(image_array: np.ndarray) -> Image.Image:
     return Image.fromarray(clipped, mode="RGB")
 
 
-def _apply_replay_transform(image: Image.Image, transform: A.ReplayCompose) -> Image.Image:
-    """Apply a replayable albumentations transform and convert the result back to PIL."""
+def _collect_replay_params(serialized: dict) -> dict:
+    """Collect applied params from an Albumentations replay tree."""
+    params: dict = {}
+
+    if not isinstance(serialized, dict):
+        return params
+
+    if serialized.get("applied") and serialized.get("params"):
+        params.update({k: v for k, v in serialized["params"].items() if not k.startswith("_")})
+
+    for child in serialized.get("transforms", []):
+        params.update(_collect_replay_params(child))
+
+    return params
+
+
+def _apply_replay_transform(image: Image.Image, transform: A.ReplayCompose) -> tuple[Image.Image, dict]:
+    """Apply a replayable albumentations transform and return the result with its metadata."""
     transformed = transform(image=_pil_to_array(image))
-    return _array_to_pil(transformed["image"])
+    pil_image = _array_to_pil(transformed["image"])
+
+    params = _collect_replay_params(transformed.get("replay", {}))
+
+    return pil_image, params
 
 
 def apply_gaussian_blur(
     image: Image.Image,
     blur_limit: tuple[int, int] = (3, 7),
     sigma_limit: tuple[float, float] = (0.5, 1.5),
-) -> Image.Image:
+) -> tuple[Image.Image, dict]:
     """Apply Gaussian blur to a pothole image.
 
     Parameters
@@ -42,8 +62,8 @@ def apply_gaussian_blur(
 
     Returns
     -------
-    PIL.Image.Image
-        Blurred image.
+    tuple[PIL.Image.Image, dict]
+        Blurred image and transformation parameters.
     """
     transform = A.ReplayCompose(
         [
@@ -64,7 +84,7 @@ def apply_motion_blur(
     angle_range: tuple[float, float] = (0.0, 360.0),
     direction_range: tuple[float, float] = (0.0, 0.0),
     allow_shifted: bool = True,
-) -> Image.Image:
+) -> tuple[Image.Image, dict]:
     """Apply directional motion blur to a pothole image.
 
     Parameters
@@ -82,8 +102,8 @@ def apply_motion_blur(
 
     Returns
     -------
-    PIL.Image.Image
-        Motion-blurred image.
+    tuple[PIL.Image.Image, dict]
+        Motion-blurred image and transformation parameters.
     """
     transform = A.ReplayCompose(
         [
@@ -106,7 +126,7 @@ def apply_cutout(
     hole_height_range: tuple[float, float] = (0.1, 0.2),
     hole_width_range: tuple[float, float] = (0.1, 0.2),
     fill: int = 0,
-) -> Image.Image:
+) -> tuple[Image.Image, dict]:
     """Apply rectangular cutout regions to a pothole image.
 
     Parameters
@@ -124,8 +144,8 @@ def apply_cutout(
 
     Returns
     -------
-    PIL.Image.Image
-        Image with masked patches.
+    tuple[PIL.Image.Image, dict]
+        Image with masked patches and transformation parameters.
     """
     transform = A.ReplayCompose(
         [

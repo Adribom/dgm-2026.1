@@ -18,10 +18,30 @@ def _array_to_pil(image_array: np.ndarray) -> Image.Image:
     return Image.fromarray(clipped, mode="RGB")
 
 
-def _apply_replay_transform(image: Image.Image, transform: A.ReplayCompose) -> Image.Image:
-    """Apply a replayable albumentations transform and convert the result back to PIL."""
+def _collect_replay_params(serialized: dict) -> dict:
+    """Collect applied params from an Albumentations replay tree."""
+    params: dict = {}
+
+    if not isinstance(serialized, dict):
+        return params
+
+    if serialized.get("applied") and serialized.get("params"):
+        params.update({k: v for k, v in serialized["params"].items() if not k.startswith("_")})
+
+    for child in serialized.get("transforms", []):
+        params.update(_collect_replay_params(child))
+
+    return params
+
+
+def _apply_replay_transform(image: Image.Image, transform: A.ReplayCompose) -> tuple[Image.Image, dict]:
+    """Apply a replayable albumentations transform and return the result with its metadata."""
     transformed = transform(image=_pil_to_array(image))
-    return _array_to_pil(transformed["image"])
+    pil_image = _array_to_pil(transformed["image"])
+
+    params = _collect_replay_params(transformed.get("replay", {}))
+
+    return pil_image, params
 
 
 def apply_fake_shadow(
@@ -30,7 +50,7 @@ def apply_fake_shadow(
     num_shadows_limit: tuple[int, int] = (1, 2),
     shadow_dimension: int = 5,
     shadow_intensity_range: tuple[float, float] = (0.4, 0.7),
-) -> Image.Image:
+) -> tuple[Image.Image, dict]:
     """Apply a road-style shadow overlay to a pothole image.
 
     Parameters
@@ -48,8 +68,8 @@ def apply_fake_shadow(
 
     Returns
     -------
-    PIL.Image.Image
-        Shadow-augmented image.
+    tuple[PIL.Image.Image, dict]
+        Shadow-augmented image and transformation parameters.
     """
     transform = A.ReplayCompose(
         [
@@ -71,7 +91,7 @@ def apply_color_jitter(
     brightness_limit: float = 0.2,
     contrast_limit: float = 0.2,
     saturation_limit: float = 0.2,
-) -> Image.Image:
+) -> tuple[Image.Image, dict]:
     """Apply color and brightness variation to a pothole image.
 
     Parameters
@@ -87,8 +107,8 @@ def apply_color_jitter(
 
     Returns
     -------
-    PIL.Image.Image
-        Color-jittered image.
+    tuple[PIL.Image.Image, dict]
+        Color-jittered image and transformation parameters.
     """
     transform = A.ReplayCompose(
         [
@@ -98,9 +118,9 @@ def apply_color_jitter(
                 p=1.0,
             ),
             A.HueSaturationValue(
-                hue_shift_limit=0,
-                sat_shift_limit=saturation_limit,
+                sat_shift_limit=saturation_limit * 100,  # Albumentations uses degrees/percent scales
                 val_shift_limit=0,
+                hue_shift_limit=0,
                 p=1.0,
             ),
         ],

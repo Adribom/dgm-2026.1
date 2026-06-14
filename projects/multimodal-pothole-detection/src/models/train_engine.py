@@ -9,8 +9,12 @@ Now includes a configurable validation loop, best-checkpoint selection via
 import json
 import logging
 from collections import Counter
+from datetime import timedelta
 from pathlib import Path
+from time import perf_counter
+import numpy as np
 import torch
+from torch.optim.lr_scheduler import CosineAnnealingLR
 from tqdm import tqdm
 
 from src.evaluation.chamfer import compute_mean_chamfer_distance
@@ -47,15 +51,67 @@ class PointETrainer:
         # Best validation metric seen so far; used for checkpoint_best.pt selection.
         # Restored from checkpoint on resume; defaults to inf for fresh runs.
         self.best_val_metric: float = float("inf")
+        self.best_epoch: int = 0
+        self._restored_scheduler_state_dict: dict | None = None
+        self._max_grad_norm: float | None = None
 
-    def train_step(self, dataloader, epochs: int = 1, start_epoch: int = 0, save_dir=None, save_interval: int = 1, augmentation_record_file=None, val_dataloader=None, val_config=None, val_log_file=None):
+    @staticmethod
+    def _format_elapsed(seconds: float) -> str:
+        """Format elapsed time as H:MM:SS for log messages."""
+        return str(timedelta(seconds=int(seconds)))
+
+    @staticmethod
+    def _json_safe(value):
+        """Convert NumPy-heavy replay metadata into JSON-serializable primitives."""
+        if isinstance(value, dict):
+            return {key: PointETrainer._json_safe(item) for key, item in value.items()}
+        if isinstance(value, list):
+            return [PointETrainer._json_safe(item) for item in value]
+        if isinstance(value, tuple):
+            return [PointETrainer._json_safe(item) for item in value]
+        if isinstance(value, np.ndarray):
+            return value.tolist()
+        if isinstance(value, np.generic):
+            return value.item()
+        return value
+
+    def train_step(
+        self,
+        dataloader,
+        epochs: int = 1,
+        start_epoch: int = 0,
+        save_dir=None,
+        save_interval: int = 1,
+        augmentation_record_file=None,
+        val_dataloader=None,
+        val_config=None,
+        val_log_file=None,
+        scheduler_config: dict | None = None,
+        max_grad_norm: float | None = None,
+    ):
         """
         Executes the core training loop for a given number of epochs.
         """
+        self._max_grad_norm = max_grad_norm
+        train_start_time = perf_counter()
+        scheduler = None
+        if scheduler_config and scheduler_config.get("type") == "cosine":
+            total_epochs = max(1, epochs - start_epoch)
+            scheduler = CosineAnnealingLR(
+                self.optimizer,
+                T_max=total_epochs,
+                eta_min=scheduler_config.get("eta_min", 1e-6),
+            )
+            if self._restored_scheduler_state_dict is not None:
+                scheduler.load_state_dict(self._restored_scheduler_state_dict)
+                self.logger.info("Restored cosine scheduler state from checkpoint.")
+
         self.base_model.train()
         
         for epoch in range(start_epoch, epochs):
-            self.logger.info(f"Starting Epoch {epoch + 1}/{epochs}")
+            elapsed_at_epoch_start = self._format_elapsed(perf_counter() - train_start_time)
+            current_lr = self.optimizer.param_groups[0]["lr"]
+            self.logger.info(f"Starting Epoch {epoch + 1}/{epochs} | LR: {current_lr:.6e} | Elapsed: {elapsed_at_epoch_start}")
             augmented_sample_entries: list[dict] = []
             transform_counter: Counter[str] = Counter()
             augmented_sample_count = 0
@@ -73,12 +129,14 @@ class PointETrainer:
                     if not applied_transforms:
                         continue
                     augmented_sample_count += 1
-                    transform_counter.update(applied_transforms)
+                    # applied_transforms is now a list of dicts: [{"name": "...", "params": {...}}, ...]
+                    transform_names = [t["name"] for t in applied_transforms]
+                    transform_counter.update(transform_names)
                     augmented_sample_entries.append(
                         {
                             "epoch": epoch + 1,
                             "sample_id": sample_id,
-                            "transforms_applied": list(applied_transforms),
+                            "transforms": applied_transforms,
                         }
                     )
                 
@@ -103,6 +161,9 @@ class PointETrainer:
                     
                 # Backpropagation governed by GradScaler (AMP)
                 self.scaler.scale(loss).backward()
+                if self._max_grad_norm is not None:
+                    self.scaler.unscale_(self.optimizer)
+                    torch.nn.utils.clip_grad_norm_(self.base_model.parameters(), self._max_grad_norm)
                 self.scaler.step(self.optimizer)
                 self.scaler.update()
                 
@@ -112,25 +173,28 @@ class PointETrainer:
                 
                 # Log periodically to standard output independently from tqdm
                 if step % 50 == 0:
-                    self.logger.info(f"Epoch {epoch+1} | Step {step} | Loss: {loss_val:.4f}")
+                    elapsed_at_step = self._format_elapsed(perf_counter() - train_start_time)
+                    self.logger.info(f"Epoch {epoch+1} | Step {step} | Loss: {loss_val:.4f} | LR: {current_lr:.6e} | Elapsed: {elapsed_at_step}")
 
             if augmentation_record_file is not None and augmented_sample_entries:
                 for entry in augmented_sample_entries:
-                    augmentation_record_file.write(json.dumps(entry) + "\n")
+                    augmentation_record_file.write(json.dumps(self._json_safe(entry)) + "\n")
                 augmentation_record_file.flush()
 
             if transform_counter:
                 transform_summary = " ".join(f"{name}:{count}" for name, count in sorted(transform_counter.items()))
             else:
                 transform_summary = "no augmentations"
+            elapsed_after_epoch = self._format_elapsed(perf_counter() - train_start_time)
             self.logger.info(
-                f"Epoch {epoch + 1} augmentation summary: {augmented_sample_count} samples | {transform_summary}"
+                f"Epoch {epoch + 1} augmentation summary: {augmented_sample_count} samples | {transform_summary} | LR: {current_lr:.6e} | Elapsed: {elapsed_after_epoch}"
             )
 
             # Handle checkpoint saving at the end of epoch
             if save_dir and (epoch + 1) % save_interval == 0:
                 save_path = Path(save_dir) / f"checkpoint_epoch_{epoch + 1}.pt"
-                self.save_checkpoint(epoch + 1, save_path)
+                scheduler_state_dict = scheduler.state_dict() if scheduler is not None else None
+                self.save_checkpoint(epoch + 1, save_path, scheduler_state_dict=scheduler_state_dict)
 
             # Run validation pass if configured
             if val_dataloader is not None and val_config is not None:
@@ -139,11 +203,14 @@ class PointETrainer:
                     result = self._run_val_pass(val_dataloader, val_config)
                     cd_str = f" | CD: {result['chamfer_distance']:.4f}" if result["chamfer_distance"] is not None else " | CD: N/A"
                     best_str = "  →  checkpoint_best.pt saved" if result["new_best"] else ""
+                    elapsed_after_val = self._format_elapsed(perf_counter() - train_start_time)
                     self.logger.info(
-                        f"Epoch {epoch + 1} | Val Loss: {result['val_loss']:.4f}{cd_str} | New Best: {result['new_best']}{best_str}"
+                        f"Epoch {epoch + 1} | Val Loss: {result['val_loss']:.4f}{cd_str} | New Best: {result['new_best']}{best_str} | LR: {current_lr:.6e} | Elapsed: {elapsed_after_val}"
                     )
                     if result["new_best"] and save_dir:
-                        self.save_checkpoint(epoch + 1, Path(save_dir) / "checkpoint_best.pt")
+                        self.best_epoch = epoch + 1
+                        scheduler_state_dict = scheduler.state_dict() if scheduler is not None else None
+                        self.save_checkpoint(epoch + 1, Path(save_dir) / "checkpoint_best.pt", scheduler_state_dict=scheduler_state_dict)
                     if val_log_file is not None:
                         val_log_file.write(json.dumps({
                             "epoch": epoch + 1,
@@ -152,6 +219,19 @@ class PointETrainer:
                             "new_best": result["new_best"],
                         }) + "\n")
                         val_log_file.flush()
+
+            if scheduler is not None:
+                scheduler.step()
+
+        total_epochs_trained = max(0, epochs - start_epoch)
+        elapsed_seconds = perf_counter() - train_start_time
+        return {
+            "best_epoch": self.best_epoch,
+            "best_val_metric": self.best_val_metric,
+            "total_epochs_trained": total_epochs_trained,
+            "elapsed_seconds": elapsed_seconds,
+            "final_lr": self.optimizer.param_groups[0]["lr"],
+        }
 
     def _run_val_pass(self, val_dataloader, val_config: dict) -> dict:
         """Run a full validation pass and return metrics.
@@ -252,7 +332,7 @@ class PointETrainer:
         self.base_model.train()
         return {"val_loss": val_loss, "chamfer_distance": chamfer_distance, "new_best": new_best}
 
-    def save_checkpoint(self, epoch: int, filepath):
+    def save_checkpoint(self, epoch: int, filepath, scheduler_state_dict: dict | None = None):
         """
         T016: Extract and save the model, optimizer, scaler, and epoch params to a dict.
 
@@ -270,6 +350,8 @@ class PointETrainer:
             "optimizer_state_dict": self.optimizer.state_dict(),
             "scaler_state_dict": self.scaler.state_dict(),
             "best_val_metric": self.best_val_metric,
+            "best_epoch": self.best_epoch,
+            "scheduler_state_dict": scheduler_state_dict,
         }
         torch.save(checkpoint, filepath)
         self.logger.info("Checkpoint saved successfully.")
@@ -293,7 +375,10 @@ class PointETrainer:
         # Restore best val metric for resume-compatible checkpoint selection.
         # Defaults to inf for backwards compatibility with pre-005 checkpoints.
         self.best_val_metric = checkpoint.get("best_val_metric", float("inf"))
+        self.best_epoch = checkpoint.get("best_epoch", 0)
+        self._restored_scheduler_state_dict = checkpoint.get("scheduler_state_dict")
         self.logger.info(f"Restored best_val_metric: {self.best_val_metric}")
+        self.logger.info(f"Restored best_epoch: {self.best_epoch}")
 
         start_epoch = checkpoint["epoch"]
         self.logger.info(f"Checkpoint loaded successfully. Resuming from epoch {start_epoch}.")

@@ -24,6 +24,7 @@ from src.data.transforms.noise import apply_cutout, apply_gaussian_blur, apply_m
 IMAGE_EXTENSIONS: tuple[str, ...] = (".png", ".jpg", ".jpeg", ".bmp", ".webp")
 
 _DEFAULT_AUGMENTATION_PROBABILITIES = {
+    "pure_image": 0.1,
     "horizontal_flip": 0.5,
     "fake_shadow": 0.3,
     "color_jitter": 0.4,
@@ -53,7 +54,7 @@ class PotholeDataset(Dataset):
       - image_for_conditioning: PIL.Image in RGB mode (raw visual input for Point-E CLIP path)
       - point_cloud_6d: torch.FloatTensor with shape [6, K]
       - sample_id: stem name used for traceability/debug
-      - applied_transforms: list of transform names applied to this sample
+      - applied_transforms: list of dicts with name and parameters
     """
     def __init__(
         self,
@@ -133,7 +134,7 @@ class PotholeDataset(Dataset):
 
         return pts_6d.transpose(0, 1)
 
-    def _apply_augmentations(self, image: Image.Image, pts_raw: np.ndarray) -> tuple[Image.Image, np.ndarray, list[str]]:
+    def _apply_augmentations(self, image: Image.Image, pts_raw: np.ndarray) -> tuple[Image.Image, np.ndarray, list[dict]]:
         """Apply configured augmentations to an image and point cloud pair.
 
         The horizontal flip path must update the image and point cloud together
@@ -142,15 +143,22 @@ class PotholeDataset(Dataset):
         if not self.augmentation_config or not self.augmentation_config.get("active_transforms"):
             return image, pts_raw, []
 
-        applied_transforms: list[str] = []
+        applied_transforms: list[dict] = []
         probabilities = {
             **_DEFAULT_AUGMENTATION_PROBABILITIES,
             **(self.augmentation_config.get("probabilities") or {}),
         }
 
+        pure_image_probability = probabilities.get("pure_image", 0.0)
+        if random.random() < pure_image_probability:
+            return image, pts_raw, [{"name": "pure_image", "params": {}}]
+
         current_image = image
         current_pts = pts_raw
         for transform_name in self.augmentation_config.get("active_transforms", []):
+            if transform_name == "pure_image":
+                continue
+
             probability = probabilities.get(transform_name, 0.0)
             if random.random() >= probability:
                 continue
@@ -160,12 +168,12 @@ class PotholeDataset(Dataset):
                 continue
 
             if transform_name == "horizontal_flip":
-                current_image, current_pts = transform_fn(current_image, current_pts)
+                current_image, current_pts, params = transform_fn(current_image, current_pts)
                 assert isinstance(current_pts, np.ndarray)
             else:
-                current_image = transform_fn(current_image)
+                current_image, params = transform_fn(current_image)
 
-            applied_transforms.append(transform_name)
+            applied_transforms.append({"name": transform_name, "params": params})
 
         return current_image, current_pts, applied_transforms
 
@@ -205,7 +213,7 @@ def point_e_collate_fn(batch: list[dict]) -> dict:
       - images: list[PIL.Image]
       - point_cloud_6d: torch.FloatTensor [B, 6, K]
       - sample_id: list[str]
-            - applied_transforms: list[list[str]]
+      - applied_transforms: list[list[dict]]
     """
     images = [item["image_for_conditioning"] for item in batch]
     point_clouds = torch.stack([item["point_cloud_6d"] for item in batch], dim=0)
@@ -246,7 +254,7 @@ def create_dataloader(
         - images: list[PIL.Image]
         - point_cloud_6d: torch.FloatTensor [B, 6, K]
         - sample_id: list[str]
-        - applied_transforms: list[list[str]]
+        - applied_transforms: list[list[dict]]
     """
     dataset = PotholeDataset(
         image_dir,

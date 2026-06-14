@@ -55,7 +55,7 @@ def _restore_point_cloud_shape(point_cloud: np.ndarray, was_transposed: bool) ->
     return point_cloud.T if was_transposed else point_cloud
 
 
-def horizontal_flip(image: Image.Image, point_cloud: np.ndarray) -> tuple[Image.Image, np.ndarray]:
+def horizontal_flip(image: Image.Image, point_cloud: np.ndarray) -> tuple[Image.Image, np.ndarray, dict]:
     """Flip an image horizontally and mirror the associated point cloud along the X axis.
 
     Parameters
@@ -67,11 +67,15 @@ def horizontal_flip(image: Image.Image, point_cloud: np.ndarray) -> tuple[Image.
 
     Returns
     -------
-    tuple[PIL.Image.Image, np.ndarray]
-        The flipped image and the point cloud with its X coordinate negated.
+    tuple[PIL.Image.Image, np.ndarray, dict]
+        The flipped image, the point cloud with its X coordinate negated, and metadata.
     """
     flipped_image = ImageOps.mirror(image)
     normalized_point_cloud, was_transposed = _normalize_point_cloud(point_cloud)
     flipped_point_cloud = np.array(normalized_point_cloud, copy=True)
     flipped_point_cloud[:, 0] *= -1
-    return flipped_image, _restore_point_cloud_shape(flipped_point_cloud, was_transposed)
+    return (
+        flipped_image,
+        _restore_point_cloud_shape(flipped_point_cloud, was_transposed),
+        {"flipped": True},
+    )
