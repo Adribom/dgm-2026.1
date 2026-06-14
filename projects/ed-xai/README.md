@@ -20,7 +20,7 @@ This project originated in the context of the graduate course _IA376N - Generati
 
 ## Abstract
 
-This work augments the FakeVLM deepfake detection framework with frequency-domain features. We extend its LLaVA 1.5 architecture with a parallel FFT feature branch that injects a frequency token into the visual pipeline, and augment the FakeClue training labels with frequency artifact descriptions derived from 17 pre-trained classifiers, covering 74.6% of fake images. The FFT magnitude model achieves 99.12% accuracy (from 98.76%) and 0.5706 ROUGE-L (from 0.4950) on the FakeClue benchmark. Ablation experiments reveal that LoRA fine-tuning drives the classification improvement, while the frequency branch and augmented labels primarily enhance the quality of generated artifact explanations.
+This work augments the FakeVLM deepfake detection framework with frequency-domain features. We extend its LLaVA 1.5 architecture with a parallel FFT feature branch that injects a frequency token into the visual pipeline, and augment the FakeClue training labels with frequency artifact descriptions derived from 17 pre-trained classifiers, covering 74.6% of fake images. The FFT magnitude model achieves 98.92% accuracy (from 98.76%) and 0.5706 ROUGE-L (from 0.4950) on the FakeClue benchmark. Ablation experiments reveal that LoRA fine-tuning drives the classification improvement, while the frequency branch and augmented labels primarily enhance the quality of generated artifact explanations.
 
 ## Problem Description / Motivation
 
@@ -219,14 +219,14 @@ The table below summarizes the evaluation results for the baseline and the two e
 | Model | Dataset | Accuracy ↑ | F1 ↑ | ROUGE-L ↑ | CSS ↑ |
 |-------|---------|----------|------|---------|------|
 | FakeVLM (baseline) | FakeClue (original) | 0.9876 | 0.9828 | 0.4950 | 0.9230 |
-| FakeVLM-Extended (magnitude) | FakeClue (augmented) | 0.9912 | 0.9878 | 0.5706 | 0.9342 |
-| FakeVLM-Extended (phase) | FakeClue (augmented) | 0.9900 | 0.9861 | 0.5712 | 0.9344 |
+| FakeVLM-Extended (magnitude) | FakeClue (augmented) | 0.9892 | 0.9850 | 0.5706 | 0.9342 |
+| FakeVLM-Extended (phase) | FakeClue (augmented) | 0.9898 | 0.9859 | 0.5712 | 0.9344 |
 
-Both extended models improve classification accuracy over the baseline. The magnitude variant increases accuracy from 98.76% to 99.12% (+0.36 percentage points), while the phase variant reaches 99.00% (+0.24 percentage points). F1 scores follow the same trend, rising from 0.9828 to 0.9878 and 0.9861, respectively. Although these gains are modest in absolute terms, the baseline already operates at a high performance level where further improvement is increasingly difficult.
+Both extended models improve classification accuracy over the baseline. The magnitude variant increases accuracy from 98.76% to 98.92% (+0.16 percentage points), while the phase variant reaches 98.98% (+0.22 percentage points). F1 scores follow the same trend, rising from 0.9828 to 0.9850 and 0.9859, respectively. Although these gains are modest in absolute terms, the baseline already operates at a high performance level where further improvement is increasingly difficult.
 
 The more substantial improvements appear in the generation quality metrics. ROUGE-L increases from 0.4950 to 0.5706 (magnitude) and 0.5712 (phase), representing a roughly 15% relative improvement in lexical overlap with the reference annotations. CSS rises from 0.9230 to 0.9342 (magnitude) and 0.9344 (phase). These gains indicate that the combination of frequency-domain features and augmented training labels enables the model to produce explanations more closely aligned with the reference annotations, both in terms of surface-level wording and semantic content.
 
-The two FFT extraction modes yield remarkably similar results across all four metrics. The magnitude mode achieves a slight advantage in classification accuracy (99.12% vs. 99.00%), while the phase mode produces marginally higher generation quality scores (ROUGE-L 0.5712 vs. 0.5706, CSS 0.9344 vs. 0.9342). These differences fall within a narrow margin, suggesting that both spectral representations encode comparable information about the artifacts left by generative models. This finding is consistent with prior work demonstrating that generative processes introduce anomalies in both the amplitude and phase structure of the frequency spectrum [5, 6].
+The two FFT extraction modes yield remarkably similar results across all four metrics. The phase mode achieves a slight advantage in classification accuracy (98.98% vs. 98.92%) and marginally higher generation quality scores (ROUGE-L 0.5712 vs. 0.5706, CSS 0.9344 vs. 0.9342). These differences fall within a narrow margin, suggesting that both spectral representations encode comparable information about the artifacts left by generative models. This finding is consistent with prior work demonstrating that generative processes introduce anomalies in both the amplitude and phase structure of the frequency spectrum [5, 6].
 
 ### Ablation
 
@@ -247,39 +247,53 @@ The table below presents the full comparison across all five model configuration
 | Model | Dataset | Accuracy ↑ | F1 ↑ | ROUGE-L ↑ | CSS ↑ |
 |-------|---------|----------|------|---------|------|
 | FakeVLM (baseline) | FakeClue (original) | 0.9876 | 0.9828 | 0.4950 | 0.9230 |
-| FakeVLM-Extended (magnitude) | FakeClue (augmented) | 0.9912 | 0.9878 | 0.5706 | 0.9342 |
-| FakeVLM-Extended (phase) | FakeClue (augmented) | 0.9900 | 0.9861 | 0.5712 | 0.9344 |
+| FakeVLM-Extended (magnitude) | FakeClue (augmented) | 0.9892 | 0.9850 | 0.5706 | 0.9342 |
+| FakeVLM-Extended (phase) | FakeClue (augmented) | 0.9898 | 0.9859 | 0.5712 | 0.9344 |
 | FakeVLM + LoRA (Vicuna) | FakeClue (original) | 0.9904 | 0.9867 | 0.5477 | 0.9315 |
 | FakeVLM + LoRA (Vicuna + projector) | FakeClue (original) | 0.9870 | 0.9819 | 0.5399 | 0.9301 |
 
-In classification performance, LoRA fine-tuning on Vicuna alone achieves 99.04% accuracy, comparable to the FFT magnitude (99.12%) and FFT phase (99.00%) configurations. This indicates that LoRA fine-tuning accounts for most of the classification improvement over the baseline. Unfreezing the CLIP visual projector does not improve results and slightly degrades accuracy to 98.70%, falling below the unmodified baseline. This suggests that adapting the pre-trained visual projector without a compensating signal (such as the frequency branch) disrupts the learned visual representations.
+In classification performance, LoRA fine-tuning on Vicuna alone achieves 99.04% accuracy, exceeding both the FFT magnitude (98.92%) and FFT phase (98.98%) configurations. This indicates that LoRA fine-tuning alone is sufficient to match or surpass the classification performance of the FFT-extended models. Unfreezing the CLIP visual projector does not improve results and slightly degrades accuracy to 98.70%, falling below the unmodified baseline. This suggests that adapting the pre-trained visual projector without a compensating signal (such as the frequency branch) disrupts the learned visual representations.
 
 In generation quality, LoRA fine-tuning on Vicuna improves ROUGE-L from 0.4950 to 0.5477, a substantial gain over the baseline but still below the FFT-extended models (0.5706 and 0.5712). The remaining gap of approximately four percentage points in ROUGE-L represents the combined contribution of the frequency feature branch and the augmented training labels. However, the current experimental design does not fully separate these two factors, since the extended models were trained on augmented data while the ablation models used original labels. CSS follows a pattern closer to the classification metrics: LoRA fine-tuning alone (0.9315) recovers most of the improvement over the baseline (0.9230), leaving only a narrow gap relative to the FFT-extended models (0.9342 and 0.9344).
 
 The ablation results indicate that LoRA fine-tuning provides the primary mechanism for improving both classification and explanation quality. The frequency branch combined with augmented labels provides an additional, smaller but consistent, contribution to the generation quality metrics.
 
-#### Error Analysis by Category
+#### Error Analysis
 
-To understand where the models differ in classification behavior, we examine the misclassifications broken down by FakeClue image category. Given that all models achieve accuracy above 98.7%, the total number of errors is small (44 to 65 out of 5,000 images), but the distribution across categories reveals patterns that aggregate metrics obscure.
+To understand where the models differ in classification behavior, we examine the misclassifications broken down by FakeClue image category. Given that all models achieve accuracy above 98.7%, the total number of errors is small (48 to 65 out of 5,000 images), but the distribution across categories reveals patterns that aggregate metrics obscure.
 
 | Category | Images | Baseline | Magnitude | Phase | LoRA Vicuna | LoRA Vic+Proj |
 |----------|--------|----------|-----------|-------|-------------|---------------|
 | animal | 749 | 7 | 2 | 2 | 2 | 5 |
 | deepfake | 1168 | 39 | 26 | 30 | 28 | 45 |
-| doc | 576 | 2 | 2 | 2 | 2 | 2 |
-| human | 403 | 0 | 4 | 4 | 4 | 2 |
-| object | 867 | 9 | 9 | 10 | 10 | 8 |
+| doc | 576 | 2 | 2 | 3 | 2 | 2 |
+| human | 403 | 0 | 5 | 4 | 4 | 2 |
+| object | 867 | 9 | 11 | 10 | 10 | 8 |
 | satellite | 875 | 0 | 0 | 0 | 0 | 0 |
-| scene | 362 | 5 | 1 | 2 | 2 | 3 |
-| **Total** | **5000** | **62** | **44** | **50** | **48** | **65** |
+| scene | 362 | 5 | 8 | 2 | 2 | 3 |
+| **Total** | **5000** | **62** | **54** | **51** | **48** | **65** |
 
 The deepfake category accounts for the majority of errors across all models. The baseline produces 39 misclassifications on this category, while the FFT magnitude model reduces this to 26, the largest per-category improvement observed. FFT phase and LoRA Vicuna also reduce deepfake errors (30 and 28, respectively), but LoRA Vicuna with CLIP projector increases them to 45, consistent with the overall degradation observed for this configuration.
 
-The satellite category achieves perfect classification across all five models, with zero misclassifications. The document category is equally stable at two errors per model, suggesting that neither LoRA fine-tuning nor the frequency branch affects classification on this category. The object category shows minimal variation (8 to 10 errors).
+The satellite category achieves perfect classification across all five models, with zero misclassifications. The document category is nearly stable at two to three errors per model, suggesting that neither LoRA fine-tuning nor the frequency branch meaningfully affects classification on this category. The object category shows moderate variation (8 to 11 errors).
 
-The human category presents an unexpected pattern: the baseline produces zero misclassifications, but all fine-tuned models introduce errors on this category (four errors for magnitude, phase, and LoRA Vicuna; two for LoRA Vicuna with projector). This suggests that fine-tuning, regardless of configuration, slightly degrades performance on this particular category.
+The human category presents an unexpected pattern: the baseline produces zero misclassifications, but all fine-tuned models introduce errors on this category (five errors for magnitude, four for phase and LoRA Vicuna, two for LoRA Vicuna with projector). This suggests that fine-tuning, regardless of configuration, slightly degrades performance on this particular category.
 
-The FFT magnitude model achieves the fewest errors in the animal (2 vs. 7 baseline) and scene (1 vs. 5 baseline) categories, where frequency-domain classifiers showed strong coverage during label augmentation (75.7% and 61.6%, respectively, as reported in the Frequency-Domain Label Augmentation section). This suggests that the frequency branch contributes most in categories where the augmented training labels carry reliable frequency-domain signals.
+The FFT magnitude model achieves the fewest errors in the animal category (2 vs. 7 baseline), where frequency-domain classifiers showed strong augmentation coverage (75.7%, as reported in the Frequency-Domain Label Augmentation section). However, it produces the most scene errors among the fine-tuned models (8 vs. 5 baseline), despite scene having 61.6% augmentation coverage. The 10 unrecognized responses from the magnitude model (all on chameleon-generated images) contribute to its elevated error counts in the human, object, and scene categories, indicating that the magnitude branch occasionally disrupts the model's ability to produce well-formed classification responses.
+
+Figure 7 decomposes the errors into false positives (real images classified as fake), false negatives (fake images classified as real), and unrecognized responses (where the model output did not contain a clear classification). False positives dominate across all models, accounting for 0.60% to 0.94% of the test set. Fine-tuning reduces the false positive rate from the baseline's 0.78% to 0.60% to 0.62% for FFT phase, FFT magnitude, and LoRA Vicuna, but LoRA Vicuna with projector increases it to 0.94%, the highest among all configurations. False negatives show a larger relative reduction: the baseline's 0.46% drops to 0.26% for FFT magnitude and 0.34% for LoRA Vicuna, suggesting that fine-tuning improves the detection of fake images more than it improves the correct acceptance of real images. The FFT magnitude model is the only configuration with a substantial unrecognized rate (0.20%, corresponding to 10 chameleon images), while FFT phase has a single unrecognized response.
+
+<p align="center">
+  <img src="images/error_rates.png" alt="Error rates by model and type" width="700"/>
+</p>
+<p align="center"><em>Figure 7. Error rate decomposition by model. False positives (real classified as fake) dominate across all configurations. FFT magnitude is the only model with a substantial unrecognized rate (0.20%, 10 chameleon images).</em></p>
+
+Figure 8 examines the distribution of errors by source dataset. FaceForensics++ (ff++) accounts for the majority of errors across all models, contributing 58% to 69% of the total. GenImage is the second-largest source (28% to 48%), while document errors remain stable at two to three per model. Chameleon errors appear exclusively in the FFT magnitude model (10 unrecognized responses, representing 19% of its errors), confirming that the magnitude branch has a specific failure mode on this generative method. The recurrent error analysis reveals that 21 false positives and 10 false negatives are shared across all five models, indicating a core set of 31 images that are inherently difficult for this architecture regardless of training configuration.
+
+<p align="center">
+  <img src="images/dataset_error_rates.png" alt="Error distribution by source dataset" width="700"/>
+</p>
+<p align="center"><em>Figure 8. Error distribution by source dataset. Left: percentage share of errors per dataset. Right: absolute error counts. FaceForensics++ dominates errors across all models, while chameleon errors appear exclusively in the FFT magnitude model.</em></p>
 
 ### Discussion
 
@@ -289,13 +303,13 @@ A central limitation of the current experimental design is the entanglement betw
 
 The near-identical performance of FFT magnitude and phase modes suggests that, at the current resolution (a single 4096-dimensional token), both spectral representations carry comparable discriminative information. This is consistent with prior findings that generative models introduce artifacts in both the amplitude and phase structure of the frequency spectrum [5, 6]. Whether richer frequency representations (multiple tokens, higher-resolution spectral maps, or alternative transforms such as DCT or wavelets) could provide additional gains remains an open question.
 
-The per-category error analysis reveals that the frequency branch provides the largest improvements in categories where the label augmentation pipeline achieved high coverage (animal at 75.7%, scene at 61.6%). In contrast, categories with low augmentation coverage (doc at 18.9%) show no change in error counts. This correlation suggests that the quality of the augmented labels is a limiting factor, and that improving classifier coverage for underrepresented categories could yield further gains.
+The per-category error analysis reveals that the frequency branch provides the largest improvements in the animal category, where the label augmentation pipeline achieved high coverage (75.7%). In contrast, categories with low augmentation coverage (doc at 18.9%) show minimal change in error counts. However, the relationship between coverage and improvement is not uniform: the FFT magnitude model produces more scene errors than the baseline (8 vs. 5) despite 61.6% augmentation coverage in that category, likely due to the 10 unrecognized responses that affect its error distribution. This suggests that the quality of the augmented labels is a necessary but not sufficient condition for per-category improvement.
 
 Several limitations constrain the generalizability of these findings. First, all experiments use a single dataset (FakeClue) and a single base model (LLaVA 1.5 / FakeVLM), and the results may not transfer to other VLM architectures or datasets with different generative method distributions. Second, the label augmentation covers 74.6% of fake training images, leaving 25.4% without frequency annotations; categories with low coverage (notably the document category at 18.9%) receive minimal benefit. Third, the frequency branch contributes a single token to the 577-token input sequence, which may limit the amount of spectral information the language model can leverage. Finally, the evaluation is limited to the FakeClue test set; cross-dataset evaluation on benchmarks such as ER-FF++ or LOKI would provide a stronger assessment of generalization.
 
 ## Conclusion
 
-This work investigated whether frequency-domain features can improve deepfake detection and explanation quality in a VLM framework. We augmented the FakeVLM detector with a parallel frequency-domain feature branch (FakeVLM-Extended) and trained it on FakeClue labels enriched with frequency artifact annotations. The results show that the extended models improve both classification accuracy (from 98.76% to 99.12% with FFT magnitude) and explanation quality (ROUGE-L from 0.4950 to 0.5706), with the more substantial gains appearing in the generation metrics. The ablation study indicates that LoRA fine-tuning is the primary driver of classification improvement, while the frequency branch combined with augmented labels provides an additional contribution to explanation quality.
+This work investigated whether frequency-domain features can improve deepfake detection and explanation quality in a VLM framework. We augmented the FakeVLM detector with a parallel frequency-domain feature branch (FakeVLM-Extended) and trained it on FakeClue labels enriched with frequency artifact annotations. The results show that the extended models improve both classification accuracy (from 98.76% to 98.92% with FFT magnitude) and explanation quality (ROUGE-L from 0.4950 to 0.5706), with the more substantial gains appearing in the generation metrics. The ablation study indicates that LoRA fine-tuning is the primary driver of classification improvement, while the frequency branch combined with augmented labels provides an additional contribution to explanation quality.
 
 All five specific objectives were achieved. We evaluated 17 frequency-domain classifiers across four frameworks and used the best-performing classifier per category to augment 74.6% of fake training images with frequency artifact annotations. We designed and implemented FakeVLM-Extended, a modular architecture that injects a single frequency token alongside the 576 CLIP visual tokens into the language model. We trained and evaluated both FFT magnitude and FFT phase variants, finding that both modes yield comparable improvements. We conducted an ablation study with two LoRA-only configurations, establishing that the frequency branch contributes beyond LoRA fine-tuning alone, primarily in generation quality. Finally, we implemented a benchmarking framework for standardized cross-model evaluation with classification and generation metrics.
 
