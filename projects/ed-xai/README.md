@@ -44,6 +44,14 @@ The specific objectives are:
 4. **Conduct an ablation study** to isolate the contribution of frequency-domain features from the effect of LoRA fine-tuning alone.
 5. **Implement a benchmarking framework** for cross-model evaluation with classification and generation quality metrics.
 
+Figure 2 summarizes the project workflow across three phases. Phase 1 evaluates 17 frequency-domain classifiers on FakeClue and uses the best-performing classifier per category to selectively augment the training labels. Phase 2 trains the extended model in two stages: first the frequency projector in isolation, then the projector jointly with LoRA adapters on the language model. Phase 3 evaluates all model configurations against the baseline using the benchmarking framework.
+
+<p align="center">
+  <img src="images/workflow.png" width="700"/>
+  <br>
+  <em>Figure 2: FakeVLM-Extended project workflow. Phase 1 augments FakeClue labels using frequency-domain classifiers, Phase 2 trains the extended model in two stages, and Phase 3 evaluates all configurations against the baseline.</em>
+</p>
+
 ## Related Work
 
 FakeVLM [4] is a VLM-based deepfake detector built on LLaVA 1.5 [8] that fine-tunes the model on the FakeClue dataset for simultaneous classification and natural-language artifact explanation, achieving accuracy comparable to expert binary classifiers while providing human-interpretable forensic descriptions. Qian et al. [3] survey the broader landscape of explainable deepfake detection, identifying three main paradigms (forensic analysis, model-centric methods, and multimodal explanations) and highlighting the critical gap between detection accuracy and interpretability that VLM-based approaches aim to bridge.
@@ -135,12 +143,12 @@ For each true-positive detection, the sentence *"The image also presents artifac
 
 ### Proposed Architecture
 
-FakeVLM-Extended augments FakeVLM (LLaVA 1.5 [8]) with a parallel frequency-domain feature branch. In the original architecture, the input image is encoded by CLIP-ViT-L/14 and projected into 576 visual tokens in the language model's embedding space. FakeVLM-Extended adds a second branch that extracts frequency-domain features from the same input image, projects them into a single token in the same embedding space, and concatenates this token with the 576 visual tokens. The language model (Vicuna 7B) thus receives 577 tokens per image: 576 capturing spatial and semantic content, and one encoding frequency-domain information. This design preserves full compatibility with the original model's inference pipeline and training infrastructure.
+FakeVLM-Extended augments FakeVLM (LLaVA 1.5 [8]) with a parallel frequency-domain feature branch. In the original architecture, the input image is encoded by CLIP-ViT-L/14 and projected into 576 visual tokens in the language model's embedding space. FakeVLM-Extended adds a second branch that extracts frequency-domain features from the same input image, projects them into a single token in the same embedding space, and concatenates this token with the 576 visual tokens. The language model (Vicuna 7B) thus receives 577 tokens per image: 576 capturing spatial and semantic content, and one encoding frequency-domain information. This design, illustrated in Figure 3, preserves full compatibility with the original model's inference pipeline and training infrastructure.
 
 <p align="center">
   <img src="images/fakevlm_extended.png" width="700"/>
   <br>
-  <em>Figure 2: FakeVLM-Extended architecture. The frequency feature branch (top) extracts spectral features via 2D FFT and projects them into a single token, which is concatenated with the 576 CLIP visual tokens before being passed to the language model.</em>
+  <em>Figure 3: FakeVLM-Extended architecture. The frequency feature branch (top) extracts spectral features via 2D FFT and projects them into a single token, which is concatenated with the 576 CLIP visual tokens before being passed to the language model.</em>
 </p>
 
 The frequency branch consists of two stages: a deterministic feature extractor with no learnable parameters that produces a fixed-dimensional representation of the image's frequency content, and a trainable two-layer projection network with approximately 22 million parameters that maps this representation into the language model's embedding space. The projection network mirrors the architecture of the original CLIP projector in LLaVA (two linear layers with GELU activation), ensuring that the frequency token is representationally compatible with the visual tokens.
@@ -149,12 +157,12 @@ The frequency branch consists of two stages: a deterministic feature extractor w
 
 Generative architectures such as GANs and diffusion models introduce systematic artifacts during upsampling operations that, while often imperceptible in the spatial domain, manifest as distinctive patterns in the frequency spectrum [1, 5]. The 2D Discrete Fourier Transform (DFT) decomposes an image into its constituent spatial frequencies, making these artifacts explicit and amenable to automated analysis. This theoretical motivation underlies the choice of frequency-domain features as a complementary signal to the semantic features captured by CLIP-ViT.
 
-The frequency extractor applies the 2D DFT independently to each color channel and centers the zero-frequency component via spectral shifting. Two operating modes are supported, each trained and evaluated independently as a separate model configuration. The magnitude mode computes the log-magnitude spectrum $\log(1 + |F(u,v)|)$, where the logarithmic scaling compresses the dynamic range so that both low-frequency structural information and high-frequency generative artifacts are represented within the same feature space. The phase mode computes the phase angle of $F(u,v)$, capturing structural and edge information that complements the energy distribution encoded by the magnitude. In both modes, the resulting spectrum is spatially pooled to a fixed grid and flattened into a 3,072-dimensional feature vector (3 channels $\times$ 32 $\times$ 32), which serves as input to the projection network. Figure 3 compares the log-magnitude FFT spectra of a real and a synthetic face image from the FakeClue dataset. While the spectra may appear similar to human inspection, the subtle distributional differences, particularly in the high-frequency components, encode discriminative information that the projection network learns to exploit during training.
+The frequency extractor applies the 2D DFT independently to each color channel and centers the zero-frequency component via spectral shifting. Two operating modes are supported, each trained and evaluated independently as a separate model configuration. The magnitude mode computes the log-magnitude spectrum $\log(1 + |F(u,v)|)$, where the logarithmic scaling compresses the dynamic range so that both low-frequency structural information and high-frequency generative artifacts are represented within the same feature space. The phase mode computes the phase angle of $F(u,v)$, capturing structural and edge information that complements the energy distribution encoded by the magnitude. In both modes, the resulting spectrum is spatially pooled to a fixed grid and flattened into a 3,072-dimensional feature vector (3 channels $\times$ 32 $\times$ 32), which serves as input to the projection network. Figure 4 compares the log-magnitude FFT spectra of a real and a synthetic face image from the FakeClue dataset. While the spectra may appear similar to human inspection, the subtle distributional differences, particularly in the high-frequency components, encode discriminative information that the projection network learns to exploit during training.
 
 <p align="center">
   <img src="images/fft_comparison.png" width="400"/>
   <br>
-  <em>Figure 3: Log-magnitude FFT spectra of a real (top) and a synthetic (bottom) face image from FakeClue.</em>
+  <em>Figure 4: Log-magnitude FFT spectra of a real (top) and a synthetic (bottom) face image from FakeClue.</em>
 </p>
 
 ### Training
@@ -194,7 +202,7 @@ The evaluation compares three model configurations. The baseline is the original
 
 ### Results
 
-Both FFT magnitude and FFT phase models were trained following the two-stage procedure described in the Training section. Figure 4 presents the training loss curves for all four training runs. In both modes, Stage 1 converges rapidly within a single epoch as the frequency projector learns to map spectral features into the language model's embedding space. Stage 2 exhibits the expected slower convergence over three epochs as the LoRA adapters and the frequency projector are jointly optimized.
+Both FFT magnitude and FFT phase models were trained following the two-stage procedure described in the Training section. Figure 5 presents the training loss curves for all four training runs. In both modes, Stage 1 converges rapidly within a single epoch as the frequency projector learns to map spectral features into the language model's embedding space. Stage 2 exhibits the expected slower convergence over three epochs as the LoRA adapters and the frequency projector are jointly optimized.
 
 <p align="center">
   <img src="images/loss_stage1_magnitude.png" width="400">
@@ -204,7 +212,7 @@ Both FFT magnitude and FFT phase models were trained following the two-stage pro
   <img src="images/loss_stage1_phase.png" width="400">
   <img src="images/loss_stage2_phase.png" width="400">
 </p>
-<p align="center"><em>Figure 4. Training loss curves. Top row: FFT magnitude (Stage 1, Stage 2). Bottom row: FFT phase (Stage 1, Stage 2).</em></p>
+<p align="center"><em>Figure 5. Training loss curves. Top row: FFT magnitude (Stage 1, Stage 2). Bottom row: FFT phase (Stage 1, Stage 2).</em></p>
 
 The table below summarizes the evaluation results for the baseline and the two extended model configurations, using the metrics described in the Evaluation Methodology section.
 
@@ -226,13 +234,13 @@ The two FFT extraction modes yield remarkably similar results across all four me
 
 To disentangle the contribution of the frequency branch from the effect of LoRA fine-tuning, we trained two ablation configurations on the original FakeClue labels (without frequency augmentation) using the same hyperparameters as Stage 2 of the extended training procedure. The first configuration applies LoRA [9] to Vicuna's linear layers only, matching the fine-tuning scope of the extended models but without the frequency feature branch. The second configuration additionally unfreezes the CLIP visual projector, testing whether adapting the visual encoder provides further benefit. Neither configuration includes the frequency feature branch or the augmented training labels.
 
-Figure 5 presents the training loss curves for both ablation configurations. Both runs converge smoothly over three epochs, exhibiting loss trajectories comparable to Stage 2 of the extended models.
+Figure 6 presents the training loss curves for both ablation configurations. Both runs converge smoothly over three epochs, exhibiting loss trajectories comparable to Stage 2 of the extended models.
 
 <p align="center">
   <img src="images/loss_ablation_lora_vicuna.png" width="400">
   <img src="images/loss_ablation_lora_vicuna_projector.png" width="400">
 </p>
-<p align="center"><em>Figure 5. Training loss curves for the ablation configurations. Left: LoRA on Vicuna only. Right: LoRA on Vicuna with CLIP projector.</em></p>
+<p align="center"><em>Figure 6. Training loss curves for the ablation configurations. Left: LoRA on Vicuna only. Right: LoRA on Vicuna with CLIP projector.</em></p>
 
 The table below presents the full comparison across all five model configurations.
 
