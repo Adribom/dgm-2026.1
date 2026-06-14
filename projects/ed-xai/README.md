@@ -20,7 +20,7 @@ This project originated in the context of the graduate course _IA376N - Generati
 
 ## Abstract
 
-This project augments the FakeVLM deepfake detection framework with frequency-domain features to improve both detection accuracy and artifact explainability. We implemented a label augmentation pipeline that evaluates 17 pre-trained frequency-domain classifiers on the FakeClue dataset, selecting the best-performing model per image category and annotating 74.6% of fake training images with frequency artifact descriptions. We also developed FakeVLM-Extended, a modular training framework that injects a parallel frequency-domain feature branch into the LLaVA 1.5 architecture, and a benchmarking framework for cross-model evaluation. Model training and comparative evaluation remain as the next steps.
+This work augments the FakeVLM deepfake detection framework with frequency-domain features. We extend its LLaVA 1.5 architecture with a parallel FFT feature branch that injects a frequency token into the visual pipeline, and augment the FakeClue training labels with frequency artifact descriptions derived from 17 pre-trained classifiers, covering 74.6% of fake images. The FFT magnitude model achieves 99.12% accuracy (from 98.76%) and 0.5706 ROUGE-L (from 0.4950) on the FakeClue benchmark. Ablation experiments reveal that LoRA fine-tuning drives the classification improvement, while the frequency branch and augmented labels primarily enhance the quality of generated artifact explanations.
 
 ## Problem Description / Motivation
 
