@@ -1,0 +1,361 @@
+object,color,seed,prompt,image_path,object_raw,color_raw,object_predicted,color_predicted,binding_correct
+apple,black,20,a photo of a black apple,apple/black/seed_0020.png,apple,red,apple,red,False
+apple,black,3,a photo of a black apple,apple/black/seed_0003.png,apple,red,apple,red,False
+apple,black,0,a photo of a black apple,apple/black/seed_0000.png,apple,black,apple,black,True
+apple,blue,23,a photo of a blue apple,apple/blue/seed_0023.png,apple,blue,apple,blue,True
+apple,blue,8,a photo of a blue apple,apple/blue/seed_0008.png,apple,red,apple,red,False
+apple,blue,7,a photo of a blue apple,apple/blue/seed_0007.png,apple,blue,apple,blue,True
+apple,brown,7,a photo of a brown apple,apple/brown/seed_0007.png,apple,red,apple,red,False
+apple,brown,4,a photo of a brown apple,apple/brown/seed_0004.png,apple,green,apple,green,False
+apple,brown,23,a photo of a brown apple,apple/brown/seed_0023.png,apple,red,apple,red,False
+apple,green,3,a photo of a green apple,apple/green/seed_0003.png,apple,green,apple,green,True
+apple,green,21,a photo of a green apple,apple/green/seed_0021.png,apple,green,apple,green,True
+apple,green,23,a photo of a green apple,apple/green/seed_0023.png,apple,green,apple,green,True
+apple,orange,28,a photo of a orange apple,apple/orange/seed_0028.png,apple,red,apple,red,False
+apple,orange,17,a photo of a orange apple,apple/orange/seed_0017.png,apple,red,apple,red,False
+apple,orange,2,a photo of a orange apple,apple/orange/seed_0002.png,apple,orange,apple,orange,True
+apple,pink,18,a photo of a pink apple,apple/pink/seed_0018.png,apple,red,apple,red,False
+apple,pink,13,a photo of a pink apple,apple/pink/seed_0013.png,apple,red,apple,red,False
+apple,pink,1,a photo of a pink apple,apple/pink/seed_0001.png,apple,red,apple,red,False
+apple,purple,0,a photo of a purple apple,apple/purple/seed_0000.png,apple,purple,apple,purple,True
+apple,purple,2,a photo of a purple apple,apple/purple/seed_0002.png,apple,red,apple,red,False
+apple,purple,6,a photo of a purple apple,apple/purple/seed_0006.png,apple,red,apple,red,False
+apple,red,7,a photo of a red apple,apple/red/seed_0007.png,apple,red,apple,red,True
+apple,red,16,a photo of a red apple,apple/red/seed_0016.png,apple,red,apple,red,True
+apple,red,19,a photo of a red apple,apple/red/seed_0019.png,apple,red,apple,red,True
+apple,white,0,a photo of a white apple,apple/white/seed_0000.png,apple,green,apple,green,False
+apple,white,17,a photo of a white apple,apple/white/seed_0017.png,apple,white,apple,white,True
+apple,white,6,a photo of a white apple,apple/white/seed_0006.png,apple,white,apple,white,True
+apple,yellow,22,a photo of a yellow apple,apple/yellow/seed_0022.png,apple,green,apple,green,False
+apple,yellow,20,a photo of a yellow apple,apple/yellow/seed_0020.png,apple,yellow,apple,yellow,True
+apple,yellow,17,a photo of a yellow apple,apple/yellow/seed_0017.png,apple,green,apple,green,False
+bag,black,13,a photo of a black bag,bag/black/seed_0013.png,handbag,black,bag,black,True
+bag,black,7,a photo of a black bag,bag/black/seed_0007.png,handbag,black,bag,black,True
+bag,black,14,a photo of a black bag,bag/black/seed_0014.png,bag,black,bag,black,True
+bag,blue,18,a photo of a blue bag,bag/blue/seed_0018.png,bag,blue,bag,blue,True
+bag,blue,8,a photo of a blue bag,bag/blue/seed_0008.png,backpack,blue,bag,blue,True
+bag,blue,25,a photo of a blue bag,bag/blue/seed_0025.png,bag,blue,bag,blue,True
+bag,brown,27,a photo of a brown bag,bag/brown/seed_0027.png,paper bag,brown,bag,brown,True
+bag,brown,0,a photo of a brown bag,bag/brown/seed_0000.png,paper bag,brown,bag,brown,True
+bag,brown,24,a photo of a brown bag,bag/brown/seed_0024.png,paper bag,brown,bag,brown,True
+bag,green,25,a photo of a green bag,bag/green/seed_0025.png,handbag,green,bag,green,True
+bag,green,5,a photo of a green bag,bag/green/seed_0005.png,bag,green,bag,green,True
+bag,green,22,a photo of a green bag,bag/green/seed_0022.png,plastic bag,green,bag,green,True
+bag,orange,13,a photo of a orange bag,bag/orange/seed_0013.png,bag,orange,bag,orange,True
+bag,orange,10,a photo of a orange bag,bag/orange/seed_0010.png,handbag,orange,bag,orange,True
+bag,orange,8,a photo of a orange bag,bag/orange/seed_0008.png,handbag,orange,bag,orange,True
+bag,pink,4,a photo of a pink bag,bag/pink/seed_0004.png,handbag,pink,bag,pink,True
+bag,pink,6,a photo of a pink bag,bag/pink/seed_0006.png,handbag,pink,bag,pink,True
+bag,pink,24,a photo of a pink bag,bag/pink/seed_0024.png,purse,pink,bag,pink,True
+bag,purple,10,a photo of a purple bag,bag/purple/seed_0010.png,purse,purple,bag,purple,True
+bag,purple,3,a photo of a purple bag,bag/purple/seed_0003.png,handbag,purple,bag,purple,True
+bag,purple,2,a photo of a purple bag,bag/purple/seed_0002.png,handbag,purple,bag,purple,True
+bag,red,12,a photo of a red bag,bag/red/seed_0012.png,handbag,red,bag,red,True
+bag,red,3,a photo of a red bag,bag/red/seed_0003.png,handbag,red,bag,red,True
+bag,red,11,a photo of a red bag,bag/red/seed_0011.png,handbag,red,bag,red,True
+bag,white,27,a photo of a white bag,bag/white/seed_0027.png,handbag,white,bag,white,True
+bag,white,11,a photo of a white bag,bag/white/seed_0011.png,handbag,white,bag,white,True
+bag,white,19,a photo of a white bag,bag/white/seed_0019.png,handbag,brown,bag,brown,False
+bag,yellow,8,a photo of a yellow bag,bag/yellow/seed_0008.png,handbag,yellow,bag,yellow,True
+bag,yellow,25,a photo of a yellow bag,bag/yellow/seed_0025.png,handbag,yellow,bag,yellow,True
+bag,yellow,1,a photo of a yellow bag,bag/yellow/seed_0001.png,bag,yellow,bag,yellow,True
+ball,black,23,a photo of a black ball,ball/black/seed_0023.png,ball,black,ball,black,True
+ball,black,14,a photo of a black ball,ball/black/seed_0014.png,sphere,black,unmatched,black,False
+ball,black,17,a photo of a black ball,ball/black/seed_0017.png,ball,black,ball,black,True
+ball,blue,3,a photo of a blue ball,ball/blue/seed_0003.png,sphere,blue,unmatched,blue,False
+ball,blue,29,a photo of a blue ball,ball/blue/seed_0029.png,ball,blue,ball,blue,True
+ball,blue,12,a photo of a blue ball,ball/blue/seed_0012.png,ball,blue,ball,blue,True
+ball,brown,2,a photo of a brown ball,ball/brown/seed_0002.png,ball,brown,ball,brown,True
+ball,brown,17,a photo of a brown ball,ball/brown/seed_0017.png,sphere,brown,unmatched,brown,False
+ball,brown,9,a photo of a brown ball,ball/brown/seed_0009.png,ball,brown,ball,brown,True
+ball,green,26,a photo of a green ball,ball/green/seed_0026.png,ball,green,ball,green,True
+ball,green,20,a photo of a green ball,ball/green/seed_0020.png,ball,green,ball,green,True
+ball,green,19,a photo of a green ball,ball/green/seed_0019.png,ball,green,ball,green,True
+ball,orange,28,a photo of a orange ball,ball/orange/seed_0028.png,orange,orange,unmatched,orange,False
+ball,orange,27,a photo of a orange ball,ball/orange/seed_0027.png,oranges,orange,unmatched,orange,False
+ball,orange,11,a photo of a orange ball,ball/orange/seed_0011.png,ball,orange,ball,orange,True
+ball,pink,18,a photo of a pink ball,ball/pink/seed_0018.png,ball,pink,ball,pink,True
+ball,pink,6,a photo of a pink ball,ball/pink/seed_0006.png,ball,pink,ball,pink,True
+ball,pink,22,a photo of a pink ball,ball/pink/seed_0022.png,ball,pink,ball,pink,True
+ball,purple,2,a photo of a purple ball,ball/purple/seed_0002.png,ball,purple,ball,purple,True
+ball,purple,1,a photo of a purple ball,ball/purple/seed_0001.png,sphere,purple,unmatched,purple,False
+ball,purple,21,a photo of a purple ball,ball/purple/seed_0021.png,ball,purple,ball,purple,True
+ball,red,7,a photo of a red ball,ball/red/seed_0007.png,ball,red,ball,red,True
+ball,red,24,a photo of a red ball,ball/red/seed_0024.png,ball,red,ball,red,True
+ball,red,9,a photo of a red ball,ball/red/seed_0009.png,ball,red,ball,red,True
+ball,white,2,a photo of a white ball,ball/white/seed_0002.png,balloon,white,unmatched,white,False
+ball,white,27,a photo of a white ball,ball/white/seed_0027.png,ball,white,ball,white,True
+ball,white,7,a photo of a white ball,ball/white/seed_0007.png,ball,white,ball,white,True
+ball,yellow,27,a photo of a yellow ball,ball/yellow/seed_0027.png,ball,yellow,ball,yellow,True
+ball,yellow,3,a photo of a yellow ball,ball/yellow/seed_0003.png,ball,yellow,ball,yellow,True
+ball,yellow,12,a photo of a yellow ball,ball/yellow/seed_0012.png,ball,yellow,ball,yellow,True
+banana,black,8,a photo of a black banana,banana/black/seed_0008.png,banana,yellow,banana,yellow,False
+banana,black,14,a photo of a black banana,banana/black/seed_0014.png,banana,black,banana,black,True
+banana,black,20,a photo of a black banana,banana/black/seed_0020.png,banana,black,banana,black,True
+banana,blue,26,a photo of a blue banana,banana/blue/seed_0026.png,flower,blue,flower,blue,False
+banana,blue,11,a photo of a blue banana,banana/blue/seed_0011.png,banana,blue,banana,blue,True
+banana,blue,5,a photo of a blue banana,banana/blue/seed_0005.png,ring,blue,unmatched,blue,False
+banana,brown,11,a photo of a brown banana,banana/brown/seed_0011.png,banana,yellow,banana,yellow,False
+banana,brown,6,a photo of a brown banana,banana/brown/seed_0006.png,bananas,yellow,banana,yellow,False
+banana,brown,21,a photo of a brown banana,banana/brown/seed_0021.png,banana,yellow,banana,yellow,False
+banana,green,8,a photo of a green banana,banana/green/seed_0008.png,banana,green,banana,green,True
+banana,green,22,a photo of a green banana,banana/green/seed_0022.png,banana,green,banana,green,True
+banana,green,29,a photo of a green banana,banana/green/seed_0029.png,banana,green,banana,green,True
+banana,orange,21,a photo of a orange banana,banana/orange/seed_0021.png,banana,yellow,banana,yellow,False
+banana,orange,20,a photo of a orange banana,banana/orange/seed_0020.png,banana,yellow,banana,yellow,False
+banana,orange,2,a photo of a orange banana,banana/orange/seed_0002.png,banana,yellow,banana,yellow,False
+banana,pink,19,a photo of a pink banana,banana/pink/seed_0019.png,bananas,yellow,banana,yellow,False
+banana,pink,20,a photo of a pink banana,banana/pink/seed_0020.png,banana,pink,banana,pink,True
+banana,pink,5,a photo of a pink banana,banana/pink/seed_0005.png,banana,yellow,banana,yellow,False
+banana,purple,17,a photo of a purple banana,banana/purple/seed_0017.png,banana,purple,banana,purple,True
+banana,purple,23,a photo of a purple banana,banana/purple/seed_0023.png,banana,purple,banana,purple,True
+banana,purple,7,a photo of a purple banana,banana/purple/seed_0007.png,banana,yellow,banana,yellow,False
+banana,red,5,a photo of a red banana,banana/red/seed_0005.png,banana,red,banana,red,True
+banana,red,14,a photo of a red banana,banana/red/seed_0014.png,banana,red,banana,red,True
+banana,red,12,a photo of a red banana,banana/red/seed_0012.png,banana,red,banana,red,True
+banana,white,8,a photo of a white banana,banana/white/seed_0008.png,banana,yellow,banana,yellow,False
+banana,white,29,a photo of a white banana,banana/white/seed_0029.png,banana,yellow,banana,yellow,False
+banana,white,20,a photo of a white banana,banana/white/seed_0020.png,banana,yellow,banana,yellow,False
+banana,yellow,22,a photo of a yellow banana,banana/yellow/seed_0022.png,bananas,yellow,banana,yellow,True
+banana,yellow,17,a photo of a yellow banana,banana/yellow/seed_0017.png,banana,yellow,banana,yellow,True
+banana,yellow,7,a photo of a yellow banana,banana/yellow/seed_0007.png,banana,yellow,banana,yellow,True
+car,black,21,a photo of a black car,car/black/seed_0021.png,car,black,car,black,True
+car,black,10,a photo of a black car,car/black/seed_0010.png,car,black,car,black,True
+car,black,26,a photo of a black car,car/black/seed_0026.png,car,black,car,black,True
+car,blue,24,a photo of a blue car,car/blue/seed_0024.png,car,blue,car,blue,True
+car,blue,1,a photo of a blue car,car/blue/seed_0001.png,car,blue,car,blue,True
+car,blue,7,a photo of a blue car,car/blue/seed_0007.png,car,blue,car,blue,True
+car,brown,26,a photo of a brown car,car/brown/seed_0026.png,car,brown,car,brown,True
+car,brown,1,a photo of a brown car,car/brown/seed_0001.png,car,brown,car,brown,True
+car,brown,25,a photo of a brown car,car/brown/seed_0025.png,car,orange,car,orange,False
+car,green,10,a photo of a green car,car/green/seed_0010.png,car,green,car,green,True
+car,green,12,a photo of a green car,car/green/seed_0012.png,car,Green,car,green,True
+car,green,8,a photo of a green car,car/green/seed_0008.png,car,green,car,green,True
+car,orange,2,a photo of a orange car,car/orange/seed_0002.png,car,orange,car,orange,True
+car,orange,6,a photo of a orange car,car/orange/seed_0006.png,car,orange,car,orange,True
+car,orange,29,a photo of a orange car,car/orange/seed_0029.png,car,orange,car,orange,True
+car,pink,18,a photo of a pink car,car/pink/seed_0018.png,car,pink,car,pink,True
+car,pink,28,a photo of a pink car,car/pink/seed_0028.png,car,pink,car,pink,True
+car,pink,22,a photo of a pink car,car/pink/seed_0022.png,car,pink,car,pink,True
+car,purple,10,a photo of a purple car,car/purple/seed_0010.png,car,purple,car,purple,True
+car,purple,6,a photo of a purple car,car/purple/seed_0006.png,car,purple,car,purple,True
+car,purple,20,a photo of a purple car,car/purple/seed_0020.png,car,purple,car,purple,True
+car,red,15,a photo of a red car,car/red/seed_0015.png,car,red,car,red,True
+car,red,12,a photo of a red car,car/red/seed_0012.png,car,red,car,red,True
+car,red,28,a photo of a red car,car/red/seed_0028.png,car,red,car,red,True
+car,white,29,a photo of a white car,car/white/seed_0029.png,car,white,car,white,True
+car,white,20,a photo of a white car,car/white/seed_0020.png,car,white,car,white,True
+car,white,14,a photo of a white car,car/white/seed_0014.png,car,white,car,white,True
+car,yellow,4,a photo of a yellow car,car/yellow/seed_0004.png,car,yellow,car,yellow,True
+car,yellow,8,a photo of a yellow car,car/yellow/seed_0008.png,car,yellow,car,yellow,True
+car,yellow,7,a photo of a yellow car,car/yellow/seed_0007.png,car,yellow,car,yellow,True
+chair,black,23,a photo of a black chair,chair/black/seed_0023.png,chair,black,chair,black,True
+chair,black,17,a photo of a black chair,chair/black/seed_0017.png,chair,black,chair,black,True
+chair,black,8,a photo of a black chair,chair/black/seed_0008.png,chair,black,chair,black,True
+chair,blue,23,a photo of a blue chair,chair/blue/seed_0023.png,chair,blue,chair,blue,True
+chair,blue,18,a photo of a blue chair,chair/blue/seed_0018.png,chair,blue,chair,blue,True
+chair,blue,13,a photo of a blue chair,chair/blue/seed_0013.png,chair,blue,chair,blue,True
+chair,brown,28,a photo of a brown chair,chair/brown/seed_0028.png,chair,brown,chair,brown,True
+chair,brown,18,a photo of a brown chair,chair/brown/seed_0018.png,chair,brown,chair,brown,True
+chair,brown,12,a photo of a brown chair,chair/brown/seed_0012.png,chair,brown,chair,brown,True
+chair,green,11,a photo of a green chair,chair/green/seed_0011.png,couch,green,unmatched,green,False
+chair,green,7,a photo of a green chair,chair/green/seed_0007.png,chair,green,chair,green,True
+chair,green,4,a photo of a green chair,chair/green/seed_0004.png,chair,green,chair,green,True
+chair,orange,16,a photo of a orange chair,chair/orange/seed_0016.png,chair,orange,chair,orange,True
+chair,orange,15,a photo of a orange chair,chair/orange/seed_0015.png,chair,orange,chair,orange,True
+chair,orange,2,a photo of a orange chair,chair/orange/seed_0002.png,chair,orange,chair,orange,True
+chair,pink,24,a photo of a pink chair,chair/pink/seed_0024.png,chair,pink,chair,pink,True
+chair,pink,1,a photo of a pink chair,chair/pink/seed_0001.png,chair,pink,chair,pink,True
+chair,pink,27,a photo of a pink chair,chair/pink/seed_0027.png,chair,pink,chair,pink,True
+chair,purple,3,a photo of a purple chair,chair/purple/seed_0003.png,chair,purple,chair,purple,True
+chair,purple,4,a photo of a purple chair,chair/purple/seed_0004.png,chair,purple,chair,purple,True
+chair,purple,20,a photo of a purple chair,chair/purple/seed_0020.png,chair,purple,chair,purple,True
+chair,red,5,a photo of a red chair,chair/red/seed_0005.png,chair,red,chair,red,True
+chair,red,25,a photo of a red chair,chair/red/seed_0025.png,chair,red,chair,red,True
+chair,red,21,a photo of a red chair,chair/red/seed_0021.png,chair,red,chair,red,True
+chair,white,13,a photo of a white chair,chair/white/seed_0013.png,chair,white,chair,white,True
+chair,white,19,a photo of a white chair,chair/white/seed_0019.png,chair,white,chair,white,True
+chair,white,2,a photo of a white chair,chair/white/seed_0002.png,chair,white,chair,white,True
+chair,yellow,12,a photo of a yellow chair,chair/yellow/seed_0012.png,chair,yellow,chair,yellow,True
+chair,yellow,19,a photo of a yellow chair,chair/yellow/seed_0019.png,chair,yellow,chair,yellow,True
+chair,yellow,14,a photo of a yellow chair,chair/yellow/seed_0014.png,chair,yellow,chair,yellow,True
+chalkboard,black,16,a photo of a black chalkboard,chalkboard/black/seed_0016.png,blackboard,black,chalkboard,black,True
+chalkboard,black,8,a photo of a black chalkboard,chalkboard/black/seed_0008.png,blackboard,black,chalkboard,black,True
+chalkboard,black,17,a photo of a black chalkboard,chalkboard/black/seed_0017.png,blackboard,black,chalkboard,black,True
+chalkboard,blue,27,a photo of a blue chalkboard,chalkboard/blue/seed_0027.png,apples,black,apple,black,False
+chalkboard,blue,0,a photo of a blue chalkboard,chalkboard/blue/seed_0000.png,blackboard,blue,chalkboard,blue,True
+chalkboard,blue,21,a photo of a blue chalkboard,chalkboard/blue/seed_0021.png,spiderweb,blue,unmatched,blue,False
+chalkboard,brown,23,a photo of a brown chalkboard,chalkboard/brown/seed_0023.png,blackboard,black,chalkboard,black,False
+chalkboard,brown,3,a photo of a brown chalkboard,chalkboard/brown/seed_0003.png,chalkboard,black,chalkboard,black,False
+chalkboard,brown,21,a photo of a brown chalkboard,chalkboard/brown/seed_0021.png,spiderweb,brown,unmatched,brown,False
+chalkboard,green,28,a photo of a green chalkboard,chalkboard/green/seed_0028.png,blackboard,black,chalkboard,black,False
+chalkboard,green,17,a photo of a green chalkboard,chalkboard/green/seed_0017.png,blackboard,green,chalkboard,green,True
+chalkboard,green,24,a photo of a green chalkboard,chalkboard/green/seed_0024.png,chopping board,green,unmatched,green,False
+chalkboard,orange,8,a photo of a orange chalkboard,chalkboard/orange/seed_0008.png,blackboard,black,chalkboard,black,False
+chalkboard,orange,24,a photo of a orange chalkboard,chalkboard/orange/seed_0024.png,oranges,gray,unmatched,unmatched,False
+chalkboard,orange,20,a photo of a orange chalkboard,chalkboard/orange/seed_0020.png,orange,black,unmatched,black,False
+chalkboard,pink,10,a photo of a pink chalkboard,chalkboard/pink/seed_0010.png,blackboard,black,chalkboard,black,False
+chalkboard,pink,3,a photo of a pink chalkboard,chalkboard/pink/seed_0003.png,blackboard,blue,chalkboard,blue,False
+chalkboard,pink,9,a photo of a pink chalkboard,chalkboard/pink/seed_0009.png,chalk,black,unmatched,black,False
+chalkboard,purple,13,a photo of a purple chalkboard,chalkboard/purple/seed_0013.png,blackboard,black,chalkboard,black,False
+chalkboard,purple,5,a photo of a purple chalkboard,chalkboard/purple/seed_0005.png,blackboard,black,chalkboard,black,False
+chalkboard,purple,14,a photo of a purple chalkboard,chalkboard/purple/seed_0014.png,blackboard,black,chalkboard,black,False
+chalkboard,red,0,a photo of a red chalkboard,chalkboard/red/seed_0000.png,blackboard,black,chalkboard,black,False
+chalkboard,red,23,a photo of a red chalkboard,chalkboard/red/seed_0023.png,blackboard,black,chalkboard,black,False
+chalkboard,red,28,a photo of a red chalkboard,chalkboard/red/seed_0028.png,chalkboard,black,chalkboard,black,False
+chalkboard,white,23,a photo of a white chalkboard,chalkboard/white/seed_0023.png,blackboard,black,chalkboard,black,False
+chalkboard,white,8,a photo of a white chalkboard,chalkboard/white/seed_0008.png,chalkboard,black,chalkboard,black,False
+chalkboard,white,16,a photo of a white chalkboard,chalkboard/white/seed_0016.png,blackboard,black,chalkboard,black,False
+chalkboard,yellow,24,a photo of a yellow chalkboard,chalkboard/yellow/seed_0024.png,tag,yellow,unmatched,yellow,False
+chalkboard,yellow,5,a photo of a yellow chalkboard,chalkboard/yellow/seed_0005.png,blackboard,black,chalkboard,black,False
+chalkboard,yellow,16,a photo of a yellow chalkboard,chalkboard/yellow/seed_0016.png,chalkboard,black,chalkboard,black,False
+dog,black,29,a photo of a black dog,dog/black/seed_0029.png,dog,black,dog,black,True
+dog,black,3,a photo of a black dog,dog/black/seed_0003.png,dog,black,dog,black,True
+dog,black,27,a photo of a black dog,dog/black/seed_0027.png,dog,black,dog,black,True
+dog,blue,20,a photo of a blue dog,dog/blue/seed_0020.png,dog,blue,dog,blue,True
+dog,blue,9,a photo of a blue dog,dog/blue/seed_0009.png,dog,blue,dog,blue,True
+dog,blue,26,a photo of a blue dog,dog/blue/seed_0026.png,dog,blue,dog,blue,True
+dog,brown,20,a photo of a brown dog,dog/brown/seed_0020.png,dog,brown,dog,brown,True
+dog,brown,16,a photo of a brown dog,dog/brown/seed_0016.png,dog,brown,dog,brown,True
+dog,brown,19,a photo of a brown dog,dog/brown/seed_0019.png,dog,brown,dog,brown,True
+dog,green,6,a photo of a green dog,dog/green/seed_0006.png,dog,white,dog,white,False
+dog,green,4,a photo of a green dog,dog/green/seed_0004.png,dog,green,dog,green,True
+dog,green,11,a photo of a green dog,dog/green/seed_0011.png,dog,white,dog,white,False
+dog,orange,24,a photo of a orange dog,dog/orange/seed_0024.png,dog,orange,dog,orange,True
+dog,orange,5,a photo of a orange dog,dog/orange/seed_0005.png,dog,orange,dog,orange,True
+dog,orange,17,a photo of a orange dog,dog/orange/seed_0017.png,dog,orange,dog,orange,True
+dog,pink,24,a photo of a pink dog,dog/pink/seed_0024.png,dog,pink,dog,pink,True
+dog,pink,29,a photo of a pink dog,dog/pink/seed_0029.png,puppy,white,dog,white,False
+dog,pink,16,a photo of a pink dog,dog/pink/seed_0016.png,dog,pink,dog,pink,True
+dog,purple,29,a photo of a purple dog,dog/purple/seed_0029.png,puppy,white,dog,white,False
+dog,purple,0,a photo of a purple dog,dog/purple/seed_0000.png,dog,gray,dog,unmatched,False
+dog,purple,19,a photo of a purple dog,dog/purple/seed_0019.png,dog,purple,dog,purple,True
+dog,red,10,a photo of a red dog,dog/red/seed_0010.png,dog,red,dog,red,True
+dog,red,15,a photo of a red dog,dog/red/seed_0015.png,dog,orange,dog,orange,False
+dog,red,0,a photo of a red dog,dog/red/seed_0000.png,dog,brown,dog,brown,False
+dog,white,3,a photo of a white dog,dog/white/seed_0003.png,dog,white,dog,white,True
+dog,white,29,a photo of a white dog,dog/white/seed_0029.png,puppy,white,dog,white,True
+dog,white,11,a photo of a white dog,dog/white/seed_0011.png,dog,white,dog,white,True
+dog,yellow,28,a photo of a yellow dog,dog/yellow/seed_0028.png,dog,brown,dog,brown,False
+dog,yellow,26,a photo of a yellow dog,dog/yellow/seed_0026.png,dog,tan,dog,brown,False
+dog,yellow,25,a photo of a yellow dog,dog/yellow/seed_0025.png,dog,yellow,dog,yellow,True
+flower,black,9,a photo of a black flower,flower/black/seed_0009.png,flower,black,flower,black,True
+flower,black,7,a photo of a black flower,flower/black/seed_0007.png,flower,black,flower,black,True
+flower,black,1,a photo of a black flower,flower/black/seed_0001.png,flower,pink,flower,pink,False
+flower,blue,7,a photo of a blue flower,flower/blue/seed_0007.png,flower,blue,flower,blue,True
+flower,blue,28,a photo of a blue flower,flower/blue/seed_0028.png,flower,blue,flower,blue,True
+flower,blue,18,a photo of a blue flower,flower/blue/seed_0018.png,flower,blue,flower,blue,True
+flower,brown,2,a photo of a brown flower,flower/brown/seed_0002.png,flower,yellow,flower,yellow,False
+flower,brown,23,a photo of a brown flower,flower/brown/seed_0023.png,flower,red,flower,red,False
+flower,brown,15,a photo of a brown flower,flower/brown/seed_0015.png,flower,brown,flower,brown,True
+flower,green,26,a photo of a green flower,flower/green/seed_0026.png,flower,green,flower,green,True
+flower,green,2,a photo of a green flower,flower/green/seed_0002.png,flower,green,flower,green,True
+flower,green,24,a photo of a green flower,flower/green/seed_0024.png,flower,green,flower,green,True
+flower,orange,17,a photo of a orange flower,flower/orange/seed_0017.png,flower,orange,flower,orange,True
+flower,orange,24,a photo of a orange flower,flower/orange/seed_0024.png,flower,orange,flower,orange,True
+flower,orange,4,a photo of a orange flower,flower/orange/seed_0004.png,flower,orange,flower,orange,True
+flower,pink,4,a photo of a pink flower,flower/pink/seed_0004.png,flower,pink,flower,pink,True
+flower,pink,21,a photo of a pink flower,flower/pink/seed_0021.png,flower,pink,flower,pink,True
+flower,pink,15,a photo of a pink flower,flower/pink/seed_0015.png,flower,pink,flower,pink,True
+flower,purple,17,a photo of a purple flower,flower/purple/seed_0017.png,flower,purple,flower,purple,True
+flower,purple,5,a photo of a purple flower,flower/purple/seed_0005.png,flower,purple,flower,purple,True
+flower,purple,8,a photo of a purple flower,flower/purple/seed_0008.png,flower,purple,flower,purple,True
+flower,red,16,a photo of a red flower,flower/red/seed_0016.png,flower,red,flower,red,True
+flower,red,27,a photo of a red flower,flower/red/seed_0027.png,flower,red,flower,red,True
+flower,red,19,a photo of a red flower,flower/red/seed_0019.png,flower,red,flower,red,True
+flower,white,13,a photo of a white flower,flower/white/seed_0013.png,flower,white,flower,white,True
+flower,white,6,a photo of a white flower,flower/white/seed_0006.png,flower,white,flower,white,True
+flower,white,29,a photo of a white flower,flower/white/seed_0029.png,flower,white,flower,white,True
+flower,yellow,17,a photo of a yellow flower,flower/yellow/seed_0017.png,sunflower,yellow,unmatched,yellow,False
+flower,yellow,24,a photo of a yellow flower,flower/yellow/seed_0024.png,flower,yellow,flower,yellow,True
+flower,yellow,23,a photo of a yellow flower,flower/yellow/seed_0023.png,flower,yellow,flower,yellow,True
+frog,black,22,a photo of a black frog,frog/black/seed_0022.png,frog,black,frog,black,True
+frog,black,6,a photo of a black frog,frog/black/seed_0006.png,frog,black,frog,black,True
+frog,black,9,a photo of a black frog,frog/black/seed_0009.png,frog,black,frog,black,True
+frog,blue,12,a photo of a blue frog,frog/blue/seed_0012.png,Frog,blue,frog,blue,True
+frog,blue,21,a photo of a blue frog,frog/blue/seed_0021.png,frog,blue,frog,blue,True
+frog,blue,20,a photo of a blue frog,frog/blue/seed_0020.png,Frog,blue,frog,blue,True
+frog,brown,11,a photo of a brown frog,frog/brown/seed_0011.png,frog,brown,frog,brown,True
+frog,brown,14,a photo of a brown frog,frog/brown/seed_0014.png,frog,brown,frog,brown,True
+frog,brown,28,a photo of a brown frog,frog/brown/seed_0028.png,frog,red,frog,red,False
+frog,green,16,a photo of a green frog,frog/green/seed_0016.png,frog,green,frog,green,True
+frog,green,14,a photo of a green frog,frog/green/seed_0014.png,frog,green,frog,green,True
+frog,green,3,a photo of a green frog,frog/green/seed_0003.png,frog,green,frog,green,True
+frog,orange,7,a photo of a orange frog,frog/orange/seed_0007.png,frog,orange,frog,orange,True
+frog,orange,2,a photo of a orange frog,frog/orange/seed_0002.png,frog,orange,frog,orange,True
+frog,orange,10,a photo of a orange frog,frog/orange/seed_0010.png,frog,orange,frog,orange,True
+frog,pink,0,a photo of a pink frog,frog/pink/seed_0000.png,frog,green,frog,green,False
+frog,pink,18,a photo of a pink frog,frog/pink/seed_0018.png,frog,pink,frog,pink,True
+frog,pink,17,a photo of a pink frog,frog/pink/seed_0017.png,frog,pink,frog,pink,True
+frog,purple,7,a photo of a purple frog,frog/purple/seed_0007.png,Frog,purple,frog,purple,True
+frog,purple,18,a photo of a purple frog,frog/purple/seed_0018.png,Frog,purple,frog,purple,True
+frog,purple,0,a photo of a purple frog,frog/purple/seed_0000.png,Frog,purple,frog,purple,True
+frog,red,2,a photo of a red frog,frog/red/seed_0002.png,frog,orange,frog,orange,False
+frog,red,22,a photo of a red frog,frog/red/seed_0022.png,frog,red,frog,red,True
+frog,red,20,a photo of a red frog,frog/red/seed_0020.png,Frog,red,frog,red,True
+frog,white,1,a photo of a white frog,frog/white/seed_0001.png,frog,white,frog,white,True
+frog,white,7,a photo of a white frog,frog/white/seed_0007.png,frog,white,frog,white,True
+frog,white,2,a photo of a white frog,frog/white/seed_0002.png,frog,white,frog,white,True
+frog,yellow,28,a photo of a yellow frog,frog/yellow/seed_0028.png,frog,yellow,frog,yellow,True
+frog,yellow,1,a photo of a yellow frog,frog/yellow/seed_0001.png,frog,yellow,frog,yellow,True
+frog,yellow,27,a photo of a yellow frog,frog/yellow/seed_0027.png,frog,yellow,frog,yellow,True
+polar bear,black,10,a photo of a black polar bear,polar_bear/black/seed_0010.png,bear,black,polar bear,black,True
+polar bear,black,2,a photo of a black polar bear,polar_bear/black/seed_0002.png,bear,black,polar bear,black,True
+polar bear,black,16,a photo of a black polar bear,polar_bear/black/seed_0016.png,bear,black,polar bear,black,True
+polar bear,blue,7,a photo of a blue polar bear,polar_bear/blue/seed_0007.png,polar bear,white,polar bear,white,False
+polar bear,blue,8,a photo of a blue polar bear,polar_bear/blue/seed_0008.png,polar bear,white,polar bear,white,False
+polar bear,blue,21,a photo of a blue polar bear,polar_bear/blue/seed_0021.png,polar bear,white,polar bear,white,False
+polar bear,brown,15,a photo of a brown polar bear,polar_bear/brown/seed_0015.png,polar bear,white,polar bear,white,False
+polar bear,brown,6,a photo of a brown polar bear,polar_bear/brown/seed_0006.png,polar bear,white,polar bear,white,False
+polar bear,brown,17,a photo of a brown polar bear,polar_bear/brown/seed_0017.png,polar bear,white,polar bear,white,False
+polar bear,green,4,a photo of a green polar bear,polar_bear/green/seed_0004.png,bear,green,polar bear,green,True
+polar bear,green,23,a photo of a green polar bear,polar_bear/green/seed_0023.png,polar bear,white,polar bear,white,False
+polar bear,green,29,a photo of a green polar bear,polar_bear/green/seed_0029.png,polar bear,white,polar bear,white,False
+polar bear,orange,28,a photo of a orange polar bear,polar_bear/orange/seed_0028.png,bear,orange,polar bear,orange,True
+polar bear,orange,18,a photo of a orange polar bear,polar_bear/orange/seed_0018.png,polar bear,white,polar bear,white,False
+polar bear,orange,15,a photo of a orange polar bear,polar_bear/orange/seed_0015.png,polar bear,white,polar bear,white,False
+polar bear,pink,7,a photo of a pink polar bear,polar_bear/pink/seed_0007.png,polar bear,white,polar bear,white,False
+polar bear,pink,25,a photo of a pink polar bear,polar_bear/pink/seed_0025.png,polar bear,white,polar bear,white,False
+polar bear,pink,15,a photo of a pink polar bear,polar_bear/pink/seed_0015.png,polar bear,white,polar bear,white,False
+polar bear,purple,25,a photo of a purple polar bear,polar_bear/purple/seed_0025.png,polar bear,white,polar bear,white,False
+polar bear,purple,13,a photo of a purple polar bear,polar_bear/purple/seed_0013.png,polar bear,white,polar bear,white,False
+polar bear,purple,6,a photo of a purple polar bear,polar_bear/purple/seed_0006.png,polar bear,white,polar bear,white,False
+polar bear,red,3,a photo of a red polar bear,polar_bear/red/seed_0003.png,polar bear,white,polar bear,white,False
+polar bear,red,21,a photo of a red polar bear,polar_bear/red/seed_0021.png,bear,red,polar bear,red,True
+polar bear,red,13,a photo of a red polar bear,polar_bear/red/seed_0013.png,bear,orange,polar bear,orange,False
+polar bear,white,11,a photo of a white polar bear,polar_bear/white/seed_0011.png,polar bear,white,polar bear,white,True
+polar bear,white,13,a photo of a white polar bear,polar_bear/white/seed_0013.png,polar bear,white,polar bear,white,True
+polar bear,white,14,a photo of a white polar bear,polar_bear/white/seed_0014.png,polar bear,white,polar bear,white,True
+polar bear,yellow,27,a photo of a yellow polar bear,polar_bear/yellow/seed_0027.png,polar bear,white,polar bear,white,False
+polar bear,yellow,23,a photo of a yellow polar bear,polar_bear/yellow/seed_0023.png,polar bear,white,polar bear,white,False
+polar bear,yellow,1,a photo of a yellow polar bear,polar_bear/yellow/seed_0001.png,polar bear,white,polar bear,white,False
+shoe,black,21,a photo of a black shoe,shoe/black/seed_0021.png,shoe,black,shoe,black,True
+shoe,black,20,a photo of a black shoe,shoe/black/seed_0020.png,shoes,black,shoe,black,True
+shoe,black,3,a photo of a black shoe,shoe/black/seed_0003.png,shoe,black,shoe,black,True
+shoe,blue,1,a photo of a blue shoe,shoe/blue/seed_0001.png,shoe,blue,shoe,blue,True
+shoe,blue,12,a photo of a blue shoe,shoe/blue/seed_0012.png,shoe,blue,shoe,blue,True
+shoe,blue,23,a photo of a blue shoe,shoe/blue/seed_0023.png,shoe,blue,shoe,blue,True
+shoe,brown,10,a photo of a brown shoe,shoe/brown/seed_0010.png,shoes,brown,shoe,brown,True
+shoe,brown,25,a photo of a brown shoe,shoe/brown/seed_0025.png,shoes,brown,shoe,brown,True
+shoe,brown,27,a photo of a brown shoe,shoe/brown/seed_0027.png,shoes,brown,shoe,brown,True
+shoe,green,3,a photo of a green shoe,shoe/green/seed_0003.png,shoes,green,shoe,green,True
+shoe,green,7,a photo of a green shoe,shoe/green/seed_0007.png,shoes,green,shoe,green,True
+shoe,green,6,a photo of a green shoe,shoe/green/seed_0006.png,shoe,green,shoe,green,True
+shoe,orange,6,a photo of a orange shoe,shoe/orange/seed_0006.png,shoes,orange,shoe,orange,True
+shoe,orange,17,a photo of a orange shoe,shoe/orange/seed_0017.png,shoes,orange,shoe,orange,True
+shoe,orange,14,a photo of a orange shoe,shoe/orange/seed_0014.png,shoes,orange,shoe,orange,True
+shoe,pink,4,a photo of a pink shoe,shoe/pink/seed_0004.png,shoes,pink,shoe,pink,True
+shoe,pink,13,a photo of a pink shoe,shoe/pink/seed_0013.png,shoe,pink,shoe,pink,True
+shoe,pink,5,a photo of a pink shoe,shoe/pink/seed_0005.png,shoe,pink,shoe,pink,True
+shoe,purple,8,a photo of a purple shoe,shoe/purple/seed_0008.png,boot,purple,shoe,purple,True
+shoe,purple,14,a photo of a purple shoe,shoe/purple/seed_0014.png,shoe,purple,shoe,purple,True
+shoe,purple,7,a photo of a purple shoe,shoe/purple/seed_0007.png,shoe,purple,shoe,purple,True
+shoe,red,27,a photo of a red shoe,shoe/red/seed_0027.png,shoes,red,shoe,red,True
+shoe,red,29,a photo of a red shoe,shoe/red/seed_0029.png,shoe,red,shoe,red,True
+shoe,red,2,a photo of a red shoe,shoe/red/seed_0002.png,shoes,red,shoe,red,True
+shoe,white,14,a photo of a white shoe,shoe/white/seed_0014.png,shoe,white,shoe,white,True
+shoe,white,25,a photo of a white shoe,shoe/white/seed_0025.png,shoes,black,shoe,black,False
+shoe,white,27,a photo of a white shoe,shoe/white/seed_0027.png,shoes,white,shoe,white,True
+shoe,yellow,27,a photo of a yellow shoe,shoe/yellow/seed_0027.png,shoe,yellow,shoe,yellow,True
+shoe,yellow,17,a photo of a yellow shoe,shoe/yellow/seed_0017.png,shoes,yellow,shoe,yellow,True
+shoe,yellow,3,a photo of a yellow shoe,shoe/yellow/seed_0003.png,shoe,yellow,shoe,yellow,True

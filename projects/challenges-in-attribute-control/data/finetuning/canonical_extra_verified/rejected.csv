@@ -1,0 +1,54 @@
+object,color,cand_idx,path,object_raw,color_raw,object_predicted,color_predicted,verdict,rejection_reason
+dog,white,0,dog/white/cand_000.png,dog,brown,dog,brown,rejected,color
+frog,green,0,frog/green/cand_000.png,rain suit,green,unmatched,green,rejected,object
+dog,black,1,dog/black/cand_001.png,T-shirt,black,unmatched,black,rejected,object
+dog,black,2,dog/black/cand_002.png,bracelet,black,unmatched,black,rejected,object
+frog,green,1,frog/green/cand_001.png,mug,green,unmatched,green,rejected,object
+dog,white,2,dog/white/cand_002.png,dog,black,dog,black,rejected,color
+dog,white,3,dog/white/cand_003.png,dog,black,dog,black,rejected,color
+chair,white,1,chair/white/cand_001.png,couch,brown,unmatched,brown,rejected,both
+dog,white,5,dog/white/cand_005.png,doghouse,black,unmatched,black,rejected,both
+chair,white,2,chair/white/cand_002.png,leis,brown,unmatched,brown,rejected,both
+dog,black,4,dog/black/cand_004.png,grill,black,unmatched,black,rejected,object
+dog,black,5,dog/black/cand_005.png,pillow,black,unmatched,black,rejected,object
+chair,white,4,chair/white/cand_004.png,chair,gray,chair,unmatched,rejected,color
+dog,black,7,dog/black/cand_007.png,book,black,unmatched,black,rejected,object
+dog,white,8,dog/white/cand_008.png,couch,black,unmatched,black,rejected,both
+shoe,brown,0,shoe/brown/cand_000.png,cabinet,brown,unmatched,brown,rejected,object
+chair,white,5,chair/white/cand_005.png,Beanbag,beige,unmatched,brown,rejected,both
+dog,brown,2,dog/brown/cand_002.png,painting,gray,unmatched,unmatched,rejected,both
+dog,brown,3,dog/brown/cand_003.png,teddy,brown,unmatched,brown,rejected,object
+shoe,brown,1,shoe/brown/cand_001.png,box,brown,unmatched,brown,rejected,object
+chair,white,7,chair/white/cand_007.png,Christmas tree,red,unmatched,red,rejected,both
+frog,green,4,frog/green/cand_004.png,doll,brown,unmatched,brown,rejected,both
+chair,brown,1,chair/brown/cand_001.png,sofa,beige,unmatched,brown,rejected,object
+dog,black,12,dog/black/cand_012.png,collar,black,unmatched,black,rejected,object
+dog,white,12,dog/white/cand_012.png,woman,white,unmatched,white,rejected,object
+dog,white,14,dog/white/cand_014.png,dog,gray,dog,unmatched,rejected,color
+dog,black,14,dog/black/cand_014.png,album,black,unmatched,black,rejected,object
+dog,white,16,dog/white/cand_016.png,dog,black,dog,black,rejected,color
+dog,black,15,dog/black/cand_015.png,abstract,black,unmatched,black,rejected,object
+dog,brown,6,dog/brown/cand_006.png,pillow,brown,unmatched,brown,rejected,object
+chair,white,8,chair/white/cand_008.png,tablecloth,black,unmatched,black,rejected,both
+dog,black,16,dog/black/cand_016.png,shoe,white,shoe,white,rejected,both
+dog,black,17,dog/black/cand_017.png,belt,blue,unmatched,blue,rejected,both
+dog,black,19,dog/black/cand_019.png,beer,black,unmatched,black,rejected,object
+dog,white,17,dog/white/cand_017.png,dog,black,dog,black,rejected,color
+frog,green,10,frog/green/cand_010.png,book,green,unmatched,green,rejected,object
+dog,white,18,dog/white/cand_018.png,puppy,gray,dog,unmatched,rejected,color
+dog,white,19,dog/white/cand_019.png,figurine,silver,unmatched,unmatched,rejected,both
+frog,green,11,frog/green/cand_011.png,rain suit,green,unmatched,green,rejected,object
+shoe,brown,2,shoe/brown/cand_002.png,shoelace,brown,unmatched,brown,rejected,object
+dog,brown,8,dog/brown/cand_008.png,stuffed dog,white,dog,white,rejected,color
+frog,green,12,frog/green/cand_012.png,mousepad,green,unmatched,green,rejected,object
+chair,brown,2,chair/brown/cand_002.png,bathroom,none,unmatched,unmatched,rejected,both
+chair,white,12,chair/white/cand_012.png,door,white,unmatched,white,rejected,object
+frog,green,13,frog/green/cand_013.png,frogs,yellow,frog,yellow,rejected,color
+dog,brown,9,dog/brown/cand_009.png,collar,brown,unmatched,brown,rejected,object
+frog,green,16,frog/green/cand_016.png,monkey,black,unmatched,black,rejected,both
+frog,green,17,frog/green/cand_017.png,baby,green,unmatched,green,rejected,object
+frog,green,18,frog/green/cand_018.png,slippers,green,unmatched,green,rejected,object
+chair,brown,3,chair/brown/cand_003.png,couch,brown,unmatched,brown,rejected,object
+chair,white,15,chair/white/cand_015.png,hat,white,unmatched,white,rejected,object
+dog,brown,10,dog/brown/cand_010.png,cat,black,unmatched,black,rejected,both
+chair,white,16,chair/white/cand_016.png,chair,pink,chair,pink,rejected,color

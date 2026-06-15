@@ -1,0 +1,46 @@
+{
+  "human_agreement": {
+    "annotator_a": "Gabriel",
+    "annotator_b": "Monica",
+    "binding": {
+      "kappa": 0.769781718963165,
+      "raw_agreement": 0.9166666666666666
+    },
+    "color": {
+      "kappa": 0.8233404710920771,
+      "raw_agreement": 0.9388888888888889
+    },
+    "n_common": 360,
+    "object": {
+      "kappa": 0.0,
+      "raw_agreement": 0.9694444444444444
+    }
+  },
+  "n_divergence_rows": 59,
+  "n_human_annotations": {
+    "Gabriel": 360,
+    "Monica": 360
+  },
+  "n_vlm_judgments": 360,
+  "vlm_vs_humans": {
+    "consensus": {
+      "accuracy": 0.9121212121212121,
+      "correct": 301,
+      "n_consensus": 330,
+      "n_disagreement": 30
+    },
+    "n_joined": 360,
+    "vs_annotator_a": {
+      "accuracy": 0.8833333333333333,
+      "annotator": "Gabriel",
+      "correct": 318,
+      "total": 360
+    },
+    "vs_annotator_b": {
+      "accuracy": 0.8722222222222222,
+      "annotator": "Monica",
+      "correct": 314,
+      "total": 360
+    }
+  }
+}

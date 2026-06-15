@@ -1,0 +1,60 @@
+category,object,color,seed,path,Gabriel_object,Gabriel_color,Monica_object,Monica_color,vlm_object_pred,vlm_color_pred,vlm_binding
+vlm_disagrees_with_human_consensus,apple,black,0,apple/black/seed_0000.png,1,0,1,0,apple,black,1
+vlm_disagrees_with_human_consensus,apple,orange,17,apple/orange/seed_0017.png,1,1,1,1,apple,red,0
+vlm_disagrees_with_human_consensus,apple,orange,28,apple/orange/seed_0028.png,1,1,1,1,apple,red,0
+humans_disagree,apple,pink,1,apple/pink/seed_0001.png,1,1,1,0,apple,red,0
+vlm_disagrees_with_human_consensus,apple,pink,13,apple/pink/seed_0013.png,1,1,1,1,apple,red,0
+vlm_disagrees_with_human_consensus,apple,pink,18,apple/pink/seed_0018.png,1,1,1,1,apple,red,0
+vlm_disagrees_with_human_consensus,apple,purple,0,apple/purple/seed_0000.png,1,0,1,0,apple,purple,1
+humans_disagree,apple,purple,6,apple/purple/seed_0006.png,1,1,1,0,apple,red,0
+humans_disagree,apple,white,6,apple/white/seed_0006.png,1,0,1,1,apple,white,1
+vlm_disagrees_with_human_consensus,apple,yellow,20,apple/yellow/seed_0020.png,1,0,1,0,apple,yellow,1
+vlm_disagrees_with_human_consensus,bag,blue,8,bag/blue/seed_0008.png,1,0,1,0,bag,blue,1
+humans_disagree,bag,brown,0,bag/brown/seed_0000.png,1,1,0,1,bag,brown,1
+humans_disagree,bag,brown,24,bag/brown/seed_0024.png,1,1,0,1,bag,brown,1
+humans_disagree,bag,green,22,bag/green/seed_0022.png,1,1,0,1,bag,green,1
+vlm_disagrees_with_human_consensus,ball,black,14,ball/black/seed_0014.png,1,1,1,1,unmatched,black,0
+vlm_disagrees_with_human_consensus,ball,blue,3,ball/blue/seed_0003.png,1,1,1,1,unmatched,blue,0
+vlm_disagrees_with_human_consensus,ball,brown,17,ball/brown/seed_0017.png,1,1,1,1,unmatched,brown,0
+vlm_disagrees_with_human_consensus,ball,orange,27,ball/orange/seed_0027.png,1,1,1,1,unmatched,orange,0
+vlm_disagrees_with_human_consensus,ball,orange,28,ball/orange/seed_0028.png,1,1,1,1,unmatched,orange,0
+vlm_disagrees_with_human_consensus,ball,purple,1,ball/purple/seed_0001.png,1,1,1,1,unmatched,purple,0
+vlm_disagrees_with_human_consensus,ball,white,2,ball/white/seed_0002.png,1,1,1,1,unmatched,white,0
+humans_disagree,banana,black,20,banana/black/seed_0020.png,1,1,1,0,banana,black,1
+humans_disagree,banana,blue,11,banana/blue/seed_0011.png,1,1,1,0,banana,blue,1
+vlm_disagrees_with_human_consensus,banana,blue,26,banana/blue/seed_0026.png,1,1,1,1,flower,blue,0
+humans_disagree,banana,blue,5,banana/blue/seed_0005.png,1,1,0,1,unmatched,blue,0
+humans_disagree,banana,pink,5,banana/pink/seed_0005.png,1,1,0,0,banana,yellow,0
+humans_disagree,banana,purple,23,banana/purple/seed_0023.png,1,1,0,1,banana,purple,1
+vlm_disagrees_with_human_consensus,banana,purple,7,banana/purple/seed_0007.png,1,1,1,1,banana,yellow,0
+humans_disagree,banana,red,12,banana/red/seed_0012.png,1,1,0,1,banana,red,1
+humans_disagree,banana,red,14,banana/red/seed_0014.png,1,1,0,1,banana,red,1
+vlm_disagrees_with_human_consensus,car,brown,25,car/brown/seed_0025.png,1,1,1,1,car,orange,0
+vlm_disagrees_with_human_consensus,chair,green,11,chair/green/seed_0011.png,1,1,1,1,unmatched,green,0
+vlm_disagrees_with_human_consensus,chalkboard,blue,0,chalkboard/blue/seed_0000.png,1,0,1,0,chalkboard,blue,1
+humans_disagree,chalkboard,blue,27,chalkboard/blue/seed_0027.png,1,1,1,0,apple,black,0
+vlm_disagrees_with_human_consensus,chalkboard,brown,21,chalkboard/brown/seed_0021.png,1,1,1,1,unmatched,brown,0
+humans_disagree,chalkboard,green,24,chalkboard/green/seed_0024.png,1,1,0,1,unmatched,green,0
+humans_disagree,chalkboard,orange,24,chalkboard/orange/seed_0024.png,1,1,0,1,unmatched,unmatched,0
+vlm_disagrees_with_human_consensus,chalkboard,orange,8,chalkboard/orange/seed_0008.png,1,1,1,1,chalkboard,black,0
+vlm_disagrees_with_human_consensus,dog,red,0,dog/red/seed_0000.png,1,1,1,1,dog,brown,0
+humans_disagree,dog,red,15,dog/red/seed_0015.png,1,1,1,0,dog,orange,0
+humans_disagree,dog,yellow,26,dog/yellow/seed_0026.png,1,0,1,1,dog,brown,0
+vlm_disagrees_with_human_consensus,dog,yellow,28,dog/yellow/seed_0028.png,1,1,1,1,dog,brown,0
+humans_disagree,flower,blue,28,flower/blue/seed_0028.png,1,1,1,0,flower,blue,1
+humans_disagree,flower,brown,15,flower/brown/seed_0015.png,1,0,1,1,flower,brown,1
+vlm_disagrees_with_human_consensus,flower,brown,23,flower/brown/seed_0023.png,1,1,1,1,flower,red,0
+vlm_disagrees_with_human_consensus,flower,yellow,17,flower/yellow/seed_0017.png,1,1,1,1,unmatched,yellow,0
+humans_disagree,frog,blue,21,frog/blue/seed_0021.png,1,1,1,0,frog,blue,1
+humans_disagree,frog,brown,28,frog/brown/seed_0028.png,1,1,1,0,frog,red,0
+humans_disagree,frog,red,20,frog/red/seed_0020.png,1,1,1,0,frog,red,1
+humans_disagree,frog,red,22,frog/red/seed_0022.png,1,1,1,0,frog,red,1
+humans_disagree,polar bear,brown,17,polar_bear/brown/seed_0017.png,1,0,1,1,polar bear,white,0
+humans_disagree,polar bear,green,23,polar_bear/green/seed_0023.png,1,1,1,0,polar bear,white,0
+vlm_disagrees_with_human_consensus,polar bear,green,29,polar_bear/green/seed_0029.png,1,1,1,1,polar bear,white,0
+humans_disagree,polar bear,orange,28,polar_bear/orange/seed_0028.png,1,1,1,0,polar bear,orange,1
+vlm_disagrees_with_human_consensus,polar bear,red,13,polar_bear/red/seed_0013.png,1,1,1,1,polar bear,orange,0
+humans_disagree,polar bear,yellow,1,polar_bear/yellow/seed_0001.png,1,0,1,1,polar bear,white,0
+humans_disagree,polar bear,yellow,23,polar_bear/yellow/seed_0023.png,1,0,1,1,polar bear,white,0
+vlm_disagrees_with_human_consensus,polar bear,yellow,27,polar_bear/yellow/seed_0027.png,1,1,1,1,polar bear,white,0
+humans_disagree,shoe,white,25,shoe/white/seed_0025.png,1,1,1,0,shoe,black,0
