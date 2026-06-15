@@ -215,8 +215,8 @@ class Preprocessing():
         removes duplicates, and removes age outliers.
         """
         # Filter patients with the specified condition
-        # pneumonia_only_df = self.metadata[self.metadata['Finding Labels'] == self.label]
         pneumonia_only_df = self.metadata[self.metadata['Finding Labels'].str.contains('Pneumonia')]
+        # pneumonia_only_df = self.metadata[self.metadata['Finding Labels'] == self.label]
 
 
         if verbose:
@@ -329,6 +329,7 @@ class Preprocessing():
         seed=42,
         verbose=True,
         method='minmax',
+        allowed_labels=None,
         apply_segmentation=False,
         add_mask_channel=False,
         segmentation_device=None,
@@ -368,10 +369,19 @@ class Preprocessing():
             method=method
         )
 
-        #Load images for train, test and validation sets
+        # Restrict the split dataframes to the allowed labels before image loading.
         train_df = split_results['train_df']
         val_df = split_results['val_df']
         test_df = split_results['test_df']
+
+        if allowed_labels is not None:
+            allowed = set(allowed_labels)
+            train_df = train_df[train_df['Finding Labels'].isin(allowed)].reset_index(drop=True)
+            val_df = val_df[val_df['Finding Labels'].isin(allowed)].reset_index(drop=True)
+            test_df = test_df[test_df['Finding Labels'].isin(allowed)].reset_index(drop=True)
+            split_results['train_df'] = train_df
+            split_results['val_df'] = val_df
+            split_results['test_df'] = test_df
 
         train_images = self._load_all_images(size, train_df, verbose=verbose)
         val_images = self._load_all_images(size, val_df, verbose=verbose)
@@ -488,6 +498,7 @@ class Preprocessing():
             seed=seed,
             verbose=verbose,
             method=method,
+            allowed_labels={self.label, 'No Finding'},
             apply_segmentation=apply_lung_segmentation,
             add_mask_channel=add_lung_mask_channel,
             segmentation_device=segmentation_device,
@@ -499,13 +510,18 @@ class Preprocessing():
         train_df = split_results['train_df']
         val_df = split_results['val_df']
         test_df = split_results['test_df']
-        
+
+        # Keep only the requested disease label and healthy controls.
+        allowed_labels = {self.label, 'No Finding'}
+        train_df = train_df[train_df['Finding Labels'].isin(allowed_labels)].reset_index(drop=True)
+        val_df = val_df[val_df['Finding Labels'].isin(allowed_labels)].reset_index(drop=True)
+        test_df = test_df[test_df['Finding Labels'].isin(allowed_labels)].reset_index(drop=True)
+
         # Filter to only include rows where images were successfully loaded
         train_df = train_df.iloc[:len(train_images)]
         val_df = val_df.iloc[:len(val_images)]
         test_df = test_df.iloc[:len(test_images)]
-        
-        
+                
         # One-hot encode the label columns for each split
         train_df = self._one_hot_encode_label_column(train_df, label_col='Label', num_classes=2, prefix='Label')
         val_df = self._one_hot_encode_label_column(val_df, label_col='Label', num_classes=2, prefix='Label')
@@ -528,7 +544,32 @@ class Preprocessing():
         train_dataset = PyTorchDataset(train_images, train_labels, train_metadata, masks=train_masks)
         test_dataset = PyTorchDataset(test_images, test_labels, test_metadata, masks=test_masks)
         val_dataset = PyTorchDataset(val_images, val_labels, val_metadata, masks=val_masks)
-        
+
+        splits_info = {
+            'train': {
+                'total_samples': len(train_df),
+                'pneumonia': len(train_df[train_df['Finding Labels'] != 'No Finding']),
+                'healthy': len(train_df[train_df['Finding Labels'] == 'No Finding']),
+            },
+            'val': {
+                'total_samples': len(val_df),
+                'pneumonia': len(val_df[val_df['Finding Labels'] !='No Finding']),
+                'healthy': len(val_df[val_df['Finding Labels'] == 'No Finding']),
+            },
+            'test': {
+                'total_samples': len(test_df),
+                'pneumonia': len(test_df[test_df['Finding Labels'] != 'No Finding']),
+                'healthy': len(test_df[test_df['Finding Labels'] == 'No Finding']),
+            }
+        }
+
+        if verbose:
+            for split_name, stats in splits_info.items():
+                print(f"\n{split_name.upper()} set:")
+                print(f"  Total images: {stats['total_samples']}")
+                print(f"  Pneumonia: {stats['pneumonia']} images")
+                print(f"  Healthy: {stats['healthy']} images")
+
         return train_dataset, test_dataset, val_dataset
 
     def get_pneumonia_dataframe(self):
@@ -623,19 +664,19 @@ class Preprocessing():
             'train': {
                 'total_samples': len(train_df),
                 'total_patients': len(train_patients),
-                'pneumonia': len(train_df[train_df['Finding Labels'] == self.label]),
+                'pneumonia': len(train_df[train_df['Finding Labels'] != 'No Finding']),
                 'healthy': len(train_df[train_df['Finding Labels'] == 'No Finding']),
             },
             'val': {
                 'total_samples': len(val_df),
                 'total_patients': len(val_patients),
-                'pneumonia': len(val_df[val_df['Finding Labels'] == self.label]),
+                'pneumonia': len(val_df[val_df['Finding Labels'] !='No Finding']),
                 'healthy': len(val_df[val_df['Finding Labels'] == 'No Finding']),
             },
             'test': {
                 'total_samples': len(test_df),
                 'total_patients': len(test_patients),
-                'pneumonia': len(test_df[test_df['Finding Labels'] == self.label]),
+                'pneumonia': len(test_df[test_df['Finding Labels'] != 'No Finding']),
                 'healthy': len(test_df[test_df['Finding Labels'] == 'No Finding']),
             }
         }
@@ -710,7 +751,7 @@ if __name__ == '__main__':
     print("\n" + "=" * 60)
     print("EXAMPLE 2: CVAE-Compatible Dataset (Original)") 
     print("=" * 60)
-    
+
     # Create CVAE-compatible dataset
     train_dataset, test_dataset, val_dataset = preprocessing.create_cvae_dataset(
         img_size=(128, 128),

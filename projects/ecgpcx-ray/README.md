@@ -15,9 +15,18 @@ offered in the **first semester of 2026 (2026.1)**, at Unicamp, under the superv
 
 ---
 
+
+# Presentation slides
+
+[E3 presentation](https://docs.google.com/presentation/d/1PmMhhpT-1ni9IrADmvGIo_p7RAnGzK0hgI9P65Vd-eE/edit?usp=sharing)
+
+---
+
 # Project Summary Description
 
 # Abstract
+
+> Update
 
 This project investigates counterfactual generation for pneumonia in chest X-rays using the NIH Chest X-ray dataset. We built patient-level splits, trained classifier baselines, and implemented two generative models: a metadata-conditioned CVAE and an unpaired CycleGAN. Classifier baselines showed limited discriminative performance under severe class imbalance, with the best test AUC reaching 0.6668. The CVAE preserved structure well (SSIM = 0.8190) but had limited realism (FID = 136.5358), while CycleGAN produced sharper translations with lower mean FID (115.34). Results suggest counterfactual generation is feasible, but classifier validity and clinical plausibility remain open challenges.
 
@@ -29,7 +38,7 @@ Chest X-ray analysis for pneumonia detection is also challenging because high cl
 
 # Objective
 
-The general objective is to develop a **generative framework for explainable data augmentation and interpretation** using **counterfactual image generation** in chest X-rays.
+The general objective is to develop a **generative framework for counterfactual image generation and classifier-grounded evaluation** in chest X-rays.
 
 Instead of generating images from random noise alone, the problem is formulated as a **domain translation task** between:
 
@@ -38,23 +47,23 @@ Instead of generating images from random noise alone, the problem is formulated 
 
 The central questions are:
 
-- **What would a healthy patient look like if they had pneumonia?***
-- **What image regions are modified to represent pneumonia?**
+- **What would a healthy patient look like if they had pneumonia?**
+- **Does the generated counterfactual change the classifier prediction in the intended direction?**
 
 Specific objectives are:
 
 1. Build a clean and reproducible preprocessing pipeline for the NIH Chest X-ray dataset.
 2. Select healthy and pneumonia-only samples to avoid confounding labels from multiple diseases.
-3. Train a conditional generative model that uses image labels and patient metadata.
-4. Generate counterfactual chest X-rays by changing the target condition.
-5. Use generated images and difference maps as qualitative explainability artifacts.
-6. In the next phase, evaluate whether generated images improve downstream pneumonia classification.
+3. Use TorchXRayVision lung segmentation masks to guide the models toward anatomically relevant lung regions.
+4. Train conditional generative models that uses image labels, patient metadata, and lung-mask information.
+5. Generate counterfactual chest X-rays by changing the target condition.
+6. Evaluate counterfactual validity using classifier flip rate and confidence change, replacing the previously planned visual attribution analysis.
 
 Expected model outputs are:
 
-- Synthetic pneumonia chest X-ray images.
-- Counterfactual difference maps highlighting modified regions.
-- Augmented datasets for downstream classification experiments.
+- Counterfactual pneumonia and healthy chest X-ray images.
+- Lung-aware reconstructions and generated images that preserve patient anatomy.
+- Classifier-facing metrics describing whether counterfactuals change predictions as intended.
 
 # Methodology
 
@@ -130,7 +139,7 @@ The original images have different spatial resolutions and are too large for eff
 
 ![Preprocessing workflow](images/preprocessing.png)
 
-The preprocessing pipeline implemented in `utils/preprocessing.py` and `utils/dataset.py` follows these steps:
+The preprocessing pipeline implemented in `utils/preprocessing.py`, `utils/dataset.py`, and `utils/xrv_lung_segmentation.py` follows these steps:
 
 1. Download the NIH Chest X-ray dataset using `kagglehub`.
 2. Load `Data_Entry_2017.csv`.
@@ -139,10 +148,12 @@ The preprocessing pipeline implemented in `utils/preprocessing.py` and `utils/da
 5. Normalize age using either Min-Max scaling or standardization and encode gender as a numerical feature. Also, assign binary labels: healthy = 0 and pneumonia = 1.
 6. Split the data by patient into training, validation, and test sets with proportions 70%, 15%, and 15%.
 7. Load and resize images to 128 x 128 pixels.
-8. Convert images, labels, and metadata into PyTorch-compatible tensors.
-9. Build PyTorch datasets and dataloaders.
+8. Generate lung masks with the TorchXRayVision anatomical PSPNet segmenter, using the left-lung and right-lung outputs to create a binary mask.
+9. Keep the grayscale image as the first channel and concatenate the lung mask as a second channel (`add_lung_mask_channel=True`). This lets the model learn from the full image while making the lung region explicit to the loss function.
+10. Convert images, labels, masks, and metadata into PyTorch-compatible tensors.
+11. Build PyTorch datasets and dataloaders.
 
-The split is performed at patient level, so the same patient cannot appear in more than one split. This avoids patient leakage between training and evaluation sets.
+The split is performed at patient level, so the same patient cannot appear in more than one split. This avoids patient leakage between training and evaluation sets. Lung masks are generated after the split for each subset and are used only as model inputs/loss guidance, not as labels for diagnosis.
 
 ## Models
 
@@ -164,7 +175,7 @@ $$
 
 Where:
 
-- $x$: chest X-ray image.
+- $x$: chest X-ray image with an additional lung-mask channel.
 - $z$: latent representation.
 - $y$: class condition, healthy or pneumonia.
 - $m$: patient metadata, represented by normalized age and encoded gender.
@@ -174,9 +185,19 @@ Counterfactual generation is performed by encoding an input image into the laten
 Two CVAE variants exist in the repository:
 
 - `models/cvae.py`: fully connected CVAE baseline.
-- `models/cvae_cnn.py`: convolutional CVAE with convolutional encoder and transposed-convolution decoder.
+- `models/cvae_cnn.py`: convolutional CVAE used in the latest experiment.
 
-The CNN-based CVAE uses four convolutional blocks in the encoder and four transposed-convolution blocks in the decoder. The latent dimension is 64, the image input has one channel, and metadata conditioning includes normalized age and a learned gender embedding.
+The CNN-based CVAE uses four convolutional encoder blocks and a transposed-convolution decoder. The final model uses two input channels: the grayscale X-ray and the TorchXRayVision lung mask. The decoder outputs a single reconstructed or counterfactual X-ray channel. The latent dimension is 64, and conditioning combines the binary disease label, normalized age, and a learned gender embedding.
+
+### Implemented CVAE workflow
+
+The following diagram summarizes the actual CVAE pipeline used in this project, from the input image and conditioning variables to the reconstructed or counterfactual output.
+
+![CVAE-Workflow](images/cvae.png)
+
+At inference time, the same encoder is used to obtain the latent representation, while the target label is changed before decoding, which produces the counterfactual image.
+
+The decoder also uses skip connections from the encoder. These connections pass intermediate spatial features from the encoder to the corresponding decoder stages, helping preserve chest anatomy, lung shape, rib structure, and other patient-specific details that can be lost when all information is compressed through the latent vector alone. FiLM-style conditioning layers modulate decoder features with the label and metadata condition, making the target class explicit during reconstruction and counterfactual generation.
 
 **Training objective and loss**
 
@@ -188,25 +209,22 @@ The CVAE model outputs:
 
 During training, the model minimizes a loss composed of:
 
-1. a reconstruction loss, which measures how similar the reconstructed image is to the original image;
-2. a KL-divergence term, which regularizes the latent space.
+1. a global reconstruction loss between the original image channel and the reconstructed image;
+2. a lung-region reconstruction loss computed inside the binary lung mask;
+3. an outside-lung reconstruction loss computed outside the mask, used to discourage unnecessary background changes;
+4. a KL-divergence term, which regularizes the latent space.
 
 The total loss is defined as:
 
 $$
 \mathcal{L}_{CVAE} =
-\mathcal{L}_{rec}(x, \hat{x}) + \beta , D_{KL}
+\mathcal{L}_{rec} +
+\lambda_{lung}\mathcal{L}_{lung} +
+\lambda_{outside}\mathcal{L}_{outside} +
+\beta D_{KL}
 $$
 
-The reconstruction loss combines MSE and L1 loss:
-
-$$
-\mathcal{L}_{rec}(x, \hat{x}) =
-0.5 \cdot \text{MSE}(x, \hat{x}) +
-0.5 \cdot \text{L1}(x, \hat{x})
-$$
-
-This combination was chosen because MSE penalizes larger pixel-level errors, while L1 helps preserve sharper intensity differences and is less sensitive to outliers. Since chest X-rays are grayscale images normalized to `[0, 1]`, both terms are computed directly on flattened image tensors.
+The reconstruction terms use pixel-level losses on grayscale images normalized to `[0, 1]`. The lung mask lets the model distinguish errors inside the clinically relevant lung fields from changes in the surrounding background. The configuration used was: $\beta = 0.005$, $\lambda_{lung} = 0.2$, and $\lambda_{outside} = 3.0$.
 
 The KL-divergence term is computed from $\mu$ and $\log\sigma^2$:
 
@@ -216,20 +234,21 @@ D_{KL} =
 \sum (1 + \log\sigma^2 - \mu^2 - \sigma^2)
 $$
 
-It is normalized by the batch size so that its scale is more comparable across batches. In this implementation, the KL term is weighted by $\beta = 0.02$, so the model focuses more on reconstruction quality while still maintaining a structured latent space. This is useful for counterfactual generation because it helps preserve the overall anatomy of the chest X-ray while allowing disease-related changes to be generated.
+It is normalized by the batch size so that its scale is more comparable across batches. The small KL weight keeps the model focused on reconstruction quality while still maintaining a structured latent space. This is useful for counterfactual generation because it helps preserve the overall anatomy of the chest X-ray while allowing condition-related changes to be generated.
 
 **Advantages**
 
 - Stable training compared with adversarial models.
 - Direct conditioning on label and metadata.
+- Lung-mask guidance through the input and loss function.
+- Skip connections that improve anatomical preservation.
 - Natural support for controlled counterfactual generation.
-- Simpler implementation and debugging for the intermediate project phase.
 
 **Current limitations**
 
-- Reconstructions are still blurry, which is common in VAE-based models.
+- Reconstructions are still smoother than the original X-rays, which is common in VAE-based models.
 - The strong class imbalance can bias generated images toward healthy-looking reconstructions.
-- The generated counterfactuals still require quantitative and explainability evaluation.
+- The generated counterfactuals still require classifier-based validity evaluation through flip rate and confidence change.
 
 #### 1.2 Cycle-Consistent GAN (CycleGAN)
 
@@ -276,24 +295,25 @@ The classifier has two roles:
 
 ## Explainability Strategy
 
-The main explainability strategy is based on counterfactual differences. Given:
+The project no longer includes a separate visual attribution component. Instead, counterfactual usefulness is evaluated through classifier-facing counterfactual validity metrics:
 
-- \(x_h\): original healthy image.
-- \(x_p\): generated pneumonia counterfactual.
-
-The difference map is:
+- **Flip rate**: measures the proportion of generated counterfactuals that change the classifier prediction to the intended target class. For example, a healthy-to-pneumonia counterfactual is successful if the classifier prediction changes from healthy to pneumonia.
 
 $$
-\Delta x = x_p - x_h
+FlipRate=
+\frac{\#\text{successful class changes}}
+{\#\text{counterfactuals}}
 $$
 
-This map highlights regions modified by the generative model and can be interpreted as a visual hypothesis of what the model associates with pneumonia. For a valid counterfactual explanation, the generated image should remain anatomically close to the original image while changing disease-related evidence enough to affect the target classifier.
+- **Confidence change**: measures how much the classifier's confidence in the target class increases after generating the counterfactual.
 
-Planned complementary analyses include:
+$$
+\Delta=
+P(y_{target}|x_{cf})-
+P(y_{target}|x)
+$$
 
-- Grad-CAM heatmaps for the downstream classifier.
-- Visual comparison between counterfactual difference maps and classifier attention maps.
-- Classifier consistency tests before and after counterfactual generation.
+These metrics directly test whether the generated image changes the classifier decision, which is the practical role counterfactuals play in this project. Difference maps and change heatmaps may still be used as qualitative visual summaries of where the image changed, but they are not treated as a separate explainability method.
 
 ## Tools
 
@@ -312,52 +332,49 @@ Planned complementary analyses include:
 
 ## Evaluation Methodology
 
-The objectives will be assessed through a combination of classifier performance, image-generation metrics, and qualitative explainability analysis. The project will be considered successful if the generated counterfactuals preserve patient anatomy while introducing localized changes, and the synthetic images show potential usefulness for downstream classification.
+The objectives are assessed through a combination of classifier performance, image-generation metrics, and classifier-facing counterfactual validity metrics. The project will be considered successful if the generated counterfactuals preserve patient anatomy, remain visually plausible, and change the classifier prediction in the intended direction.
 
-The classification objective is assessed with ROC-AUC, accuracy, confusion matrices, and training/validation curves. ROC-AUC is the primary metric because the dataset is severely imbalanced. This objective is met only if the classifier achieves stable validation behavior and test performance clearly above chance, especially for pneumonia cases. If classifier performance is weak, it cannot be used as a reliable oracle for validating counterfactuals.
+The classification objective is assessed with ROC-AUC, accuracy, confusion matrices, and training/validation curves. ROC-AUC is the primary metric because the dataset is severely imbalanced. This objective is met only if the classifier achieves stable validation behavior and test performance clearly above chance, especially for pneumonia cases. If classifier performance is weak, flip rate and confidence change must be interpreted cautiously, because the classifier is the evaluation oracle.
 
 The image-generation objective is assessed with SSIM, FID, and visual inspection. SSIM indicates whether counterfactuals preserve anatomical structure, while FID indicates whether generated images follow the distribution of real chest X-rays. This objective is met if generated images remain anatomically close to the input, avoid obvious artifacts, and improve realism across model variants.
 
-The explainability objective is assessed by inspecting counterfactual difference heatmaps and, in future work, comparing them with Grad-CAM maps from a reliable classifier. This objective is met if generated changes are spatially meaningful, concentrated in plausible image regions, and eventually produce the expected classifier prediction change.
+The counterfactual validity objective replaces the previous visual-attribution-based explainability plan. It is assessed with flip rate and confidence change: generated images should flip the classifier prediction to the target class and move the classifier confidence in the expected direction. Change heatmaps are kept only as qualitative visual aids for inspecting image differences.
 
 The data augmentation objective will be assessed by retraining the classifier with and without generated images. It is met if synthetic counterfactuals improve ROC-AUC or minority-class recall without increasing overfitting or introducing clinically implausible artifacts.
 
 The evaluation will consider three aspects:
 
 ### 6.1 Classification Performance:
-- Accuracy  
-- ROC-AUC  
+- Accuracy
+- ROC-AUC
 
 ### 6.2 Image Generation Quality:
-- SSIM (Structural Similarity Index): SSIM evaluates structural similarity between original and counterfactual images, measuring whether anatomical consistency is preserved during transformation.  (high is better)
-- FID (Fréchet Inception Distance): FID evaluates the realism of generated images by measuring the distance between the feature distributions of real and synthetic samples, indicating how closely the generated pneumonia images resemble real chest X-rays. (low is better)
+- SSIM (Structural Similarity Index): SSIM evaluates structural similarity between original and counterfactual images, measuring whether anatomical consistency is preserved during transformation. (high is better)
+- FID (Fréchet Inception Distance): FID evaluates the realism of generated images by measuring the distance between the feature distributions of real and synthetic samples, indicating how closely the generated images resemble real chest X-rays. (low is better)
+- Visual inspection of reconstructions and counterfactual pairs, with attention to lung-field preservation and artifacts.
 
-### 6.3 Explainability:
-- Visual inspection of counterfactual differences  
-- Comparison with Grad-CAM heatmaps  
-- Classifier Consistency (predict with pneumonia vs. without)
+### 6.3 Counterfactual Validity:
+- Flip rate: proportion of counterfactuals that change the classifier prediction to the target class. (high is better)
+- Confidence change: difference between the classifier target-class confidence before and after counterfactual generation. The expected direction is an increase for the target class and a decrease for the original class.
 
 # Workflow
 
-The preprocessing workflow used to reproduce the current experiments is shown below.
+The diagram below summarizes the actual reproducibility flow implemented in this project: which data enters each stage, how it is transformed, and which outputs are produced for the experiments.
 
-![Preprocessing workflow](images/preprocessing.png)
+![Workflow](images/workflow-d3-vertical.png)
 
-The current experimental workflow is:
-
-![Workflow](images/worklow.png)
-
-1. Preprocess images and metadata dataset
-2. Compute baseline metrics using a classification model.
-3. Implement and train two generative models, CVAE and CycleGAN to generate the counterfactuals.
-4. Compute the metrics using the same classifier used in the baseline.
-5. Compute the differences and understand prediction
+This diagram makes explicit that the experiment starts from the raw NIH dataset, passes through cleaning and patient-level splitting, then feeds three branches: classifier evaluation, CVAE counterfactual generation, and CycleGAN translation. The outputs of those branches are then compared using the same downstream classifier and image-quality metrics.
 
 The original project schedule is also available:
 
 ![Schedule](images/schedule.png)
 
 # Experiments, Results, and Discussion of Results
+
+>In the final project submission (D3), this section should list the main results obtained (not necessarily all), which best represent the fulfillment of the project objectives.
+> The discussion of results may be carried out in a separate section or integrated into the results section. This is a matter of style.
+> It is considered fundamental that the presentation of results should not serve as a treatise whose only purpose is to show that "a lot of work was done."
+> What is expected from this section is that it presents and discusses only the most relevant results, highlighting the strengths and/or limitations of the methodology, emphasizing aspects of performance, and containing content that can be classified as organized, didactic, and reproducible sharing of knowledge relevant to the community.
 
 ## Experiment 1: Classifier Baseline
 
@@ -461,83 +478,95 @@ The final metrics were: best validation AUC = 0.5406 (epoch 3), test AUC = 0.620
 
 | Hyperparameter | Value |
 |---|---|
-| Image size | 128 × 128 |
-| Batch size | 64 |
-| Epochs | 300 |
-| Learning rate | 3 × 10⁻⁴ |
+| Image size | 128 x 128 |
+| Input channels | 2: grayscale X-ray + lung mask |
+| Output channels | 1: reconstructed/generated X-ray |
+| Batch size | 16 |
+| Planned epochs | 300 |
+| Completed epochs in saved run | 94 |
+| Best epoch checkpoint | 78 |
+| Learning rate | 3 x 10^-4 |
 | Optimizer | Adam |
-| z | 64 |
+| Latent dimension | 64 |
 | Conditions | binary disease label, normalized age, and gender embedding |
-| KL weight $\beta$ | 0.02 |
+| KL weight $\beta$ | 0.005 with warm-up schedule |
+| Lung reconstruction weight $\lambda_{lung}$ | 0.2 |
+| Outside-lung reconstruction weight $\lambda_{outside}$ | 3.0 |
+| Lung segmentation | TorchXRayVision anatomical PSPNet mask |
 | Device | CUDA |
+
+The final CVAE experiment uses the convolutional implementation in `models/cvae_cnn.py`. The training input concatenates the resized grayscale X-ray and its lung mask, while the decoder generates only the image channel. Skip connections pass encoder features into the decoder to preserve spatial structure, and FiLM conditioning injects label and metadata information into decoder blocks.
 
 ### 2.2 Training Loss Behavior
 
-The training was run for 300 epochs, with the final checkpoint saved at epoch 299. The final notebook output reports:
+![CVAE Loss behavior](training-results/cvae/loss-behavior.png)
 
-| Metric | Epoch 0 | Epoch 299 |
-|---|---:|---:|
-| Total Training loss | 0.046 | 0.012 |
-| Training reconstruction loss | 0.040 | 0.012 |
-| Total Validation loss | 0.036 | 0.014 |
-| Validation reconstruction loss | 0.030 | 0.014 |
-| Training KL divergence | 43.155 | 609.191 |
-| Validation KL divergence | 46.102 | 611.220 |
+The final experiment contains 94 completed epochs. Training loss decreased from **0.3880** at the first saved epoch to **0.0170** at the last saved epoch. Validation loss decreased from **0.1562** to **0.0126**, and the validation image score remained high near the end of training, reaching approximately **0.9971** in the final logged epoch.
 
-The reconstruction loss decreased throughout training and stabilized near the end, indicating that the CVAE learned to reconstruct the overall structure of the chest X-ray images. The validation loss remained close to the training loss, suggesting limited overfitting in this experiment. The KL divergence increased during training, which is expected as the latent space becomes more informative and captures more variation in the data. Since the KL term is weighted by the β parameter, the total loss remains primarily influenced by the reconstruction term.
+This behavior indicates that the CVAE learned a stable reconstruction mapping for the lung-mask-conditioned inputs. The low final losses and high validation image score suggest that the skip-connected architecture preserves global anatomy well. At the same time, the generated outputs remain smoother than the original X-rays, which is expected for a VAE-style model and limits fine radiological texture.
 
 Example reconstruction outputs:
 
 ![CVAE reconstruction epoch 0](training-results/cvae/results/reconstruction_0.png)
 
-![CVAE reconstruction epoch 299](training-results/cvae/results/reconstruction_299.png)
+![CVAE reconstruction epoch 93](training-results/cvae/results/reconstruction_93.png)
 
 ### 2.3 Counterfactual Generation
 
 After training, counterfactual images were generated for the complete test set by flipping the input class condition:
 
-- Healthy \(\rightarrow\) Pneumonia.
-- Pneumonia \(\rightarrow\) Healthy.
+- Healthy $\rightarrow$ Pneumonia.
+- Pneumonia $\rightarrow$ Healthy.
 
-The latent representation was extracted from the original image and decoded using the opposite disease condition. This procedure aims to preserve patient-specific structure while modifying disease-related visual evidence.
+The latent representation was extracted from the original image and decoded using the opposite disease condition. During generation, the lung-aware setup encourages the model to preserve patient-specific anatomy and avoid unnecessary changes outside the lung fields.
 
-In total, **9,425 original images** and **9,425 counterfactual images** were evaluated.
+In total, **9,176 original images** and **9,176 counterfactual images** were evaluated.
 
 ### 2.4 Qualitative Evaluation
 
 **Counterfactual image generation examples**
 
-![CVAE Counterfactual examples](training-results/cvae/results/generation_examples.png)
+> Generate image
 
 The figure above shows 4 example pairs for each translation direction. Blue borders denote real (input) images while red borders denote generated counteerfactual (output) images.
 
-The generated examples preserve the main anatomical layout of the input X-rays, including the lung fields, rib cage, and cardiac silhouette. The changes introduced by the CVAE are subtle, which is desirable for counterfactual explanations, but the generated outputs are also smoother than the original images. This suggests that the model is capturing global structure more strongly than fine radiological texture, losing the sharpness of the images and making it difficult to identify aspects like bones or artifacts in the images.
+The generated examples show that the CVAE preserves the main anatomical layout of the input X-rays, including the lung fields, rib cage, and cardiac silhouette. The changes introduced by the CVAE are subtle, and the lung-mask channel helps make the lung region explicit during training.
+
+The generated outputs are smoother than the original images. This suggests that the model captures global structure more strongly than fine radiological texture, losing some sharpness in bones, borders, and small artifacts. This smoothness is a known limitation of VAE-based image generation.
 
 **Counterfactual change heatmaps**
 
-![CVAE Change Heatmap](training-results/cvae/results/cvae_change_heatmap_008.png)
+![CVAE Change Heatmap](training-results/cvae/results/change_heatmaps/cvae_change_heatmap_002.png)
 
-The heatmaps show the absolute pixel-level differences between each original image and its generated counterfactual. Brighter regions indicate where the CVAE changed the image more strongly.
+The change heatmaps show absolute pixel-level differences between each original image and its generated counterfactual. Brighter regions indicate stronger image changes. These heatmaps are used only as qualitative visual checks; the project no longer treats them as the main explainability strategy.
 
-The changes are not uniformly distributed across the full image, which supports the counterfactual goal of localized modifications rather than arbitrary global shifts. However, some highlighted regions are diffuse and may include areas outside the most clinically relevant lung regions, so these maps should still be interpreted as qualitative evidence and compared with classifier-based explanations in future experiments.
-
+The changes are not uniformly distributed across the full image, which supports the counterfactual goal of localized modifications rather than arbitrary global shifts. However, the final result show highlighted areas more concentrated on the lung regions but we can see some highlighted regions are diffuse and may include areas outside the most clinically relevant lung regions. With that, we can see that using the lung segmentation algorithm helped, but not fully resolved the issue.
 
 ### 2.5 Quantitative Evaluation
 
 | Metric | Value |
 |---|---:|
-| Number of SSIM pairs | 9,425 |
-| Mean SSIM | 0.8190 |
-| SSIM standard deviation | 0.0503 |
-| Minimum SSIM | 0.3929 |
-| Maximum SSIM | 0.9544 |
-| Number of counterfactual images | 9,425 |
-| Number of reference images | 9,425 |
-| FID | 136.5358 |
+| Number of SSIM pairs | 9,176 |
+| Mean SSIM | 0.9957 |
+| SSIM standard deviation | 0.0022 |
+| Minimum SSIM | 0.9052 |
+| Maximum SSIM | 0.9978 |
+| Number of counterfactual images | 9,176 |
+| Number of reference images | 9,176 |
+| FID | 2.7269 |
 
-The mean SSIM of 0.8190 indicates that the generated counterfactuals preserved most of the original image structure, which is important since counterfactual explanations should mainly modify disease-related regions while maintaining anatomical consistency. However, the minimum SSIM value of 0.3929 indicates that some generated samples differed substantially from the original images and may require individual inspection.
+The mean SSIM of 0.9954 indicates that the generated counterfactuals preserved most of the original image structure, which is important since counterfactual explanations should mainly modify disease-related regions while maintaining anatomical consistency.
 
-The FID score of 136.5358 indicates a noticeable distributional difference between the generated counterfactuals and the reference images. This is consistent with a common limitation of VAE-based image generation, where reconstructed images preserve global anatomy but may appear smoother or less realistic than real chest X-rays. Overall, the CVAE provides a useful baseline for counterfactual generation, although further refinement or comparison with models such as CycleGAN may improve image realism.
+The FID score of 2.7269 ...
+
+The counterfactual validity evaluation focuses on classifier behavior:
+
+| Metric | Value |
+|---|---|
+| Flip rate |  |
+| Confidence change | |
+
+
 
 ## Experiment 3: CycleGAN Training
 
@@ -656,20 +685,21 @@ A further challenge is the strong class imbalance in the training set, where pos
 
 ### CVAE
 
-The CVAE provides a stable and interpretable baseline for conditional counterfactual generation. Its main advantage is that the conditioning mechanism is direct: disease label, age, and gender are explicitly passed to the encoder and decoder, making it simple to control the target generation setting.
+The final CVAE implementation is a stronger baseline than the initial fully connected version because it combines convolutional encoding/decoding, skip connections, FiLM-style conditioning, and lung-mask guidance. The conditioning mechanism remains direct: disease label, normalized age, and gender are explicitly passed into the model, while the lung mask is provided as an additional input channel and used to guide reconstruction losses.
 
-Compared with adversarial models, the CVAE is easier to train and less sensitive to instability. This makes it useful as a first generative baseline for the project. However, the visual results also show the expected limitation of VAE-based models: generated images tend to be smoother and less detailed, which may reduce their clinical realism.
+The main positive result is anatomical preservation. The skip connections help maintain global chest structure, and the saved reconstructions show that the model learns a stable mapping for the 128 x 128 lung-aware inputs. This makes the CVAE useful for producing controlled counterfactual pairs where the source image and generated image remain visually aligned.
 
-The high SSIM suggests that the CVAE preserves anatomical structure reasonably well, but the FID score indicates that realism remains limited. This motivates the comparison with CycleGAN, which is expected to generate sharper images due to adversarial training, although with a higher risk of artifacts and training instability.
+The main limitation remains counterfactual strength. The generated images tend to be smooth and the visual changes are subtle, so qualitative inspection alone is not enough to claim that the model introduced pneumonia-related evidence. For this reason, the CVAE discussion now prioritizes classifier-facing validity metrics: flip rate and confidence change. A useful CVAE counterfactual should flip the downstream classifier to the target class and shift the target-class confidence in the expected direction.
 
-The qualitative examples and heatmaps reinforce this interpretation. The generated image pairs show that the CVAE mostly keeps the global chest anatomy stable while applying subtle counterfactual changes, which is aligned with the explanation goal. However, the heatmaps also show that some modifications are diffuse or occur outside the most relevant lung regions. This means the current counterfactuals are useful for visual inspection, but they should not yet be interpreted as clinically reliable disease localization.
+Visual attribution maps were removed from the evaluation plan. Change heatmaps are still useful for visually checking whether modifications are diffuse or concentrated, especially relative to the lung fields, but they are not treated as a standalone explanation. The decisive question is whether the counterfactual changes alter classifier behavior.
 
 Main limitations observed in the CVAE experiment include:
 
-- **Blurry reconstructions**: generated images preserve global structure but may lose fine radiological detail.
+- **Smooth reconstructions**: generated images preserve global structure but lose fine radiological detail.
 - **Class imbalance**: the model may be biased toward healthy-looking reconstructions because healthy images dominate the selected dataset.
-- **Counterfactual validity**: SSIM and FID do not confirm whether the generated image actually changes the disease evidence enough to affect a classifier.
-- **Clinical plausibility**: FID measures distributional similarity but not clinical relevance, so a classifier-based evaluation is still needed to verify whether the generated changes correspond to pneumonia-related regions.
+- **Subtle counterfactual changes**: visual differences may be too weak to change classifier predictions consistently.
+- **Oracle dependence**: flip rate and confidence change are only as reliable as the downstream classifier used to compute them.
+- **Clinical plausibility**: classifier behavior does not replace expert validation, so generated changes should not be interpreted as clinically confirmed pneumonia evidence.
 
 ### CycleGAN
 
@@ -687,6 +717,9 @@ Main limitations and future direction of the CycleGAN include:
 - **Artifact reduction**: minor artifacts observed at lung borders in some generated images warrant investigation into whether longer training, higher resolution, or spectral normalization in the discriminator could reduce them.
 
 # Conclusion
+
+> In the final project submission (D3), the conclusion is expected to outline, among other aspects, possibilities for the project’s continuation.
+> Can talk about enhance models, use diffusion or something like a cvae+cycleGAN. Can talk about explainability.
 
 This work presented a generative framework for counterfactual image generation in chest X-rays, combining a CVAE and a CycleGAN trained on the NIH Chest X-ray dataset to translate images between healthy and pneumonia domains. The CVAE produced anatomically consistent counterfactuals (mean SSIM 0.82) but with limited realism (FID 136.5), while the CycleGAN achieved sharper translations (mean FID 115.3) though with residual artifacts. A downstream binary classifier was trained, with the best model reaching a test AUC of 0.67, insufficient to reliably assess counterfactual validity.
 
@@ -714,8 +747,5 @@ Although generative models and explainable AI methods have shown promising resul
 14. Jones, C., Castro, D.C., De Sousa Ribeiro, F. et al. A causal perspective on dataset bias in machine learning for medical imaging. Nat Mach Intell 6, 138–146 (2024). https://doi.org/10.1038/s42256-024-00797-8
 15. Rajpurkar, Pranav, et al. "CheXNet: Radiologist-Level Pneumonia Detection on Chest X-Rays with Deep Learning." arXiv, 2017. https://arxiv.org/abs/1711.05225
 
----
 
-# Presentation slides
 
-[E2 presentation](https://docs.google.com/presentation/d/10yREsF1VV15-_t_ywsPW0LPbsevZmyQg6nUT1NBQpgE/edit?usp=sharing)

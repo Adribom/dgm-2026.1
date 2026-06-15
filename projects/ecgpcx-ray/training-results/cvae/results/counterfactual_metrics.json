@@ -1,0 +1,10 @@
+{
+  "num_ssim_pairs": 9021,
+  "ssim_mean": 0.9945196944387297,
+  "ssim_std": 0.003479860138518946,
+  "ssim_min": 0.8794103860855103,
+  "ssim_max": 0.9974129796028137,
+  "num_counterfactual_images": 9021,
+  "num_reference_images": 9021,
+  "fid": 2.879544734954834
+}
