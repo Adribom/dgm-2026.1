@@ -18,22 +18,59 @@ offered in the first semester of 2026, at Unicamp, under the supervision of Prof
 
 ## Abstract
 
-This project develops a deep learning framework to assess pothole severity from single 2D road images by inferring their 3D geometric structure. Instead of relying on complex stereo vision at inference, we adapt a generative 3D model to probabilistically reconstruct the occluded cavity and extract practical engineering metrics, such as effective depth and volume. For this intermediate delivery (D2), a major contribution is the curation and geometric standardization of a 3D pothole dataset, rigorously filtered to remove sensor artifacts and explicitly prepared for generative training. We also established a mathematical evaluation framework to reliably translate generated point clouds into real-world maintenance categories.
+Road potholes remain one of the most significant challenges affecting transportation infrastructure, vehicle safety, and maintenance planning worldwide. Traditional pothole inspection techniques rely heavily on manual surveys, LiDAR scanners, and specialized sensing equipment, making large-scale deployment expensive and operationally challenging. Although recent advances in computer vision have enabled automatic pothole detection and segmentation, most existing approaches remain limited to two-dimensional analysis and do not provide the geometric information required for engineering decision-making.
+
+This project proposes a hybrid Deep Learning and 3D Computer Vision framework for reconstructing pothole geometry from monocular RGB images and estimating quantitative severity metrics, including depth, surface area, and volume. The proposed pipeline combines semantic segmentation, monocular depth estimation, Point-E diffusion-based point cloud generation, and Open3D geometric processing to transform ordinary road images into engineering measurements suitable for infrastructure monitoring and maintenance prioritization.
+
+To improve robustness under diverse road conditions, the framework leverages synthetic pothole image generation using Stable Diffusion and LoRA fine-tuning. The resulting system provides a low-cost alternative to LiDAR-based inspection while enabling applications in intelligent transportation systems, smart city infrastructure monitoring, digital twins, and autonomous vehicle navigation.
+
+---
+
+## Introduction
+
+Road transportation is the backbone of economic activity and mobility in most countries, particularly in Brazil, where approximately 65% of freight transportation depends on the road network [1]. As a result, pavement condition directly influences transportation efficiency, logistics costs, road safety, and overall economic productivity.
+
+Among various forms of pavement distress, potholes represent one of the most common and hazardous road defects. Potholes develop due to repeated traffic loading, environmental degradation, water infiltration, and inadequate maintenance practices. Their presence not only reduces driving comfort but also increases vehicle operating costs, accelerates tire and suspension damage, contributes to fuel inefficiency, and poses significant safety risks to road users [2].
+The severity of the problem is particularly evident in Brazil. According to the CNT Rodovias 2024 Survey, which evaluated more than 111,000 km of paved roads, only 33.5% of the assessed road network was classified as being in good or excellent condition, while approximately 66.5% was rated as regular, poor, or very poor [1]. Furthermore, 26.6% of Brazilian roads were classified as poor or very poor, highlighting the urgent need for more efficient road condition monitoring and maintenance strategies [1].
+
+The economic consequences of deteriorated road infrastructure are substantial. The CNT estimates that approximately R$ 100 billion would be required to restore the evaluated road network to acceptable conditions [1]. In addition, poor pavement conditions resulted in the waste of nearly 1.18 billion liters of diesel annually by trucks and buses operating on Brazilian highways, generating significant economic losses and environmental impacts [1].
+Beyond economic losses, pavement deterioration also affects road safety. Road accidents associated with inadequate infrastructure conditions generate annual losses exceeding R$ 14 billion, while thousands of road defects continue to compromise transportation safety across the national road network [3]. Poor pavement conditions have been linked to increased accident risk, vehicle damage, and emergency maintenance requirements, creating additional burdens on transportation agencies and road users [2], [3].
+
+To address these challenges, transportation agencies require scalable and cost-effective technologies capable of continuously monitoring road conditions and prioritizing maintenance interventions based on objective severity measurements. Traditionally, road inspection relies on manual surveys, laser scanning systems, photogrammetric surveys, or LiDAR-based platforms. Although these approaches provide accurate geometric measurements, they are often expensive, labor-intensive, and difficult to deploy at large scales [4].
+
+Recent advances in Artificial Intelligence (AI), Deep Learning, and Computer Vision have enabled automated pothole detection and segmentation from road imagery [5]. However, most existing approaches remain limited to two-dimensional analysis, focusing primarily on classification, detection, or segmentation tasks. While these methods can identify the presence of potholes, they generally fail to provide accurate geometric characterization, which is essential for engineering decision-making [6].
+
+For pavement management systems, geometric attributes such as depth, surface area, and volume are critical indicators of pothole severity because they directly influence maintenance prioritization, repair cost estimation, risk assessment, and infrastructure management strategies [7]. Accurate quantification of these parameters can also support autonomous vehicle navigation systems by enabling more informed path planning and road hazard assessment [8].
+
+Consequently, there is a growing need for intelligent systems capable of reconstructing pothole geometry from low-cost image data and converting visual information into quantitative engineering metrics. In response to this challenge, this research proposes a hybrid Deep Learning and 3D Computer Vision framework that integrates semantic segmentation, monocular depth estimation, Point-E diffusion-based point cloud generation [9], and Open3D geometric processing [10] to reconstruct pothole geometry from RGB images and estimate key severity metrics, including depth, area, and volume.
+
+The proposed framework aims to provide a scalable, low-cost, and practical solution for intelligent infrastructure monitoring, smart city applications, autonomous vehicle systems, and data-driven road maintenance planning.
+
 
 ## Problem Description / Motivation
 Road potholes are among the most common forms of pavement deterioration affecting transportation safety, driving comfort, and infrastructure maintenance costs. Traditional pothole inspection methods are often manual, time-consuming, and inefficient for large-scale road monitoring. Although many computer vision approaches can detect potholes from 2D images, they usually provide limited information about pothole geometry such as depth, volume, and severity.
 Recent advances in deep learning, monocular depth estimation, and 3D reconstruction have made it possible to generate spatial information from ordinary road images. In particular, point cloud representation techniques enable accurate modeling of road surface structures and pothole geometry. Furthermore, modern generative and diffusion-based 3D reconstruction methods have improved the quality and consistency of point cloud generation from visual data.
 This study proposes a framework for converting 2D road images into 3D point cloud representations for pothole detection and severity assessment. The proposed approach integrates monocular depth estimation, point cloud reconstruction, and geometric analysis to estimate pothole characteristics such as depth, area, and volume. The framework aims to provide a cost-effective and scalable solution for intelligent road condition monitoring and automated maintenance planning.
 
-## Objective
-To develop a framework for converting 2D road surface images into 3D point cloud representations for automated pothole detection and severity assessment.
-The proposed approach moves beyond visual detection by generating geometric estimates that support engineering decisions: where the defect is, how large it is, how deep it is, and how urgently it should be repaired.
-- To collect and preprocess road surface image datasets suitable for pothole detection and 3D reconstruction tasks.
-- To implement monocular depth estimation methods for extracting depth information from 2D road images.
-- To reconstruct road surfaces into 3D point cloud representations using estimated depth maps and image features.
-- To estimate pothole severity using geometric characteristics such as pothole depth, width, area, and volume.
-- To investigate the use of modern 3D reconstruction and generative modeling techniques for improving point cloud quality and structural consistency.
-- To evaluate the performance of the proposed framework using reconstruction accuracy, detection accuracy, and severity classification metrics.
+## Project Objective
+**Main Objective**
+Develop a Deep Learning-based framework capable of generating accurate 3D point cloud representations from monocular 2D pothole images for the estimation of critical geometric parameters, including depth, surface area, and volume.
+
+**Specific Objectives**
+1.	Segment pothole regions from RGB road images and extract relevant geometric information through monocular depth estimation.
+2.	Generate and refine 3D point cloud representations of potholes using Point-E and Open3D.
+3.	Reconstruct pothole geometry and estimate key geometric metrics, including depth, surface area, and volume.
+4.	Evaluate the effectiveness of the proposed framework for pothole quantification and infrastructure monitoring applications.
+
+## 2. Contributions
+
+This project presents a novel framework for pothole geometric quantification from monocular RGB images by integrating Deep Learning, generative AI, and 3D computer vision techniques. The main contributions of this work are:
+
+1.	Development of an end-to-end framework for 3D pothole reconstruction from 2D images, eliminating the need for expensive sensing technologies such as LiDAR or laser scanners.
+2.	Integration of Point-E and Open3D for pothole geometry reconstruction, enabling the generation, refinement, and processing of 3D point clouds from monocular RGB images.
+3.	Estimation of key geometric characteristics of potholes, including depth, surface area, and volume, which are essential for objective severity assessment and maintenance prioritization.
+4.	Demonstration of a low-cost and scalable approach for road infrastructure monitoring, with potential applications in pavement management systems, smart cities, and autonomous vehicle road hazard assessment.
+5.	Creation and utilization of synthetic pothole data using Stable Diffusion and LoRA fine-tuning, improving dataset diversity and supporting the development of robust AI models for real-world road conditions.
 
 ## Methodology
 The proposed framework converts road images into quantitative outputs for pothole severity assessment and maintenance planning.
