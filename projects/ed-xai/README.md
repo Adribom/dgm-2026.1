@@ -20,7 +20,7 @@ This project originated in the context of the graduate course _IA376N - Generati
 
 ## Abstract
 
-This work augments the FakeVLM synthetic image detection framework with frequency-domain features. We extend its LLaVA 1.5 architecture with a parallel FFT feature branch that injects a frequency token into the visual pipeline, and augment the FakeClue training labels with frequency artifact descriptions derived from 17 pre-trained classifiers, covering 74.6% of fake images. The FFT magnitude model achieves 98.92% accuracy (from 98.76%) and 0.5706 ROUGE-L (from 0.4950) on the FakeClue benchmark. Ablation experiments reveal that LoRA fine-tuning drives the classification improvement, while the frequency branch and augmented labels primarily enhance the quality of generated artifact explanations.
+This work augments the FakeVLM synthetic image detection framework with frequency-domain features. We extend its LLaVA 1.5 architecture with a parallel FFT (Fast Fourier Transform) feature branch that injects a frequency token into the visual pipeline, and augment the FakeClue training labels with frequency artifact descriptions derived from 17 pre-trained classifiers, covering 74.6% of fake images. The best classification accuracy (99.04%) is achieved by LoRA fine-tuning alone, while the FFT-extended models yield the highest explanation quality (ROUGE-L 0.5712, up from 0.4950). Ablation experiments reveal that LoRA fine-tuning drives the classification improvement, while the frequency branch and augmented labels primarily enhance the quality of generated artifact explanations.
 
 ## Problem Description / Motivation
 
@@ -54,7 +54,7 @@ Figure 1 summarizes the project workflow across three phases. Phase 1 evaluates 
 
 ## Related Work
 
-FakeVLM [4] is a specialized large multimodal model built on LLaVA 1.5 [8], designed for both general synthetic image and deepfake detection on the FakeClue dataset, achieving accuracy comparable to expert binary classifiers while providing human-interpretable forensic descriptions. Qian et al. [3] survey the broader landscape of explainable synthetic image detection, identifying three main paradigms (forensic analysis, model-centric methods, and multimodal explanations) and highlighting the critical gap between detection accuracy and interpretability that VLM-based approaches aim to bridge.
+FakeVLM [4] is a specialized LMM built on LLaVA 1.5 [8], designed for both general synthetic image and deepfake detection on the FakeClue dataset, achieving accuracy comparable to expert binary classifiers while providing human-interpretable forensic descriptions. Qian et al. [3] survey the broader landscape of explainable synthetic image detection, identifying three main paradigms (forensic analysis, model-centric methods, and multimodal explanations) and highlighting the critical gap between detection accuracy and interpretability that VLM-based approaches aim to bridge.
 
 Several works have demonstrated that generative models leave exploitable artifacts in the frequency domain. Frank et al. [5] showed that GAN-generated images exhibit consistent spectral artifacts in DCT coefficients caused by upsampling operations, enabling detection via simple linear classifiers. Doloriel and Cheung [7] proposed frequency masking as a training strategy for universal deepfake detection, applying spectral masks at multiple frequency bands to improve generalization across unseen generators. Karageorgiou et al. [6] introduced SPAI, a spectral learning approach that operates on FFT-decomposed components at the original image resolution, reporting state-of-the-art results across 13 generative approaches at the time of publication. Bammey [2] extended frequency-domain analysis to diffusion models with Synthbuster, demonstrating that frequency peaks in the Fourier transform of high-pass residuals can reliably distinguish diffusion-generated images from authentic ones. These four methods form the basis of the frequency-domain classifier evaluation used to produce the augmented training dataset in this project.
 
@@ -68,7 +68,7 @@ During the classifier evaluation, NPR [1] was also considered as a candidate for
 |---------|-------------|---------------------|
 | FakeClue | [huggingface.co/datasets/lingcco/FakeClue](https://huggingface.co/datasets/lingcco/FakeClue) | Large-scale multimodal dataset for synthetic image detection and artifact explanation, with over 100,000 images spanning seven categories, each annotated with fine-grained artifact descriptions in conversational format. |
 
-FakeClue [4] is a large-scale multimodal dataset designed for synthetic image detection and artifact explanation. It contains 104,343 training and 5,000 test images across seven categories: deepfake, document, satellite, animal, human, scene, and object. The images are sourced from GenImage, FaceForensics++, Chameleon, and domain-specific collections for remote sensing and document forgeries. Labels follow the convention 0 = fake, 1 = real. Each entry contains an image path, a binary label, an image category, and a `conversations` array pairing a human question with a GPT-generated natural-language explanation that describes the visual artifacts observed in the image.
+FakeClue [4] is a large-scale multimodal dataset designed for synthetic image detection and artifact explanation. It contains 104,343 training and 5,000 test images across seven categories: deepfake, document, satellite, animal, human, scene, and object. The images are sourced from GenImage, FaceForensics++, Chameleon, and domain-specific collections for remote sensing and document forgeries. Labels follow the convention 0 = fake, 1 = real. Each entry contains an image path, a binary label, an image category, and a `conversations` array pairing a human question with a GPT-generated natural-language explanation that describes the visual artifacts observed in the image. Figure 2 shows one real and one fake example from each category.
 
 <p align="center">
   <img src="images/fakeclue_deepfake_real.png" width="110"/>
@@ -220,7 +220,7 @@ The table below summarizes the evaluation results for the baseline and the two e
 |-------|---------|----------|------|---------|------|
 | FakeVLM (baseline) | FakeClue (original) | 0.9876 | 0.9828 | 0.4950 | 0.9230 |
 | FakeVLM-Extended (magnitude) | FakeClue (augmented) | 0.9892 | 0.9850 | 0.5706 | 0.9342 |
-| FakeVLM-Extended (phase) | FakeClue (augmented) | 0.9898 | 0.9859 | 0.5712 | 0.9344 |
+| FakeVLM-Extended (phase) | FakeClue (augmented) | **0.9898** | **0.9859** | **0.5712** | **0.9344** |
 
 Both extended models improve classification accuracy over the baseline. The magnitude variant increases accuracy from 98.76% to 98.92% (+0.16 percentage points), while the phase variant reaches 98.98% (+0.22 percentage points). F1 scores follow the same trend, rising from 0.9828 to 0.9850 and 0.9859, respectively. Although these gains are modest in absolute terms, the baseline already operates at a high performance level where further improvement is increasingly difficult.
 
@@ -232,7 +232,7 @@ The two FFT extraction modes yield remarkably similar results across all four me
 
 #### Frequency Branch vs. LoRA Fine-Tuning
 
-To disentangle the contribution of the frequency branch from the effect of LoRA fine-tuning, we trained two ablation configurations on the original FakeClue labels (without frequency augmentation) using the same hyperparameters as Stage 2 of the extended training procedure. The first configuration applies LoRA [9] to Vicuna's linear layers only, matching the fine-tuning scope of the extended models but without the frequency feature branch. The second configuration additionally unfreezes the CLIP visual projector, testing whether adapting the visual encoder provides further benefit. Neither configuration includes the frequency feature branch or the augmented training labels.
+To disentangle the contribution of the frequency branch from the effect of LoRA fine-tuning, we trained two ablation configurations on the original FakeClue labels (without frequency augmentation) using the same hyperparameters as Stage 2 of the extended training procedure. The first configuration applies LoRA [9] to Vicuna's linear layers only, matching the fine-tuning scope of the extended models but without the frequency feature branch. The second configuration additionally unfreezes the CLIP projection MLP (the two-layer network between CLIP-ViT and Vicuna), testing whether adapting this projector provides further benefit. Neither configuration includes the frequency feature branch or the augmented training labels.
 
 Figure 6 presents the training loss curves for both ablation configurations. Both runs converge smoothly over three epochs, exhibiting loss trajectories comparable to Stage 2 of the extended models.
 
@@ -248,8 +248,8 @@ The table below presents the full comparison across all five model configuration
 |-------|---------|----------|------|---------|------|
 | FakeVLM (baseline) | FakeClue (original) | 0.9876 | 0.9828 | 0.4950 | 0.9230 |
 | FakeVLM-Extended (magnitude) | FakeClue (augmented) | 0.9892 | 0.9850 | 0.5706 | 0.9342 |
-| FakeVLM-Extended (phase) | FakeClue (augmented) | 0.9898 | 0.9859 | 0.5712 | 0.9344 |
-| FakeVLM + LoRA (Vicuna) | FakeClue (original) | 0.9904 | 0.9867 | 0.5477 | 0.9315 |
+| FakeVLM-Extended (phase) | FakeClue (augmented) | 0.9898 | 0.9859 | **0.5712** | **0.9344** |
+| FakeVLM + LoRA (Vicuna) | FakeClue (original) | **0.9904** | **0.9867** | 0.5477 | 0.9315 |
 | FakeVLM + LoRA (Vicuna + projector) | FakeClue (original) | 0.9870 | 0.9819 | 0.5399 | 0.9301 |
 
 In classification performance, LoRA fine-tuning on Vicuna alone achieves 99.04% accuracy, exceeding both the FFT magnitude (98.92%) and FFT phase (98.98%) configurations. This indicates that LoRA fine-tuning alone is sufficient to match or surpass the classification performance of the FFT-extended models. Unfreezing the CLIP visual projector does not improve results and slightly degrades accuracy to 98.70%, falling below the unmodified baseline. This suggests that adapting the pre-trained visual projector without a compensating signal (such as the frequency branch) disrupts the learned visual representations.
@@ -309,7 +309,7 @@ Several limitations constrain the generalizability of these findings. First, all
 
 ## Conclusion
 
-This work investigated whether frequency-domain features can improve synthetic image detection and explanation quality in a VLM framework. We augmented the FakeVLM detector with a parallel frequency-domain feature branch (FakeVLM-Extended) and trained it on FakeClue labels enriched with frequency artifact annotations. The results show that the extended models improve both classification accuracy (from 98.76% to 98.92% with FFT magnitude) and explanation quality (ROUGE-L from 0.4950 to 0.5706), with the more substantial gains appearing in the generation metrics. The ablation study indicates that LoRA fine-tuning is the primary driver of classification improvement, while the frequency branch combined with augmented labels provides an additional contribution to explanation quality.
+This work investigated whether frequency-domain features can improve synthetic image detection and explanation quality in a VLM framework. We augmented the FakeVLM detector with a parallel frequency-domain feature branch (FakeVLM-Extended) and trained it on FakeClue labels enriched with frequency artifact annotations. The results show that the extended models improve both classification accuracy (from 98.76% to 98.98% with FFT phase) and explanation quality (ROUGE-L from 0.4950 to 0.5712), with the more substantial gains appearing in the generation metrics. The ablation study indicates that LoRA fine-tuning is the primary driver of classification improvement, while the frequency branch combined with augmented labels provides an additional contribution to explanation quality.
 
 All five specific objectives were achieved. We evaluated 17 frequency-domain classifiers across four frameworks and used the best-performing classifier per category to augment 74.6% of fake training images with frequency artifact annotations. We designed and implemented FakeVLM-Extended, a modular architecture that injects a single frequency token alongside the 576 CLIP visual tokens into the language model. We trained and evaluated both FFT magnitude and FFT phase variants, finding that both modes yield comparable improvements. We conducted an ablation study with two LoRA-only configurations, establishing that the frequency branch contributes beyond LoRA fine-tuning alone, primarily in generation quality. Finally, we implemented a benchmarking framework for standardized cross-model evaluation with classification and generation metrics.
 
