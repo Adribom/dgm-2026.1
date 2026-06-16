@@ -1,0 +1,19 @@
+{
+  "best_val_auc": 0.6946,
+  "test_auc": 0.6659,
+  "test_accuracy": 0.989,
+  "confusion_matrix": {
+    "TN": 8920,
+    "FP": 58,
+    "FN": 41,
+    "TP": 2
+  },
+  "train_synthetic_n": 6230,
+  "train_original_n": 42661,
+  "hyperparams": {
+    "lr": 0.001,
+    "batch_size": 64,
+    "epochs_trained": 6,
+    "pos_weight": 6.57
+  }
+}

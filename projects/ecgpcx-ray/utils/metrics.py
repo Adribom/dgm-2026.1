@@ -15,6 +15,10 @@ def compute_roc_auc(y_true, y_scores):
     """Area under the ROC curve (pneumonia = positive class)."""
     return roc_auc_score(np.asarray(y_true), np.asarray(y_scores))
 
+def compute_pr_auc(y_true, y_scores):
+    """Area under the Precision-Recall curve (pneumonia = positive class)."""
+    from sklearn.metrics import average_precision_score
+    return average_precision_score(np.asarray(y_true), np.asarray(y_scores))
 
 def plot_roc_curve(y_true, y_scores, save_path=None):
     """Plot ROC curve and return the figure."""
@@ -47,9 +51,11 @@ def print_metrics(y_true, y_scores, threshold=0.5):
     acc = compute_accuracy(y_true, y_scores, threshold)
     auc = compute_roc_auc(y_true, y_scores)
     cm = compute_confusion_matrix(y_true, y_scores, threshold)
+    pr_auc = compute_pr_auc(y_true, y_scores)
 
     print(f"Accuracy : {acc:.4f}")
     print(f"AUC-ROC  : {auc:.4f}")
+    print(f"PR-AUC   : {pr_auc:.4f}")
     print(f"Confusion matrix (threshold={threshold}):")
     print(f"  TN={cm[0,0]}  FP={cm[0,1]}")
     print(f"  FN={cm[1,0]}  TP={cm[1,1]}")
