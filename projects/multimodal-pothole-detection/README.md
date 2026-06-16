@@ -137,7 +137,7 @@ The dataset contains **998 sample entries** in the manifest. After integrity che
 A portable system was meticulously designed to collect depth and RGB image data of potholes from various road surfaces. The system's architecture emphasizes mobility and efficiency, comprising key components integrated for seamless data acquisition [1]. 
 
 <p align="center">
-  <img src="reports/figures/PotRGB_Dataset_Collection.jpeg" width="900">
+  <img src="reports/figures/PotRGB_Dataset_Collection.png" width="900">
 </p>
 
 <p align="center">
@@ -158,7 +158,7 @@ PothRGDB is a paired RGB and depth dataset of potholes, captured using the Intel
 *   **Full-frame RGB Images:** High-resolution color images of road surfaces, often containing one or more potholes. These are the visual inputs for detection and analysis.
 
 <p align="center">
-  <img src="reports/figures/RGB_Pothole_Images.jpeg" width="900">
+  <img src="reports/figures/RGB_Pothole_Images.png" width="900">
 </p>
 
 <p align="center">
@@ -170,7 +170,7 @@ PothRGDB is a paired RGB and depth dataset of potholes, captured using the Intel
 *   **YOLO-format Segmentation Annotations:** The dataset includes bounding box annotations in YOLO format, but more importantly, it is **labeled for segmentation**. This means that for each pothole, a precise mask is provided, outlining the exact pixels belonging to the pothole region. This allows for accurate perimeter and depth measurements, going beyond simple bounding box detection.
 
 <p align="center">
-  <img src="reports/figures/RGB_Segmentation_Data.jpeg" width="900">
+  <img src="reports/figures/RGB_Segmentation_Data.png" width="900">
 </p>
 
 <p align="center">
