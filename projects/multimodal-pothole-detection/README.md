@@ -150,21 +150,73 @@ A portable system was meticulously designed to collect depth and RGB image data 
 
 PothRGDB is a paired RGB and depth dataset of potholes, captured using the Intel RealSense D415 active stereo depth camera. Each sample within the dataset provides [1]:
 
-*   **Full-frame RGB Images:** High-resolution color images of road surfaces, often containing one or more potholes. These are the visual inputs for detection and analysis. 
+*   **Full-frame RGB Images:** High-resolution color images of road surfaces, often containing one or more potholes. These are the visual inputs for detection and analysis.
+
+<p align="center">
+  <img src="images/RGB_Pothole_Images.png" width="900">
+</p>
+
+<p align="center">
+  <b>Fig. 2.</b>  Sample images from the PothRGBD dataset.
+</p>
+
+*   **Paired 16-bit Depth Maps:** Precisely aligned with their corresponding RGB frames, these maps provide crucial 3D geometric information, indicating the distance of each pixel from the camera.
+
+*   **YOLO-format Segmentation Annotations:** The dataset includes bounding box annotations in YOLO format, but more importantly, it is **labeled for segmentation**. This means that for each pothole, a precise mask is provided, outlining the exact pixels belonging to the pothole region. This allows for accurate perimeter and depth measurements, going beyond simple bounding box detection.
+
+<p align="center">
+  <img src="images/RGB_Segmentation_Data.png" width="900">
+</p>
+
+<p align="center">
+  <b>Fig. 3.</b>  Sample segmentation results of the proposed model on the PothRGBD test set
+</p>
 
 
-Key EDA metrics computed from the full dataset:
+## 6. Data Processing and Quality Control
 
-| Metric | Median | 95th Percentile |
-|---|---|---|
-| Volume (cm³) | 4,464 | 93,571 |
-| Max depth (mm) | 72 | 522 |
-| Mask fraction | 0.209 | 0.501 |
-| Missing depth fraction (mean) | - | 1.67% |
+The dataset underwent a rigorous processing and quality control workflow to ensure data integrity and reliability. This multi-stage process involved initial integrity checks, batch EDA, outlier detection, and a final manual review [1].
 
-The volume and depth distributions follow a heavy-tailed, approximately log-normal shape. Outlier detection was performed on log-transformed values (IQR on log-volume and log-depth) to avoid incorrectly discarding genuinely large potholes as artifacts. A total of 29 samples were flagged as physically implausible (depths exceeding 5,000 mm or volumes exceeding 1,000,000 cm³), driven by sensor failures. The two most extreme cases, one showing depths consistent with water-reflection failure (reported depth over 64 m) and another with harsh-shadow failure (reported depth over 63 m), illustrate the failure modes described above.
+```mermaid
+--- 
+title: PothRGDB Data Processing Workflow
+---
+graph LR
+    A[RGB-D Acquisition] --> B{Integrity Check}
+    B --> C[Batch EDA Pipeline]
+    C --> D{Outlier Detection}
+    D --> E[Manual Review]
+    E --> F[Final Training Set]
+    
+    subgraph Data Cleaning
+    B
+    C
+    D
+    E
+    end
+```
 
-After filtering and manual review of prepared 3D point clouds, the final training set contains **975 samples**.
+**Workflow Details:**
+
+*   **Integrity Check:** Initial validation of the 1000 collected samples, resulting in 996 valid entries.
+*   **Batch EDA Pipeline:** Processed 992 valid samples, with 4 failures attributed to empty masks or unstable road-surface estimation.
+*   **Outlier Detection:** Performed on log-transformed values (IQR on log-volume and log-depth) to identify physically implausible samples. This step prevented the incorrect discarding of genuinely large potholes [1]. A total of 29 samples were flagged due to sensor failures, such as depths exceeding 5,000 mm or volumes over 1,000,000 cm³ [1].
+*   **Manual Review:** A final review of prepared 3D point clouds ensured the quality and accuracy of the dataset.
+
+## 7. Key EDA Metrics
+
+Exploratory Data Analysis revealed critical insights into the characteristics of the potholes within the dataset. The volume and depth distributions exhibited a heavy-tailed, approximately log-normal shape [1].
+
+| Metric                    | Median  | 95th Percentile |
+| :------------------------ | :------ | :-------------- |
+| Volume (cm³)              | 4,464   | 93,571          |
+| Max depth (mm)            | 72      | 522             |
+| Mask fraction             | 0.209   | 0.501           |
+| Missing depth fraction    | -       | 1.67%           |
+
+## 8. Final Dataset Size
+
+After comprehensive filtering and manual review, the **final training set of PothRGDB contains 975 samples**. This refined dataset provides a robust foundation for training and evaluating models for pothole detection and 3D measurement.
 
 #### Calibration Limitations
 
