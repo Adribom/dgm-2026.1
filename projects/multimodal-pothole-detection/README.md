@@ -125,12 +125,32 @@ PothRGDB is a paired RGB and depth dataset of potholes, captured with an Intel R
 - A paired 16-bit depth map aligned with the RGB frame.
 - A YOLO-format bounding box annotation identifying the pothole region.
 
-The dataset contains 998 sample entries in the manifest. After integrity checking, 996 are valid. The batch EDA pipeline processed 992 of those successfully; 4 failed due to empty masks or unstable road-surface estimation.
+The dataset contains **998 sample entries** in the manifest. After integrity checking, 996 are valid. The batch EDA pipeline processed 992 of those successfully; 4 failed due to empty masks or unstable road-surface estimation.
 
 **Dataset Collection Setup**
 
-A portable system was meticulously designed to collect depth and RGB image data of potholes from various road surfaces. The system's architecture emphasizes mobility and efficiency, comprising key components integrated for seamless data acquisition [1].
+A portable system was meticulously designed to collect depth and RGB image data of potholes from various road surfaces. The system's architecture emphasizes mobility and efficiency, comprising key components integrated for seamless data acquisition [1]. 
 
+<p align="center">
+  <img src="images/PotRGB_Dataset_Collection.png" width="900">
+</p>
+
+<p align="center">
+  <b>Fig. 1.</b> Schematic diagram of the pothole data collection system.
+</p>
+
+**Key Components:**
+
+*   **LattePanda 3 Delta Computer:** Chosen for its compact structure, powerful processor, and extensive connectivity, providing a suitable platform for portable systems [1].
+*   **Intel RealSense D415 Depth Camera:** Selected for its capability to capture high-resolution RGB images and precise depth maps, essential for accurate pothole dimension measurement [1].
+*   **Touchscreen:** Offers instant user feedback, simplifying data viewing and management during collection [1].
+*   **Powerbank:** Ensures uninterrupted power supply, enabling prolonged mobile data collection sessions [1].
+
+## 5. Dataset Characteristics: RGB, Depth, and Segmentation Masks
+
+PothRGDB is a paired RGB and depth dataset of potholes, captured using the Intel RealSense D415 active stereo depth camera. Each sample within the dataset provides [1]:
+
+*   **Full-frame RGB Images:** High-resolution color images of road surfaces, often containing one or more potholes. These are the visual inputs for detection and analysis. 
 
 
 Key EDA metrics computed from the full dataset:
