@@ -227,11 +227,63 @@ PothRGDB does not provide per-device intrinsics. Because the dataset was collect
 In practice this means: relative comparisons between samples are meaningful, but the absolute numbers should be interpreted as estimates, not ground-truth measurements. This limitation is explicitly acknowledged throughout the evaluation, and all severity thresholds were chosen to be well-separated enough that small calibration errors do not move samples across bin boundaries.
 
 ### 3.2 Rui Fan Stereo Pothole Dataset: Held-Out Evaluation Benchmark
+**1. Authorship and Affiliations**
+This repository contains one of the first multi-modal pothole datasets specifically designed for both 3D pothole reconstruction and pothole detection using stereo vision. It was introduced in the paper:
+• Rui Fan (A tenured professor at Tongji University, China, known for his work in computer vision, deep learning, and autonomous systems).
+• Umar Ozgunalp (Department of Electrical and Electronics Engineering, Near East University (Cyprus))
+• Yuan Wang
+• Ming Liu (Professor at Southwest University in Chongqing, China)
+• Ioannis Pitas (Professor at Aristotle University of Thessaloniki and Centre for Research and Technology Hellas)
+**2. The Dataset Contain**
+The repository provides two datasets:
+**A. Road Pothole 3D Geometry Reconstruction Dataset**
+This dataset is intended for evaluating how accurately stereo vision reconstructs the actual shape of potholes. It contains:
+• Stereo road image pairs (left and right images)
+• Ground-truth pothole 3D models
+• Point cloud data
+• Laser-scanned pothole models
+• Materials for constructing and calibrating the laser scanner
+**B. Road Pothole Detection Dataset**
+This allows researchers to compare classical computer vision methods with newer machine learning approaches. The dataset contains
+• Left RGB road images
+• Dense disparity maps
+• Transformed disparity maps
+• Pixel-level pothole annotations
+• Detection benchmark results
+**3. Where the Data was Obtained**
+This dataset was created through a combination of methods:
+**Step 1: Real Road Data Collection**
+The researchers captured stereo road images using a stereo camera system mounted on a vehicle.
+The stereo setup produced:
+• Left camera images
+• Right camera images.
+These images served as the primary source for disparity estimation.
+**Step 2: Physical Ground Truth Acquisition**
+To obtain the true pothole geometry, the authors physically measured potholes.
+By first poured enough gypsum plaster into a pothole and dug the gypsum mold out when it became dry and hardened. Thus, actual potholes on roads were transformed into solid replicas.
+**4. Calculation for Groundtruth**
+The ground-truth 3D geometry of potholes was established through a multi-step procedure involving physical mold creation, laser scanning, stereo reconstruction, and quantitative evaluation.
+**Stage 1: Creation of Physical Pothole Models**
+The authors first generated physical replicas of real potholes: To acquire the pothole point cloud ground truth, we first poured enough gypsum plaster into a pothole and dug the gypsum mold out, when it became dry and hardened.
+This process produced three gypsum molds (model1, model2, model3) corresponding to actual potholes, which are distributed in the repository. These models are not synthetic; they are physical casts of real potholes.
 
-The Rui Fan dataset provides high-precision 3D ground truth for pothole evaluation. Three synthetic gypsum molds (model1, model2, model3) were scanned with a laser profilometer, achieving RMSE of 2.23 mm. Each model folder contains:
+**Stage 2: Laser Scanning of the Gypsum Models**
+The hardened molds were digitized using a BQ Ciclop 3D laser scanner equipped with a Logitech C270 HD camera and two one-line laser transmitters.
+The resulting laser-scanned point clouds served as the ground-truth 3D representations of the potholes.
+**Stage 3: Stereo-Based Reconstruction**
+Using synchronized stereo image pairs captured from a stereo camera, dense disparity maps were estimated using Semi-Global Matching (SGM). The disparities were converted into depth measurements and subsequently into 3D point clouds representing the same potholes.
+**Stage 4: ICP Registration**
+The authors aligned the stereo-derived point clouds with the laser-scanned ground-truth point clouds using the Iterative Closest Point (ICP) algorithm.
+• Point Cloud A = laser-scanned gypsum mold (ground truth)
+• Point Cloud B = stereo-reconstructed pothole
+The ICP algorithm minimized the distances between corresponding points after registration.
+**Stage 5: Accuracy Calculation**
+The reconstruction accuracy was quantified using the Root Mean Squared Closest Distance Error (RMSE):
+<p align="center">
+  <img src="images/RGB_Segmentation_Data.png" width="900">
+</p>
 
-- Left-camera PNG images from multiple viewpoints.
-- Ground-truth PLY files, one per section of the cast.
+<p align="center">
 
 The benchmark subset used for evaluation (`rethinking_road_reconstruction_pothole_detection-main/dataset/`) contains 54 PNG images and 13 PLY files across 3 model folders, yielding 27 prepared evaluation samples after the benchmark preparation pipeline is applied.
 
