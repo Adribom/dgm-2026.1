@@ -1,0 +1,21 @@
+{
+  "model": "CheXNet fine-tuned + CVAE synthetic augmentation",
+  "best_val_auc": 0.6205,
+  "test_auc": 0.6731,
+  "test_accuracy": 0.704,
+  "best_threshold": 0.2561,
+  "confusion_matrix": {
+    "TN": 1671,
+    "FP": 7307,
+    "FN": 1,
+    "TP": 42
+  },
+  "train_synthetic_n": 42436,
+  "train_original_n": 42661,
+  "hyperparams": {
+    "lr": 0.001,
+    "batch_size": 64,
+    "epochs_trained": 9,
+    "pos_weight": 0.99
+  }
+}
