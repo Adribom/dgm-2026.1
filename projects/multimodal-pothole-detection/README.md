@@ -14,7 +14,7 @@ offered in the first semester of 2026, at Unicamp, under the supervision of Prof
 > | Hasnat Hameed | 270284 | Civil Engineering|
 > | Iniobong Nicholas Udeme | 298961 | Applied Physics|
 
-**[Presentation Link (D3) - link here]**
+[Presentation Link (D3)](https://docs.google.com/presentation/d/1cc78ufUjmKnw2n2YCgBF-n_ziutPqUfz/edit?usp=sharing&ouid=103986782979648938085&rtpof=true&sd=true) 
 
 ## 1. Abstract
 
@@ -111,9 +111,9 @@ All training runs were performed on a single machine with the following hardware
 |**PothRGDB** | [Kaggle](https://www.kaggle.com/datasets/mahyeks/pothrgbd-rgb-and-depth-images-of-potholes) | Provides 1,000 paired RGB and depth (2.5D) images with YOLO annotations captured using an Intel RealSense camera as the primary dataset.|
 |**Rui Fan's Stereo Pothole** | [Rui Fan GitHub](https://github.com/ruirangerfan/rethinking_road_reconstruction_pothole_detection) | Contains 79 pothole instances with high-precision 3D ground truth obtained from laser-scanned gypsum molds|
 
-#### 6.3.1. PothRGDB: Primary Training Dataset
+### 6.3.1. PothRGDB: Primary Training Dataset
 
-**6.3.1.1 Authorship and Affiliations**
+**Authorship and Affiliations**
 
 The PothRGDB dataset and its accompanying research were developed by:
 
@@ -129,7 +129,7 @@ PothRGDB is a paired RGB and depth dataset of potholes, captured with an Intel R
 
 The dataset contains **998 sample entries** in the manifest. After integrity checking, 996 are valid. The batch EDA pipeline processed 992 of those successfully; 4 failed due to empty masks or unstable road-surface estimation.
 
-#### 6.3.1.2 Dataset Collection Setup
+**Dataset Collection Setup**
 
 A portable system was meticulously designed to collect depth and RGB image data of potholes from various road surfaces. The system's architecture emphasizes mobility and efficiency, comprising key components integrated for seamless data acquisition [1]. 
 
@@ -141,14 +141,14 @@ A portable system was meticulously designed to collect depth and RGB image data 
   <b>Fig. 1.</b> Schematic diagram of the pothole data collection system.
 </p>
 
-#### 6.3.1.3 Key Components:
+**Key Components:**
 
 *   **LattePanda 3 Delta Computer:** Chosen for its compact structure, powerful processor, and extensive connectivity, providing a suitable platform for portable systems [1].
 *   **Intel RealSense D415 Depth Camera:** Selected for its capability to capture high-resolution RGB images and precise depth maps, essential for accurate pothole dimension measurement [1].
 *   **Touchscreen:** Offers instant user feedback, simplifying data viewing and management during collection [1].
 *   **Powerbank:** Ensures uninterrupted power supply, enabling prolonged mobile data collection sessions [1].
 
-#### 6.3.1.4 Dataset Characteristics: RGB, Depth, and Segmentation Masks
+**Dataset Characteristics: RGB, Depth, and Segmentation Masks**
 
 PothRGDB is a paired RGB and depth dataset of potholes, captured using the Intel RealSense D415 active stereo depth camera. Each sample within the dataset provides [1]:
 
@@ -175,12 +175,12 @@ PothRGDB is a paired RGB and depth dataset of potholes, captured using the Intel
 </p>
 
 
-#### 6.3.1.5 Data Processing and Quality Control
+**Data Processing and Quality Control**
 
 The dataset underwent a rigorous processing and quality control workflow to ensure data integrity and reliability. This multi-stage process involved initial integrity checks, batch EDA, outlier detection, and a final manual review [1].
 
 ```mermaid
---- 
+---
 title: PothRGDB Data Processing Workflow
 ---
 graph LR
@@ -205,7 +205,7 @@ graph LR
 *   **Outlier Detection:** Performed on log-transformed values (IQR on log-volume and log-depth) to identify physically implausible samples. This step prevented the incorrect discarding of genuinely large potholes [1]. A total of 29 samples were flagged due to sensor failures, such as depths exceeding 5,000 mm or volumes over 1,000,000 cm³ [1].
 *   **Manual Review:** A final review of prepared 3D point clouds ensured the quality and accuracy of the dataset.
 
-#### 6.3.1.6 Key EDA Metrics
+**Key EDA Metrics**
 
 Exploratory Data Analysis revealed critical insights into the characteristics of the potholes within the dataset. The volume and depth distributions exhibited a heavy-tailed, approximately log-normal shape [1].
 
@@ -216,11 +216,9 @@ Exploratory Data Analysis revealed critical insights into the characteristics of
 | Mask fraction             | 0.209   | 0.501           |
 | Missing depth fraction    | -       | 1.67%           |
 
-#### 6.3.1.7 Final Dataset Size
-
 After comprehensive filtering and manual review, the **final training set of PothRGDB contains 975 samples**. This refined dataset provides a robust foundation for training and evaluating models for pothole detection and 3D measurement.
 
-#### 6.3.1.8 Calibration Limitations
+**Calibration Limitations**
 
 Converting a depth map into a 3D point cloud requires **camera intrinsic parameters**: the focal lengths (how much the lens magnifies the scene) and the principal point (the pixel coordinates of the optical center). Together, these four numbers define the mapping from a pixel location and its measured depth to a real-world 3D coordinate; without them, the reconstructed geometry can be systematically scaled or skewed.
 
@@ -230,7 +228,7 @@ In practice this means: relative comparisons between samples are meaningful, but
 
 ### 6.3.2. Rui Fan Stereo Pothole Dataset: Held-Out Evaluation Benchmark
 
-#### 6.3.2.1. Authorship and Affiliations
+**Authorship and Affiliations**
 This repository contains one of the first multi-modal pothole datasets specifically designed for both 3D pothole reconstruction and pothole detection using stereo vision. It was introduced in the paper:
 •  Rui Fan (A tenured professor at Tongji University, China, known for his work in computer vision, deep learning, and autonomous systems).
 • Umar Ozgunalp (Department of Electrical and Electronics Engineering, Near East University (Cyprus))
@@ -239,59 +237,63 @@ This repository contains one of the first multi-modal pothole datasets specifica
 • Ioannis Pitas (Professor at Aristotle University of Thessaloniki and Centre for Research and Technology Hellas)
 
 
-#### 6.3.2.1. The Dataset Contain
+**Dataset Contents**
+
 The repository provides two datasets:
 
-
-#### A. Road Pothole 3D Geometry Reconstruction Dataset
+**A. Road Pothole 3D Geometry Reconstruction Dataset**
 This dataset is intended for evaluating how accurately stereo vision reconstructs the actual shape of potholes. It contains:
 • Stereo road image pairs (left and right images)
 • Ground-truth pothole 3D models
 • Point cloud data
 • Laser-scanned pothole models
 • Materials for constructing and calibrating the laser scanner
-#### B. Road Pothole Detection Dataset
+**B. Road Pothole Detection Dataset**
 This allows researchers to compare classical computer vision methods with newer machine learning approaches. The dataset contains
 • Left RGB road images
 • Dense disparity maps
 • Transformed disparity maps
 • Pixel-level pothole annotations
 • Detection benchmark results
-#### 6.3.2.1. Where the Data was Obtained
+**Where the Data was Obtained**
+
 This dataset was created through a combination of methods:
-#### Step 1: Real Road Data Collection
+
+**Step 1: Real Road Data Collection**
 The researchers captured stereo road images using a stereo camera system mounted on a vehicle. The stereo setup produced:
 
 • Left camera images
 • Right camera images.
 
 These images served as the primary source for disparity estimation.
-#### Step 2: Physical Ground Truth Acquisition
+**Step 2: Physical Ground Truth Acquisition**
 To obtain the true pothole geometry, the authors physically measured potholes.
 By first poured enough gypsum plaster into a pothole and dug the gypsum mold out when it became dry and hardened. Thus, actual potholes on roads were transformed into solid replicas.
-### 6.3.2.1. Calculation for Groundtruth
+**Ground Truth Calculation**
+
 The ground-truth 3D geometry of potholes was established through a multi-step procedure involving physical mold creation, laser scanning, stereo reconstruction, and quantitative evaluation.
-#### Stage 1: Creation of Physical Pothole Models
+
+**Stage 1: Creation of Physical Pothole Models**
 The authors first generated physical replicas of real potholes: To acquire the pothole point cloud ground truth, we first poured enough gypsum plaster into a pothole and dug the gypsum mold out, when it became dry and hardened.
 This process produced three gypsum molds (model1, model2, model3) corresponding to actual potholes, which are distributed in the repository. These models are not synthetic; they are physical casts of real potholes.
 
-#### Stage 2: Laser Scanning of the Gypsum Models
+**Stage 2: Laser Scanning of the Gypsum Models**
 The hardened molds were digitized using a BQ Ciclop 3D laser scanner equipped with a Logitech C270 HD camera and two one-line laser transmitters.
 The resulting laser-scanned point clouds served as the ground-truth 3D representations of the potholes.
-#### Stage 3: Stereo-Based Reconstruction
+**Stage 3: Stereo-Based Reconstruction**
 Using synchronized stereo image pairs captured from a stereo camera, dense disparity maps were estimated using Semi-Global Matching (SGM). The disparities were converted into depth measurements and subsequently into 3D point clouds representing the same potholes.
-#### Stage 4: ICP Registration
+**Stage 4: ICP Registration**
 The authors aligned the stereo-derived point clouds with the laser-scanned ground-truth point clouds using the Iterative Closest Point (ICP) algorithm.
 • Point Cloud A = laser-scanned gypsum mold (ground truth)
 • Point Cloud B = stereo-reconstructed pothole
 The ICP algorithm minimized the distances between corresponding points after registration.
-#### Stage 5: Accuracy Calculation
+**Stage 5: Accuracy Calculation**
 The reconstruction accuracy was quantified using the Root Mean Squared Closest Distance Error (RMSE):
 <p align="center">
   <img width="432" height="147" alt="RMSE" src="https://github.com/user-attachments/assets/f95c715e-6554-4d97-9e21-b6ec2cde6ab3" />
 </p>
 
-#### The block diagram of our proposed road pothole detection system.
+**Block diagram of the proposed road pothole detection system:**
 <p align="center">
 <img width="1497" height="407" alt="ClassProject" src="https://github.com/user-attachments/assets/85f06239-9d1f-49d9-9e5f-a3054318b873" />
 </p>
@@ -303,9 +305,9 @@ This dataset was kept strictly separate from training data throughout the entire
 The animations below show the three ground-truth point clouds after preparation. Unlike the PothRGDB clouds, these have no road plane: the gypsum molds were scanned in isolation, so each cloud represents only the cavity itself.
 
 <p align="center">
-  <img src="reports/figures/rui_fan_sample_model1.gif" width="30%">
-  <img src="reports/figures/rui_fan_sample_model2.gif" width="30%">
-  <img src="reports/figures/rui_fan_sample_model3.gif" width="30%">
+  <img src="reports/figures/rui_fan_sample_model1.gif" width="15%">
+  <img src="reports/figures/rui_fan_sample_model2.gif" width="15%">
+  <img src="reports/figures/rui_fan_sample_model3.gif" width="15%">
 </p>
 <p align="center">
   <b>Fig.</b> Prepared ground-truth clouds for model1, model2, and model3. Each was assembled from multiple PLY scan sections to cover the full pothole extent.
@@ -313,13 +315,13 @@ The animations below show the three ground-truth point clouds after preparation.
 
 ### 6.4. Exploratory Data Analysis
 
-#### 6.4.1 Dataset Inventory and Integrity
+### 6.4.1 Dataset Inventory and Integrity
 
 The EDA pipeline began with a structural inventory: loading the manifest, counting paired files, checking mask completeness, and identifying duplicate sample IDs.
 
 Two samples were flagged as duplicates, each having two sets of images, depths, and labels. These were noted for review but retained in the general statistics, since the root cause was a dataset collection artifact.
 
-#### 6.4.2 Geometric Metric Extraction
+### 6.4.2 Geometric Metric Extraction
 
 For each valid sample the pipeline:
 
@@ -331,20 +333,20 @@ For each valid sample the pipeline:
 
 The road-surface estimation uses a flat-plane approximation (median of surrounding ring), not a full RANSAC plane fit. This is a deliberate simplification acceptable for the EDA phase; the actual training preprocessing uses RANSAC-based geometric leveling (see Section 5).
 
-#### 6.4.3 Outlier Handling
+### 6.4.3 Outlier Handling
 
 The initial version of the EDA applied IQR-based outlier detection on raw linear values. This was updated to apply IQR on log-transformed values (`np.log1p`) after observing that the distribution is log-normal. The updated approach correctly preserves genuinely large potholes while flagging the implausible sensor artifacts.
 
 The 29 flagged samples are excluded from training via the quality gate in the preprocessing pipeline.
 
-#### 6.4.4 Missing Depth Analysis
+### 6.4.4 Missing Depth Analysis
 
 The missing depth fraction, the proportion of masked pothole pixels with zero depth reading, was added as an explicit EDA metric: mean 1.67% across the dataset. While small on average, individual samples show much higher rates. Visual inspection of the top outliers confirmed that the failure modes are systematic (water, shadows, occlusion) rather than random sensor noise. This finding is used as a direct justification for the generative approach: the model must infer geometry where the sensor is structurally blind.
 
 The images below illustrate two of the most common failure modes observed in PothRGDB:
 
 <p align="center">
-  <img src="reports/figures/pothrgb_20250227_175817_water.gif" width="45%">
+  <img src="reports/figures/pothrgb_20250227_175817_water.gif" width="25%">
   &nbsp;
 </p>
 <p align="center">
@@ -355,16 +357,16 @@ The images below illustrate two of the most common failure modes observed in Pot
 
 ### 6.5. Data Preparation and Preprocessing
 
-#### 6.5.1 Overview
+### 6.5.1 Overview
 
 A **point cloud** is a set of 3D points, where each point has a position in space (X, Y, Z coordinates) and, in our case, also carries the color of the corresponding pixel from the original RGB image (R, G, B values). The result is a 6-dimensional representation per point that encodes both geometry and appearance. This format is what Point-E natively produces and expects as training targets.
 
 An important design choice is the number of points. A high-fidelity mesh with tens of thousands of points would look more accurate, but it would be computationally expensive to generate and train on, and the extra detail is not necessary for severity classification. The images below contrast a dense mesh reconstruction (left) with the sparse 1024-point representation used in this project (right).
 
 <p align="center">
-  <img src="reports/figures/mesh_full.png" width="45%">
+  <img src="reports/figures/mesh_full.png" width="25%">
   &nbsp;
-  <img src="reports/figures/mesh_only_1024_points.png" width="45%">
+  <img src="reports/figures/mesh_only_1024_points.png" width="25%">
 </p>
 <p align="center">
   <b>Left:</b> Dense mesh with many points - high fidelity but expensive and unnecessary. <b>Right:</b> Sparse 1024-point cloud - sufficient to capture the cavity shape for severity estimation.
@@ -373,7 +375,7 @@ An important design choice is the number of points. A high-fidelity mesh with te
 The animation below shows an example of a PothRGDB training cloud after preprocessing. The road plane is visible surrounding the pothole cavity, and each point carries the RGB color from the original image.
 
 <p align="center">
-  <img src="reports/figures/pothrgb_20250227_170538_better.gif" width="55%">
+  <img src="reports/figures/pothrgb_20250227_170538_better.gif" width="25%">
 </p>
 <p align="center">
   <b>Fig.</b> Example training cloud converted from a PothRGDB depth map. Road surface surrounds the pothole cavity.
@@ -386,7 +388,7 @@ The preprocessing pipeline converts the raw PothRGDB samples (RGB images, depth 
 
 The output of the pipeline is a prepared dataset directory containing the square RGB crops, the normalized point cloud tensors, depth heatmaps for visual inspection, and a metadata file with the per-sample scale factor needed to recover physical dimensions.
 
-#### 6.5.2 Square Crop and Padding
+### 6.5.2 Square Crop and Padding
 
 Point-E's CLIP image encoder requires a square input. Stretching or cropping the pothole region would distort the geometric proportions the model needs to learn.
 
@@ -402,22 +404,22 @@ To address this, the pipeline uses a **hybrid padding strategy** that selects th
 This strategy was chosen because both extremes are problematic: purely zero-padded crops introduce unnatural borders, while always inpainting adds unnecessary computation for crops that are mostly inside the image.
 
 <p align="center">
-  <img src="reports/figures/pothole_before_crop.png" width="45%">
+  <img src="reports/figures/pothole_before_crop.png" width="15%">
   &nbsp;
-  <img src="reports/figures/pothole_after_crop.png" width="45%">
+  <img src="reports/figures/pothole_after_crop.png" width="15%">
 </p>
 <p align="center">
   <b>Left:</b> Original full-frame image. <b>Right:</b> Square crop centered on the pothole, ready for the encoder.
 </p>
 
 <p align="center">
-  <img src="reports/figures/data_augmentation_types.png" width="90%">
+  <img src="reports/figures/data_augmentation_types.png" width="50%">
 </p>
 <p align="center">
   <b>Fig.</b> Comparison of padding strategies: original, black padding, reflect-101, replicate, and inpaint Telea. The hybrid system selects between reflect and inpaint depending on how much of the border falls outside the image.
 </p>
 
-#### 6.5.3 Geometric Leveling with RANSAC
+### 6.5.3 Geometric Leveling with RANSAC
 
 Depth maps encode the raw distance from the camera to each pixel, not the depth of the pothole relative to the road surface. A camera mounted at an angle introduces a systematic tilt: even a flat road has a depth gradient across the frame.
 
@@ -431,15 +433,15 @@ To isolate the pure cavity geometry, the pipeline fits a plane to the road surfa
 RANSAC is used specifically because a simple mean or median of the surrounding ring is sensitive to non-planar road features and camera calibration errors.
 
 <p align="center">
-  <img src="reports/figures/RANSAC_before.png" width="45%">
+  <img src="reports/figures/RANSAC_before.png" width="25%">
   &nbsp;
-  <img src="reports/figures/RANSAC_after.png" width="45%">
+  <img src="reports/figures/RANSAC_after.png" width="25%">
 </p>
 <p align="center">
   <b>Left:</b> Raw point cloud before leveling. The camera tilt makes the road appear as a ramp, distorting the apparent depth of the cavity. <b>Right:</b> After RANSAC plane subtraction, the road surface is flat at Z=0 and the cavity depth is isolated cleanly.
 </p>
 
-#### 6.5.4 Point Cloud Normalization
+### 6.5.4 Point Cloud Normalization
 
 Point-E expects point clouds bounded in a [-1, 1] cube. The leveled pothole cloud is normalized globally:
 
@@ -449,7 +451,7 @@ Point-E expects point clouds bounded in a [-1, 1] cube. The leveled pothole clou
 
 The scale factor is critical for severity assessment: after inference, multiplying the generated point cloud by the scale factor and dividing by 1000 converts it to meters, from which effective depth in cm can be computed.
 
-#### 6.5.5 Fixed Point Count (FPS and Random Upsampling)
+### 6.5.5 Fixed Point Count (FPS and Random Upsampling)
 
 Point-E requires exactly 1024 points. The raw leveled point cloud may contain anywhere from a few hundred to tens of thousands of points depending on the mask size and depth coverage.
 
@@ -458,20 +460,20 @@ Point-E requires exactly 1024 points. The raw leveled point cloud may contain an
 
 Random upsampling is a known limitation: small potholes may have repeated points in the training target, which slightly inflates apparent point density for those samples.
 
-#### 6.5.6 Manual Quality Review
+### 6.5.6 Manual Quality Review
 
 After generating the full prepared dataset, a manual quality review removed samples with clearly degenerate point clouds (flat or collapsed structures, obviously wrong scale, or sensor failures that survived the automated outlier filter). The final training set after this review contains **975 samples**.
 
 To assist this review, a depth heatmap visualization was built for each sample, making it easier to spot clouds with implausible geometry at a glance.
 
 <p align="center">
-  <img src="reports/figures/heatmap_for_data_cleaning.png" width="70%">
+  <img src="reports/figures/heatmap_for_data_cleaning.png" width="10%">
 </p>
 <p align="center">
   <b>Fig.</b> Depth heatmap used during manual review. Samples with collapsed, inverted, or extreme distributions were removed before training.
 </p>
 
-#### 6.5.7 Rui Fan Benchmark Preparation
+### 6.5.7 Rui Fan Benchmark Preparation
 
 The Rui Fan evaluation set is prepared by a dedicated benchmark preparation step, completely separate from the training pipeline:
 
@@ -486,7 +488,7 @@ The Rui Fan prepared set is kept completely separate from the training data and 
 
 ### 6.6. Model: Point-E Fine-Tuning
 
-#### 6.6.1 Architecture Overview
+### 6.6.1 Architecture Overview
 
 One of the major challenges in pothole severity assessment is obtaining three-dimensional geometric information from a single RGB image. Traditional 3D reconstruction methods typically require multiple camera views, stereo imaging systems, LiDAR sensors, or structured light scanners, which increase both cost and deployment complexity.
 
@@ -494,7 +496,7 @@ To overcome these limitations, this research employs **Point-E**, a diffusion-ba
 
 ![Point-E Model Banner](https://github.com/openai/point-e/blob/main/point_e/examples/paper_banner.gif?raw=true)
 
-#### 6.6.2 Point-E Architecture and Pipeline
+### 6.6.2 Point-E Architecture and Pipeline
 
 The Point-E framework utilizes a two-stage generation process that combines image feature extraction with diffusion-based generative modeling to predict a three-dimensional representation [1].
 
@@ -611,7 +613,7 @@ The following augmentations are applied to the image only, leaving the point clo
 | Cutout | Random rectangular masking to improve robustness to partial occlusion |
 
 <p align="center">
-  <img src="reports/figures/example_different_types_augmentation.png" width="90%">
+  <img src="reports/figures/example_different_types_augmentation.png" width="50%">
 </p>
 <p align="center">
   <b>Fig.</b> Side-by-side comparison of all augmentation types applied to the same pothole sample. Each transform is shown independently so its visual effect is unambiguous.
@@ -676,9 +678,9 @@ The following animations show output clouds for the same input image at each tra
 Before any fine-tuning, the model generates completely random shapes. At guidance 0 (image signal fully disabled) the output is arbitrary; at guidance 3 the model occasionally produces something that looks vaguely like a pothole, but this is inconsistent across samples.
 
 <p align="center">
-  <img src="reports/figures/inference_train_epoch_0_pure_20250227_163300_guidance_0_better.gif" width="30%">
-  <img src="reports/figures/inference_train_epoch_0_pure_20250227_163300_better.gif" width="30%">
-  <img src="reports/figures/inference_train_epoch_0_pure_20250227_163300_2_better.gif" width="30%">
+  <img src="reports/figures/inference_train_epoch_0_pure_20250227_163300_guidance_0_better.gif" width="15%">
+  <img src="reports/figures/inference_train_epoch_0_pure_20250227_163300_better.gif" width="15%">
+  <img src="reports/figures/inference_train_epoch_0_pure_20250227_163300_2_better.gif" width="15%">
 </p>
 <p align="center">
   <b>Left:</b> Guidance 0 - fully random. <b>Center:</b> Guidance 3 - occasional lucky result. <b>Right:</b> Guidance 3 second example - still random, confirming the center was not representative.
@@ -689,8 +691,8 @@ Before any fine-tuning, the model generates completely random shapes. At guidanc
 The first fine-tuning phase already produces a visible change: the model consistently generates a flat plane rather than random shapes. It is not yet modeling a depression, but it has stopped producing arbitrary geometry.
 
 <p align="center">
-  <img src="reports/figures/inference_train_epoch_89_20250227_163300_better.gif" width="45%">
-  <img src="reports/figures/inference_train_epoch_89_20250305_081309_shadow_better.gif" width="45%">
+  <img src="reports/figures/inference_train_epoch_89_20250227_163300_better.gif" width="15%">
+  <img src="reports/figures/inference_train_epoch_89_20250305_081309_shadow_better.gif" width="15%">
 </p>
 <p align="center">
   <b>Fig.</b> Epoch 89. The model produces a consistent flat surface but has not yet learned to model a depression. The right example shows a bowl shape, suggesting the model is transitioning but still generating outward forms.
@@ -701,7 +703,7 @@ The first fine-tuning phase already produces a visible change: the model consist
 A clearer improvement: the plane-cavity separation appears, with the road surface and the depression becoming distinct regions. Color quality is still poor.
 
 <p align="center">
-  <img src="reports/figures/inference_train_epoch_370_20250227_163300_better.gif" width="55%">
+  <img src="reports/figures/inference_train_epoch_370_20250227_163300_better.gif" width="15%">
 </p>
 <p align="center">
   <b>Fig.</b> Epoch 370. The road plane and the pothole cavity are now visually separable.
@@ -712,8 +714,8 @@ A clearer improvement: the plane-cavity separation appears, with the road surfac
 The geometry and color continue to improve from epoch 370 to 580, but the jump from 580 to 590 is imperceptible. This suggests the model reached a plateau, likely limited by the size and diversity of the training dataset.
 
 <p align="center">
-  <img src="reports/figures/inference_train_epoch_580_20250227_163300_better.gif" width="45%">
-  <img src="reports/figures/inference_train_epoch_590_20250227_163300_better.gif" width="45%">
+  <img src="reports/figures/inference_train_epoch_580_20250227_163300_better.gif" width="15%">
+  <img src="reports/figures/inference_train_epoch_590_20250227_163300_better.gif" width="15%">
 </p>
 <p align="center">
   <b>Left:</b> Epoch 580. <b>Right:</b> Epoch 590 (final). The difference is negligible, indicating convergence.
@@ -724,10 +726,10 @@ The geometry and color continue to improve from epoch 370 to 580, but the jump f
 With the best checkpoint, varying the guidance scale reveals how strongly the model attends to the input image. At guidance 0, the model is image-blind and generates an average pothole shape - a sign the weights have shifted toward the pothole distribution. As guidance increases to 2-3, the shape begins to reflect the image. At very high values (10+) the shape degrades, likely because the classifier-free guidance amplification pushes the model into out-of-distribution regions.
 
 <p align="center">
-  <img src="reports/figures/inference_train_epoch_590_20250227_163300_guidance_0_better.gif" width="22%">
-  <img src="reports/figures/inference_train_epoch_590_20250227_163300_guidance_1_better.gif" width="22%">
-  <img src="reports/figures/inference_train_epoch_590_20250227_163300_guidance_3_better.gif" width="22%">
-  <img src="reports/figures/inference_train_epoch_590_20250227_163300_guidance_10_better.gif" width="22%">
+  <img src="reports/figures/inference_train_epoch_590_20250227_163300_guidance_0_better.gif" width="15%">
+  <img src="reports/figures/inference_train_epoch_590_20250227_163300_guidance_1_better.gif" width="15%">
+  <img src="reports/figures/inference_train_epoch_590_20250227_163300_guidance_3_better.gif" width="15%">
+  <img src="reports/figures/inference_train_epoch_590_20250227_163300_guidance_10_better.gif" width="15%">
 </p>
 <p align="center">
   Guidance 0 (image-blind) | Guidance 1 | Guidance 3 (used in evaluation) | Guidance 10 (degraded)
@@ -865,8 +867,8 @@ The animations below show examples of the model's output on validation samples (
 **Val set examples (PothRGDB, unseen):**
 
 <p align="center">
-  <img src="reports/figures/val_sample_20250305_061313_better.gif" width="45%">
-  <img src="reports/figures/val_sample_20250305_113647_better.gif" width="45%">
+  <img src="reports/figures/val_sample_20250305_061313_better.gif" width="15%">
+  <img src="reports/figures/val_sample_20250305_113647_better.gif" width="15%">
 </p>
 <p align="center">
   <b>Fig.</b> Inference on val samples. The general location of the pothole is reasonable, but boundary artifacts and bowl-shaped edges persist, suggesting some overfitting to the training distribution.
@@ -877,9 +879,9 @@ The animations below show examples of the model's output on validation samples (
 These three examples come from the same physical pothole (model3) photographed from different angles. The model produces different cavity shapes for each viewpoint, indicating limited robustness to viewpoint variation on out-of-distribution data.
 
 <p align="center">
-  <img src="reports/figures/rui_fan_inference_model3_L1_better.gif" width="30%">
-  <img src="reports/figures/rui_fan_inference_model3_L2_better.gif" width="30%">
-  <img src="reports/figures/rui_fan_inference_model3_L3_better.gif" width="30%">
+  <img src="reports/figures/rui_fan_inference_model3_L1_better.gif" width="15%">
+  <img src="reports/figures/rui_fan_inference_model3_L2_better.gif" width="15%">
+  <img src="reports/figures/rui_fan_inference_model3_L3_better.gif" width="15%">
 </p>
 <p align="center">
   <b>Fig.</b> Three different viewpoints of the same Rui Fan pothole produce three visibly different predicted shapes, highlighting generalization challenges on data from a different source domain.
