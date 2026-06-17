@@ -902,38 +902,54 @@ Inference latency was measured on 100 samples using the best checkpoint on the s
 At roughly 3 seconds per image on a high-end consumer GPU, the system is not suitable for real-time applications. It targets offline or batch inspection workflows, such as post-route analysis of footage captured by a vehicle-mounted camera.
 
 ---
+## 8. Discussion
 
-## 8. Limitations and Open Points
+The experimental results demonstrate that the proposed framework is capable of generating meaningful 3D point cloud representations from monocular pothole images and extracting geometric information relevant to pothole severity assessment. On the Rui Fan benchmark dataset, the model achieved a mean Chamfer Distance of 0.0883 and a mean depth error of 1.51 cm. Furthermore, all 27 benchmark samples were correctly classified into their corresponding severity category, resulting in a severity match rate of 100%. These results indicate that the framework can successfully capture the overall geometric structure of shallow potholes and reconstruct plausible three-dimensional representations from single RGB images.
 
-### 8.1 Calibration Uncertainty
+However, the interpretation of these results requires careful consideration of the dataset characteristics. All benchmark samples belonged exclusively to the low-severity category, meaning that the model was never evaluated on medium- or high-severity potholes within the test benchmark. Consequently, the observed severity classification performance cannot be generalized to deeper or more complex pothole geometries. The perfect severity match rate should therefore be interpreted as a reflection of the limited severity diversity in the evaluation dataset rather than evidence of comprehensive robustness across all pothole types.
+
+The validation set results provide additional insights into the behavior of the model. While the framework achieved a severity classification accuracy of 90% on the validation set, all classification errors were caused by depth overestimation, where low-severity potholes were incorrectly assigned to the medium-severity category. This behavior suggests that the model captures relative variations in pothole geometry but struggles to predict absolute depth values consistently. The observed depth errors, typically ranging from 1 to 6 cm, indicate that the framework is currently more suitable for relative severity assessment than for high-precision geometric measurement.
+
+Another important observation concerns the model's ability to capture scale information. Despite the depth estimation inaccuracies, the framework responded to unusually deep potholes by producing larger predicted depth values compared to typical shallow potholes. This suggests that the learned representation retains some sensitivity to geometric magnitude, even though absolute calibration remains challenging. Such behavior is encouraging because it indicates that the model is extracting meaningful structural cues from the input images rather than producing entirely arbitrary reconstructions.
+
+The qualitative results further reveal limitations in generalization and reconstruction consistency. Validation examples show that the model generally identifies the location and approximate shape of potholes; however, boundary artifacts and bowl-shaped reconstructions are frequently observed. These artifacts may result from the limited diversity of training samples and the inherent difficulty of recovering accurate three-dimensional geometry from a single image. Similar challenges were observed on the Rui Fan benchmark dataset, where images of the same physical pothole captured from different viewpoints produced noticeably different reconstructed shapes. This behavior highlights the sensitivity of the framework to viewpoint variation and suggests that the learned representations do not yet achieve viewpoint-invariant geometric reconstruction.
+
+From a practical perspective, the measured inference latency of approximately 3 seconds per image demonstrates that the framework is currently better suited for offline inspection and batch-processing scenarios rather than real-time deployment. Applications such as road condition surveys, pavement monitoring campaigns, and infrastructure asset management could benefit from this approach, whereas autonomous driving and real-time road hazard detection would require further optimization of both the reconstruction pipeline and model architecture.
+
+Overall, the results demonstrate the feasibility of using Deep Learning and generative 3D reconstruction techniques for pothole geometric analysis from monocular imagery. While the current framework successfully generates informative 3D representations and provides useful severity-related signals, improvements in dataset diversity, depth estimation accuracy, viewpoint robustness, and evaluation coverage across multiple severity levels will be necessary before the system can be considered a reliable tool for large-scale deployment. Nevertheless, the study establishes a promising foundation for future research on image-based pothole quantification and intelligent road infrastructure monitoring.
+
+---
+## 9. Limitations and Open Points
+
+### 9.1 Calibration Uncertainty
 
 Absolute depth values depend on camera intrinsics not provided by PothRGDB. The approximate D415 intrinsics may introduce a systematic scale offset. Relative severity ranking is more reliable than absolute geometric precision.
 
-### 8.2 Benchmark Coverage
+### 9.2 Benchmark Coverage
 
 The Rui Fan benchmark contains only 27 samples across 3 physical pothole molds, all in the low-severity bin. The model's behavior on medium and high severity potholes is not validated by these results.
 
-### 8.3 Upsampler Not Used
+### 9.3 Upsampler Not Used
 
 The Point-E upsampler is not integrated. All results represent the base40M output only. Adding the upsampler may improve geometric fidelity but would require additional training and evaluation work.
 
-### 8.4 Scale Ambiguity
+### 9.4 Scale Ambiguity
 
 The generative model produces a normalized output without intrinsic scale. Scale is recovered from preprocessing metadata, which inherits the calibration uncertainty described above.
 
-### 8.5 Random Upsampling for Small Clouds
+### 9.5 Random Upsampling for Small Clouds
 
 Samples with fewer than 1024 valid depth points are upsampled by random resampling with replacement. This may cause the model to overfit to repeated points in small-pothole training samples.
 
-### 8.6 Training Distribution
+### 9.6 Training Distribution
 
 PothRGDB was collected in a limited geographic context with a single camera model. Generalization to potholes with different aspect ratios, pavement types, or illumination conditions beyond the training distribution is not guaranteed.
 
-### 8.7 Severity Coverage in Validation
+### 9.7 Severity Coverage in Validation
 
 The validation set used during training contains very few samples outside the low-severity bin, as observed in the evaluation results. This means the model was validated almost entirely on low-severity cases, and the val loss metric used for checkpoint selection does not reflect performance on medium or high severity potholes. A proper evaluation of the system across all severity levels would require a more balanced held-out set.
 
-## 9. Future Work
+## 10. Future Work
 
 If we had another month, the priorities would be:
 
@@ -949,7 +965,7 @@ Fifth: Future studies should validate the estimated depth, area, and volume meas
 
 Sixth: While this work focuses on geometric reconstruction and metric estimation, future research can extend the framework to automatically classify pothole severity levels based on the estimated depth, area, and volume. Such a system could support maintenance prioritization and assist transportation agencies in decision-making processes.
 
-## 10. Conclusion 
+## 11. Conclusion 
 
 This project presented a Deep Learning-based framework for generating 3D point cloud representations of potholes from monocular RGB images and estimating critical geometric characteristics, including depth, surface area, and volume. By integrating pothole segmentation, depth estimation, Point-E-based point cloud generation, and Open3D geometric processing, the proposed methodology successfully transformed two-dimensional road images into three-dimensional representations suitable for quantitative analysis. The framework demonstrates the feasibility of extracting meaningful geometric information from low-cost image data without relying on expensive sensing technologies such as LiDAR or laser scanners.
 
@@ -958,7 +974,7 @@ The results indicate that image-based 3D reconstruction can serve as a practical
 Overall, this research contributes to the development of scalable and cost-effective solutions for road condition monitoring and pavement management. The proposed framework establishes a foundation for future advancements in automated pothole severity classification, intelligent maintenance planning, autonomous vehicle applications, and smart city infrastructure systems. With further improvements in dataset diversity, reconstruction accuracy, and real-world validation, the approach has the potential to become a valuable tool for data-driven transportation infrastructure management.
 
 
-## 11. Bibliographic References
+## 12. Bibliographic References
 
 [1] Confederação Nacional do Transporte (CNT), "Pesquisa CNT de Rodovias 2024", Brasília, Brazil, 2024.
 
