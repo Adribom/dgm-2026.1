@@ -346,10 +346,9 @@ The images below illustrate two of the most common failure modes observed in Pot
 <p align="center">
   <img src="reports/figures/pothrgb_20250227_175817_water.gif" width="45%">
   &nbsp;
-  <img src="reports/figures/pothrgb_shadow_20250305_125803.gif" width="45%">
 </p>
 <p align="center">
-  <b>Left:</b> Water inside the pothole scatters the IR beam, producing invalid depth readings in exactly the deepest region. <b>Right:</b> Harsh sunlight creates pitch-black shadows where stereo matching fails entirely.
+  </b> Water inside the pothole scatters the IR beam, producing invalid depth readings in exactly the deepest region. 
 </p>
 
 ---
@@ -584,7 +583,7 @@ Point-E offers models of different sizes (approximately 40 million, 300 million,
 
 Each training sample is a pair:
 
-- **Image input:** a 512x512 square RGB crop of the pothole, padded to preserve aspect ratio, encoded through Point-E's CLIP encoder.
+- **Image input:** a 224x224 square RGB crop of the pothole, padded to preserve aspect ratio, encoded through Point-E's CLIP encoder.
 - **Point cloud target:** the normalized 6D tensor (X, Y, Z, R, G, B) produced by the preprocessing pipeline. The RGB values for each point come directly from the corresponding pixel in the original RGB image, sampled at the same pixel location as the depth reading.
 
 The model is trained using the native Point-E diffusion loss, which measures the denoising network's ability to recover the original cloud from a noise-corrupted version at a randomly sampled noise level.
