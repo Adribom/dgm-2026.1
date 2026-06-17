@@ -1,0 +1,11 @@
+expected_color,black,blue,brown,green,orange,pink,purple,red,unmatched,white,yellow
+blue,0,25,0,0,0,0,0,0,0,0,0
+yellow,0,0,1,0,0,0,0,0,0,1,25
+red,0,0,1,0,1,0,0,26,0,0,0
+green,0,0,0,31,0,0,0,0,0,1,0
+pink,0,0,0,0,0,23,0,2,0,0,0
+orange,1,0,0,0,25,0,0,2,1,0,0
+purple,0,0,0,0,0,0,24,0,0,0,1
+white,0,0,0,0,0,0,0,0,0,26,0
+black,30,0,0,0,0,0,0,0,0,0,0
+brown,0,0,20,0,1,0,0,1,0,0,0

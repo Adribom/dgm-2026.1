@@ -1,0 +1,98 @@
+{
+  "n_approved": 71,
+  "n_rejected": 110,
+  "n_image_errors": 0,
+  "global_acceptance_rate": 0.39226519337016574,
+  "per_pair": {
+    "flower__purple": {
+      "approved": 5,
+      "total": 15,
+      "rate": 0.3333333333333333
+    },
+    "apple__red": {
+      "approved": 12,
+      "total": 15,
+      "rate": 0.8
+    },
+    "flower__red": {
+      "approved": 3,
+      "total": 15,
+      "rate": 0.2
+    },
+    "apple__green": {
+      "approved": 9,
+      "total": 15,
+      "rate": 0.6
+    },
+    "flower__pink": {
+      "approved": 5,
+      "total": 15,
+      "rate": 0.3333333333333333
+    },
+    "flower__orange": {
+      "approved": 5,
+      "total": 11,
+      "rate": 0.45454545454545453
+    },
+    "flower__blue": {
+      "approved": 4,
+      "total": 15,
+      "rate": 0.26666666666666666
+    },
+    "flower__white": {
+      "approved": 3,
+      "total": 15,
+      "rate": 0.2
+    },
+    "polar bear__white": {
+      "approved": 4,
+      "total": 4,
+      "rate": 1.0
+    },
+    "car__blue": {
+      "approved": 8,
+      "total": 12,
+      "rate": 0.6666666666666666
+    },
+    "car__green": {
+      "approved": 1,
+      "total": 5,
+      "rate": 0.2
+    },
+    "banana__yellow": {
+      "approved": 2,
+      "total": 2,
+      "rate": 1.0
+    },
+    "car__pink": {
+      "approved": 2,
+      "total": 3,
+      "rate": 0.6666666666666666
+    },
+    "bag__brown": {
+      "approved": 5,
+      "total": 12,
+      "rate": 0.4166666666666667
+    },
+    "banana__red": {
+      "approved": 1,
+      "total": 2,
+      "rate": 0.5
+    },
+    "ball__red": {
+      "approved": 2,
+      "total": 13,
+      "rate": 0.15384615384615385
+    },
+    "chalkboard__black": {
+      "approved": 0,
+      "total": 8,
+      "rate": 0.0
+    },
+    "ball__yellow": {
+      "approved": 0,
+      "total": 4,
+      "rate": 0.0
+    }
+  }
+}

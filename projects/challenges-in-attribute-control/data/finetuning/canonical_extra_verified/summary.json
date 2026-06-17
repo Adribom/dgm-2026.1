@@ -1,0 +1,48 @@
+{
+  "n_approved": 51,
+  "n_rejected": 53,
+  "n_image_errors": 0,
+  "global_acceptance_rate": 0.49038461538461536,
+  "per_pair": {
+    "dog__black": {
+      "approved": 9,
+      "total": 20,
+      "rate": 0.45
+    },
+    "chair__white": {
+      "approved": 8,
+      "total": 17,
+      "rate": 0.47058823529411764
+    },
+    "dog__white": {
+      "approved": 9,
+      "total": 20,
+      "rate": 0.45
+    },
+    "dog__brown": {
+      "approved": 6,
+      "total": 12,
+      "rate": 0.5
+    },
+    "chair__brown": {
+      "approved": 2,
+      "total": 5,
+      "rate": 0.4
+    },
+    "frog__green": {
+      "approved": 10,
+      "total": 20,
+      "rate": 0.5
+    },
+    "shoe__black": {
+      "approved": 5,
+      "total": 5,
+      "rate": 1.0
+    },
+    "shoe__brown": {
+      "approved": 2,
+      "total": 5,
+      "rate": 0.4
+    }
+  }
+}

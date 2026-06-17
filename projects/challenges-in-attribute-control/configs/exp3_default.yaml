@@ -1,0 +1,47 @@
+# ─────────────────────────────────────────────────────────────────────────
+# Experiment 3 — Phase 1: Generate evaluation images with the base model
+# ─────────────────────────────────────────────────────────────────────────
+# This config controls the generation of the "evaluation dataset": images
+# produced by the *unmodified* Stable Diffusion 1.5 model, one per
+# (object, color, seed) triple. The result is the baseline that later
+# gets compared against the finetuned model.
+#
+# CRITICAL: do not change `seeds`, `model_id`, `template`, `width`, `height`,
+# `num_inference_steps`, `guidance_scale`, or `scheduler` between the
+# "before" and "after" runs — these must match exactly so any difference
+# is attributable to the finetuning, not to evaluation drift.
+
+model:
+  # Stable Diffusion 1.5 — the canonical reference for attribute binding
+  # research (Attend-and-Excite, SynGen, StructureDiffusion all use it).
+  model_id: "runwayml/stable-diffusion-v1-5"
+  revision: null                  # set to a commit hash for strict pinning
+  dtype: "float16"                # fp16 on GPU; the loader falls back to fp32 on CPU
+
+generation:
+  template: "a photo of a {color} {object}"
+  width: 512
+  height: 512
+  num_inference_steps: 30
+  guidance_scale: 7.5
+  scheduler: "DPMSolverMultistepScheduler"
+  negative_prompt: ""             
+
+# Per-pair sampling: 30 images per (object, color) = 3600 total.
+# Seeds are deterministic (0..N-1) so the i-th image of any pair is
+# reproducible across machines.
+sampling:
+  images_per_pair: 30
+  seed_start: 0                   # seeds used: [seed_start, seed_start + images_per_pair)
+
+# Output location (under data/, which is gitignored).
+output:
+  root: "data/eval_images"
+  metadata_filename: "metadata.json"
+  # Image filename pattern. {object} and {color} may contain spaces;
+  # they are replaced with underscores at save time.
+  image_pattern: "{object}/{color}/seed_{seed:04d}.png"
+
+# Pair source — points to the shared taxonomy.
+pairs:
+  taxonomy_path: "configs/objects_colors.yaml"

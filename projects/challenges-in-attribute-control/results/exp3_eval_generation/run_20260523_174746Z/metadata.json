@@ -1,0 +1,43 @@
+{
+  "config": {
+    "generation": {
+      "guidance_scale": 7.5,
+      "height": 512,
+      "negative_prompt": "",
+      "num_inference_steps": 30,
+      "scheduler": "DPMSolverMultistepScheduler",
+      "template": "a photo of a {color} {object}",
+      "width": 512
+    },
+    "model": {
+      "dtype": "float16",
+      "model_id": "runwayml/stable-diffusion-v1-5",
+      "revision": null
+    },
+    "output": {
+      "image_pattern": "{object}/{color}/seed_{seed:04d}.png",
+      "metadata_filename": "metadata.json",
+      "root": "data/eval_images"
+    },
+    "pairs": {
+      "taxonomy_path": "configs/objects_colors.yaml"
+    },
+    "sampling": {
+      "images_per_pair": 30,
+      "seed_start": 0
+    }
+  },
+  "git_commit": "b6a80ae",
+  "libraries": {
+    "datasets": "4.8.5",
+    "diffusers": "0.37.1",
+    "numpy": "2.4.6",
+    "python": "3.14.0",
+    "torch": "2.12.0+cpu",
+    "transformers": "5.9.0"
+  },
+  "n_pairs": 3,
+  "output_root": "data\\eval_smoke",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "timestamp_utc": "2026-05-23T17:47:46.135107+00:00"
+}
